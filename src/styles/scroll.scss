@@ -1,0 +1,60 @@
+/* 全局滚动条样式 */
+
+/* Webkit 浏览器滚动条样式 (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 4px !important; /* 垂直滚动条宽度 */
+    height: 4px !important; /* 水平滚动条高度 */
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; /* 滚动条轨道背景透明 */
+    width: 4px; /* 明确设置轨道宽度 */
+    height: 4px; /* 明确设置轨道高度 */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(27, 36, 50, 0.2); /* 滚动条滑块颜色 #1B2432 透明度 0.2 */
+    border-radius: 99px; /* 滑块圆角 */
+    transition: background-color 0.3s ease; /* 平滑过渡效果 */
+    border: none; /* 移除默认边框 */
+    outline: none; /* 移除轮廓 */
+    box-shadow: none; /* 移除阴影 */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(27, 36, 50, 0.4); /* 悬停时增加不透明度 */
+    border-radius: 99px; /* 保持圆角 */
+    border: none; /* 移除默认边框 */
+    outline: none; /* 移除轮廓 */
+    box-shadow: none; /* 移除阴影 */
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: rgba(27, 36, 50, 0.6); /* 激活时进一步增加不透明度 */
+    border-radius: 99px; /* 保持圆角 */
+    border: none; /* 移除默认边框 */
+    outline: none; /* 移除轮廓 */
+    box-shadow: none; /* 移除阴影 */
+}
+
+/* Firefox 滚动条样式 */
+* {
+    scrollbar-width: thin; /* 滚动条宽度设置为 thin */
+    scrollbar-color: rgba(27, 36, 50, 0.2) transparent; /* 滑块颜色和轨道颜色 */
+}
+
+/* 移除默认的滚动条样式 */
+html {
+    overflow-x: hidden; /* 防止水平滚动条 */
+}
+
+/* 确保滚动条在所有容器中都应用 */
+body, div, section, article, aside, nav, main {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(27, 36, 50, 0.2) transparent;
+}
+
+/* 移动端滚动优化 */
+* {
+    -webkit-overflow-scrolling: touch; /* iOS 设备上的惯性滚动 */
+}

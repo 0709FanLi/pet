@@ -1,0 +1,432 @@
+// Element Plus 组件样式覆盖
+// 按功能模块组织，遵循项目颜色变量规范
+
+// =============================================================================
+// 通用混合（Mixins）
+// =============================================================================
+
+// 圆角对话框基础样式
+@mixin dialog-base($border-radius: 12px, $padding: 0) {
+    border-radius: $border-radius !important;
+    padding: $padding !important;
+    overflow: hidden;
+
+    .el-dialog__header {
+        padding: 0 !important;
+    }
+
+    .el-dialog__footer {
+        padding: 24px !important;
+    }
+}
+
+// 全屏居中对话框样式
+@mixin dialog-centered($max-width: 800px, $min-width: 400px, $max-height: 85vh) {
+    margin-top: 0 !important;
+    padding: 0 !important;
+    min-width: $min-width;
+    max-width: $max-width;
+    max-height: $max-height;
+    display: flex;
+    flex-direction: column;
+    top: 50%;
+    transform: translate(0, -50%);
+    overflow: hidden;
+}
+
+// 按钮基础样式
+@mixin button-base($height: 38px, $border-radius: 8px, $font-size: 14px) {
+    height: $height;
+    border-radius: $border-radius;
+    font-size: $font-size;
+    box-sizing: border-box;
+}
+
+// =============================================================================
+// 消息框组件
+// =============================================================================
+
+// 限制提示消息
+.custom-message-limit-one {
+    border-radius: 8px;
+    background: var(--warning-light);
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.05);
+
+    .el-message__content {
+        color: var(--text-title) !important;
+    }
+}
+
+// =============================================================================
+// Tooltip 组件
+// =============================================================================
+
+// 白色主题 Tooltip
+.el-popper.el-tooltip.l-tooltip-popper-white {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    color: var(--text-description);
+
+    .el-popper__arrow::before {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+    }
+}
+
+// 黑色主题 Tooltip
+.el-popper.el-tooltip.l-tooltip-popper-black {
+    background-color: var(--text-title);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    color: var(--bg-secondary);
+
+    .el-popper__arrow::before {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+    }
+}
+
+// =============================================================================
+// 下拉菜单组件
+// =============================================================================
+
+// 通用下拉菜单样式
+.el-popper.is-pure.is-light.el-tooltip.el-dropdown__popper {
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
+    padding: 0;
+}
+
+// 下拉容器
+#dropdown-container {
+    width: 253px;
+}
+
+// 最近文件弹出框
+.el-popper.is-light.el-tooltip.el-popover.recent-files-popover {
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    width: 318px;
+    padding: 8px 16px;
+}
+
+// 自定义下拉菜单
+.l-dropdown-popper {
+    border-radius: 12px;
+}
+
+// 反馈类型下拉菜单
+.feedback-type-dropdown {
+    border-radius: 12px;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    margin-top: 4px;
+    overflow: hidden;
+
+    .el-select-dropdown__item {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 16px;
+        font-size: 14px;
+        color: var(--text-title);
+
+        &:not(:last-child) {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        &.hover,
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+
+        &.selected {
+            font-weight: normal;
+            color: var(--text-title);
+        }
+    }
+}
+
+// =============================================================================
+// 对话框组件
+// =============================================================================
+
+// 删除确认对话框基础样式
+.def-delete-dialog {
+    @include dialog-base(20px, 24px 0);
+    .el-dialog__footer {
+        padding: 0 24px !important;
+    }
+}
+
+// 删除确认对话框（通用版本）
+.delete-confirm-dialog {
+    @include dialog-base(16px, 0);
+}
+
+// 通用删除提示对话框
+.delete-universal-prompt-dialog {
+    @include dialog-base(16px, 16px 0);
+
+    .confirm-title {
+        color: var(--text-title);
+        font-size: 18px;
+        font-weight: 590;
+        line-height: 24px;
+        margin: 0 24px;
+    }
+
+    .confirm-message {
+        margin: 0 24px;
+        color: var(--text-description);
+    }
+
+    .def-line {
+        width: 100%;
+        height: 1px;
+        background: var(--border-color);
+        margin: 12px 0;
+    }
+
+    .confirm-actions {
+        margin-top: 24px;
+        margin-right: 24px;
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+    }
+
+    .cancel-btn {
+        @include button-base();
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        background: var(--bg-secondary);
+        color: var(--text-title);
+    }
+
+    .delete-btn {
+        @include button-base();
+        background: var(--error-deep);
+        color: var(--bg-secondary);
+        border: none;
+    }
+}
+
+// 管理员相关对话框
+.admin-list-dialog,
+.create-admin-dialog,
+.reset-success-dialog {
+    @include dialog-base();
+    max-width: 1080px;
+
+    .el-dialog__body {
+        &.create-admin-dialog {
+            flex-direction: column;
+        }
+    }
+}
+
+// 备注对话框
+.remark-dialog {
+    @include dialog-base();
+    display: flex;
+    flex-direction: column;
+
+    .el-dialog__header {
+        height: 50px;
+        line-height: 50px;
+        padding-left: 20px !important;
+        color: var(--text-title);
+    }
+
+    .el-dialog__body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .el-dialog__footer {
+        background: var(--bg-primary) !important;
+        border-radius: 0 0 12px 12px !important;
+    }
+}
+
+// 对话历史对话框
+.conversation-dialog.el-dialog {
+    padding: 0;
+    border-radius: 40px;
+
+    .el-dialog__header {
+        padding-bottom: 0;
+    }
+}
+
+// =============================================================================
+// 大型对话框组件（全屏居中）
+// =============================================================================
+
+// 通用提示查看对话框
+.universal-prompt-view-dialog-container {
+    @include dialog-centered(800px, 400px, 85vh);
+    border-radius: 16px !important;
+    max-height: 742px;
+
+    .el-overlay-dialog {
+        overflow: hidden !important;
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .el-dialog__body {
+        flex: 1;
+        overflow: hidden;
+        border-radius: 0 0 16px 16px;
+    }
+}
+
+// 创建角色对话框
+.create-character-dialog-container {
+    @include dialog-centered(896px, 700px, 85vh);
+    border-radius: 12px !important;
+    max-height: 85vh;
+
+    .el-dialog__footer {
+        margin: 0 !important;
+    }
+
+    .el-table__inner-wrapper::before {
+        display: none !important;
+    }
+
+    .el-dialog__body {
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+    }
+    .el-dialog__header{
+        padding: 0 !important;
+    }
+    .dialog-background-box{
+        flex: 1;
+    }
+}
+
+// 创建图像角色对话框
+.create-image-character-dialog-container {
+    @include dialog-centered(700px, 500px, 85vh);
+    border-radius: 12px !important;
+    height: auto;
+
+    .el-dialog__footer {
+        margin: 0 !important;
+    }
+
+    .el-dialog__body {
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+    }
+    .el-dialog__header{
+        padding: 0 !important;
+        border-bottom: 1px solid var(--border-color);
+    }
+}
+
+// 提示查看对话框
+.prompt-view-dialog-container {
+    @include dialog-centered(800px, 400px, 85vh);
+    border-radius: 16px !important;
+
+    .el-overlay-dialog {
+        overflow: hidden !important;
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .el-dialog__body {
+        flex: 1;
+        overflow: hidden;
+        border-radius: 0 0 16px 16px;
+        display: flex;
+    }
+    .dialog-background-box{
+        flex: 1;
+    }
+    .el-dialog__header{
+        padding: 0 !important;
+    }
+}
+
+// 创建工具对话框
+.create-tool-dialog-container {
+    @include dialog-centered(700px, 400px, 85vh);
+    border-radius: 12px !important;
+
+    .el-dialog__body {
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+    }
+
+    .el-dialog__footer {
+        padding: 0 !important;
+    }
+    .el-dialog__header{
+        padding: 0 !important;
+    }
+}
+
+// 反馈对话框
+.feedback-dialog-container {
+    @include dialog-centered(432px, 432px, 85vh);
+    border-radius: 12px !important;
+    width: 432px !important;
+
+    .el-dialog__footer {
+        padding-top: 0 !important;
+    }
+}
+
+// 设置对话框
+.setting-dialog-container {
+    @include dialog-centered(844px, 600px);
+    height: 85vh;
+    max-height: 575px;
+    border-radius: 12px !important;
+
+    .el-dialog__body {
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+    }
+    .el-dialog__header{
+        padding: 0 !important;
+    }
+}
+
+// 自定义灰色Loading样式
+.custom-loading-gray {
+    // 修改loading图标颜色为灰色
+    .el-loading-spinner {
+        .circular {
+            width: 42px;
+            height: 42px;
+            animation: loading-rotate 2s linear infinite;
+        }
+        
+        .path {
+            stroke: #999 !important; // 灰色loading图标
+            stroke-width: 2;
+            stroke-linecap: round;
+            animation: loading-dash 1.5s ease-in-out infinite;
+        }
+    }
+    
+    // 修改loading文字颜色
+    .el-loading-text {
+        color: #666 !important;
+        font-size: 14px;
+        margin-top: 12px;
+    }
+}

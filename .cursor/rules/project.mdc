@@ -1,0 +1,257 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# 项目开发总规
+
+---
+
+## 1. 项目总述
+本项目为 PC 端 AI 问答网页应用，仿 Grok 风格。
+目标：实现高可维护性、强一致性、良好用户体验的现代 Web 应用，支持多语言、响应式设计、主题色、模块化开发。
+### 1.1 核心技术栈
+- **构建工具**: Vite
+- **前端框架**: Vue3
+- **状态管理**: Pinia
+- **类型安全**: TypeScript
+- **路由管理**: Vue Router
+- **HTTP 请求**: Axios
+- **国际化**: Vue I18n
+- **UI 组件库**: Element Plus(Vue 3 版本)
+
+---
+
+## 2. 角色与职责
+- **AI助手角色**：你是一位 web 前端架构师与编程高手，擅长 JavaScript、TypeScript、Vue3，专注于 PC 端开发，并确保在 Chrome、Safari 等主流浏览器的兼容性。
+- **开发者协作规范**：
+  - **内容展示文本必须使用英文**
+  - **多语言支持**
+  - **支持响应式设计，需适配不同屏幕尺寸**
+  - 严格遵循本规则及各子模块细则。
+  - 关键代码需有简洁明了的中文注释。
+  - 代码逻辑清晰，避免冗余与重复。
+  - 变更规则需经评审并同步至所有相关文档。
+  - 代码评审时需重点关注规范性与一致性。
+
+---
+
+## 3. 目录结构与模块说明
+## PC/Web端项目结构
+```
+project-web/
+├── public/                             # 静态资源 存放不需要webpack处理的静态资源，构建时会直接复制到输出目录
+│   ├── static/                         # 静态文件（图片、字体等）
+│   │   ├── images/                     # 图片
+│   │   ├── fonts/                      # 字体
+│   │   └── icons/                      # 字体图标
+│   ├── favicon.ico                     # 网站图标
+│   │
+├── src/                                # 源代码
+│   ├── api/                            # 【API接口管理】按业务模块划分，统一管理HTTP请求
+│   │   ├── [module]/                   # 【复杂模块子目录】如：upload/、payment/
+│   │   │   ├── index.ts                # 模块主入口文件
+│   │   │   ├── [module]-base.ts        # 基础配置和类型
+│   │   │   └── [module]-service.ts     # 具体服务实现
+│   ├── components/                     # 全局可复用组件，按用途分为通用、布局、业务组件
+│   │   ├── l-[name].vue                # 【模板】全局基础组件，使用l-前缀，如：l-button.vue、l-img.vue、l-loading.vue
+│   │   ├── layout/                     # 【布局组件】页面布局相关组件
+│   │   │     └── layout-[module].vue   # 命名规范：layout-{模块名}.vue，如：layout-media.vue、layout-chat.vue
+│   │   ├── dialog/                     # 【对话框组件】所有弹窗、模态框组件
+│   │   │     ├── common-dialog.vue     # 通用对话框基础组件（必需）
+│   │   │     ├── [business]-dialog.vue # 命名规范：{业务场景}-dialog.vue，如：login-expired-dialog.vue
+│   │   │     └── [module]-dialog/      # 复杂对话框可建子目录，如：ai-tool-dialog/
+│   │   │           └── index.vue       # 子目录主入口文件
+│   │   └── [module]/                   # 【业务组件】命名规范：{模块}/ - generate/ - edit/ - view/
+│   │   └── [function].vue              # 特定业务逻辑的复用组件 命名规范：{功能}.vue，如：media-generate.vue、user-profile.vue
+│   │
+│   ├── composables/                    # 【Composition API复用逻辑】封装有状态的业务逻辑，体现关注点分离和逻辑复用
+│   │   └── use[Function].ts            # 【模板】命名规范：use{功能名}.ts，如：useUserData.ts、useResizablePanels.ts
+│   │
+│   ├── models/                         # 【数据模型】提供类型安全的数据结构定义
+│   │   ├── base-models.ts              # 基础数据模型（必需）
+│   │   └── [module]-models.ts          # 【模板】业务模块模型，命名规范：{模块名}-models.ts，如：user-models.ts、chat-models.ts
+│   ├── types/                          # 【类型定义】TypeScript类型、枚举、常量的集中管理
+│   │   ├── enums.ts                    # 项目通用枚举（必需）
+│   │   ├── global.d.ts                 # 全局类型声明（必需）
+│   │   ├── index.ts                    # 常量统一导出入口（必需）
+│   │   └── [module].ts                 # 【模板】模块相关类型，命名规范：{模块名}.ts，如：media.ts、user.ts
+│   │   
+│   ├── language/                       # 多语言模块
+│   │   ├── index.js                    # 多语言系统主要逻辑
+│   │   └── en.json                     # 英文语言包
+│   ├── router/                         # 路由模块
+│   │   ├── middlewares/                # 中间件
+│   │   │   ├── index.js                # 中间件管理器
+│   │   │   ├── middle-auth.js          # 认证相关中间件
+│   │   │   └── middle-permission.js    # 权限相关中间件
+│   │   ├── index.js                    # 路由入口
+│   │   ├── routers.js                  # 路由配置集合
+│   │   ├── constants.js                # 路由相关常量
+│   │   └── navigation.js               # 路由工具类
+│   ├── store/                          # 状态管理（Pinia）
+│   │   ├── index.ts                    # Pinia主实例
+│   │   └── modules/                    # 业务模块
+│   │       └── user.ts                 # 用户状态管理
+│   ├── styles/                         # 全局样式文件，包含变量、混入、通用样式
+│   │   ├── color.scss                  # 全局颜色变量
+│   │   ├── global.scss                 # 全局CSS标准常量
+│   │   ├── scroll.scss                 # 全局滚动条样式
+│   │   └── element-plus.scss           # Element Plus样式文件
+│   ├── utils/                          # 【工具函数库】第三方工具封装、业务逻辑封装和通用工具方法
+│   │   ├── third-party/                # 【第三方工具封装】第三方库的二次封装
+│   │   │   └── [library].js            # 【模板】命名规范：{库名}.js，如：axios.js
+│   │   ├── business/                   # 【业务逻辑封装】特定业务场景的工具函数
+│   │   │   └── [module].js             # 【模板】命名规范：{模块}.js，如：user.js、chat.js、file.js
+│   │   ├── global.js                   # 项目通用方法（必需）
+│   │   ├── util.js                     # 其他工具类方法：格式化、验证、DOM操作等（必需）
+│   │   ├── storage.js                  # localStorage存储工具（必需）
+│   │   └── ui-feedback.js              # UI反馈工具：Message、MessageBox、Notification的统一封装（必需）
+│   │   
+│   ├── views/                          # 【页面组件】所有路由页面组件
+│   │   ├── [Module].vue                # 【单页面】简单页面直接放根目录，如：Home.vue、Login.vue、NotFound.vue
+│   │   └── [module]/                   # 【模块目录】复杂模块建子目录，如：user/、admin/、chat/
+│   │       ├── [page].vue              # 模块内页面，如：user-profile.vue、user-settings.vue
+│   │       └── components/             # 模块内私有组件（可选）
+│   │
+│   ├── App.vue                         # 应用程序根组件
+│   └── main.ts                         # 应用程序入口文件
+├── docs/                               # 项目文档
+├── .env                                # 环境变量
+├── .env.development                    # 开发环境变量
+├── .env.production                     # 生产环境变量
+├── .gitignore                          # Git忽略文件
+├── index.html                          # Vite项目入口
+├── package.json                        # 项目依赖配置
+├── README.md                           # 项目说明文档
+├── tsconfig.json                       # TypeScript配置
+└── vite.config.ts                      # Vite配置文件
+```
+
+---
+
+## 4. 根组件布局
+- **顶部**
+  - 全局的 navbar，**始终固定**显示
+- **主体**
+  - 内容应通过 router-view 渲染
+  - **高度**使用 global.scss --height-small-base-view
+- **底部**
+  - 仅在开发环境下显示的组件区域（如调试工具）。无需考虑
+
+**指导原则**
+  - 根据当前设计图内容判断其所属区域(navbar 或 router-view)。
+  - **禁止**将全局导航内容放入页面主体，确保页面结构清晰、职责分明。
+
+---
+
+## 5. 前置条件
+
+### 5.1 需求与设计图分析
+- **必须**：完成以下步骤
+  1.**阅读设计图区分移动端设计和PC端设计**
+  2. **如果是PC端，读取并分析 App.vue 文件结构**：全面理解页面的整体结构和布局逻辑。参考**4-根组件布局**
+  3. **如果是移动端，全程忽略设计图的顶部电池状态栏和底部全面屏的返回横条**
+  4. **明确目标在整体架构中的定位**：说明当前页面的功能和角色。
+  5. **列出所有布局约束**：识别并记录与页面布局相关的限制条件（如固定区域、动态内容等）。
+**如未完成上述步骤，请停止分析并先完成前置条件**
+
+---
+
+## 6. 全局基础规范
+
+### 6.1 命名规范
+| 类型 | 规则 | 示例 |
+|-----------|-----------|-----------|
+| `变量/函数` | 小驼峰 | `isLoading`, `userList` |
+| `文件名` | 短横线拼接 | `api-user.ts`, `chat-list.vue` |
+| `资源文件名` |  下划线拼接 | `icon_copy.png`, `user_show.mp4` |
+| `css 类名` | 短横线拼接 | `text-title`, `btn-primary` |
+| `html ID 属性` | 下划线拼接 | `btn_cancel`, `view_content` |
+| `模版组件名称` | 短横线拼接 | `l-img`, `customer-list` |
+| `枚举/类型/接口` | 需遵循 TypeScript 标准 | `UserType`, `ILoginParams` |
+
+### 6.2 代码风格
+- 代码结束添加`;`
+- 优先 async/await 处理异步
+- **注释用中文**，区域与复杂逻辑必须注释
+- 代码块、函数、组件需保持单一职责，避免过长
+- 禁止魔法数字，需用常量或枚举代替
+- 代码中禁止出现未使用变量、未处理的 Promise
+
+### 6.3 样式与资源
+- **使用主题色**
+  - **颜色变量复用**：优先从`src/styles/color.scss`中引用并按照语义使用
+  - **禁止新增**: 同色值同模块的变量
+  - **必须复用**: 已定义的颜色变量
+  - **仅在必要时**: 提出新的全局变量建议，且需说明理由
+- 优先使用 `src/styles/global.scss` 变量
+- 使用 CSS 媒体查询和 flexbox/grid 布局实现响应式设计
+- vue页面在宽高固定的情况下, 使用padding需要同时添加box-sizing: border-box;
+- 优先用 **flex布局**，避免 position
+- style 标签必须加 scoped，使用 lang="scss"
+- 使用 l-img 组件展示图片，src 必须为根路径，w/h 必填
+  - l-img的例子：```<l-img :src="'/static/images/password-error.png'" w="18px" h="18px"/>```
+- :deep() 伪类前需加主类
+- 遇样式冲突优先提升权重，少用 !important
+- 样式变量命名需语义化，便于维护
+- 公共样式、混入、函数应统一管理于 styles 目录
+
+### 6.4 组件与页面开发
+- 所有功能模块应以 Vue 组件形式实现，页面为 SFC
+- 组件需有必要的类型声明，props/emits 必须注明类型
+- 组件间通信优先使用 props/emits，复杂场景用 Pinia
+- 组件复用性、解耦性优先，避免重复造轮子
+- 书写规范见 [vue3-coding-rules.mdc](mdc:.cursor/rules/vue3-coding-rules.mdc)
+
+### 6.5 状态管理
+- 全局状态统一用 Pinia，局部状态用 Composition API
+- store 按业务模块拆分，命名需语义化
+- store 需有类型声明，避免 any
+- 禁止在组件中直接操作全局状态，需通过 store 方法
+
+### 6.6 路由与导航
+- 路由统一用 Vue Router，配置集中管理
+- 路由守卫、权限控制需用中间件实现
+- 路由常量、权限常量需集中定义
+- 路由跳转需用导航工具类，避免硬编码路径
+
+### 6.7 其它全局约定
+- 从设计图中获取设计资源的时候，导出2倍png图使用，不能直接使用svg资源
+- 弹窗类交互用 Element Plus 组件，自动覆盖全屏
+- 开发环境下底部可有调试工具，生产环境不显示
+- 代码生成、AI 生成需严格遵守本规范
+
+---
+
+## 7. Vue3 代码规范（vue3-coding-rules.mdc）
+> 本章节内容详见 [vue3-coding-rules.mdc](mdc:.cursor/rules/vue3-coding-rules.mdc)
+> **如与全局基础规范冲突，以全局基础规范为准。**
+
+---
+
+## 8. 网络请求开发规范（request.mdc）
+> 本章节内容详见 [request.mdc](mdc:.cursor/rules/request.mdc)
+> **如与全局基础规范冲突，以全局基础规范为准。**
+
+---
+
+## 9. 多语言开发规范
+> 本章节内容详见 [i18n.mdc](mdc:.cursor/rules/i18n.mdc)
+> **如与全局基础规范冲突，以全局基础规范为准。**
+
+---
+
+## 10. 规则适用与优先级说明
+- **全局基础规范** 优先于各子模块细则
+- **子模块细则**（如 request.mdc、vue3-coding-rules.mdc、language 相关实现）优先于具体业务实现
+- 如有冲突，遵循“先全局后局部，先基础后细则”的原则
+- 变更规则需同步所有相关文档，确保一致性
+- 规则适用范围、优先级、冲突处理需在每个细则开头注明
+
+---
+
+> 本文档为项目开发总规，所有开发、AI 生成、协作均需严格遵守。
+> 细则如有更新，请及时补充于本文件并同步至相关子模块。
+
+

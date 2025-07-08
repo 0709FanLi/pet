@@ -1,0 +1,209 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Vue3 样式开发规范
+
+> **适用范围**：所有Vue3项目的样式开发
+> **优先级**：与项目总规发生冲突时以项目总规为准
+
+---
+
+## 1. 技术规范速查
+
+| 项目 | 必须使用 | 禁止使用 |
+|------|----------|----------|
+| **预处理器** | SCSS | CSS/Less |
+| **作用域** | `scoped` | 全局样式 |
+| **布局** | Flex/Grid | Position(非必要) |
+| **变量** | 全局变量 | 硬编码值 |
+
+---
+
+## 2. 命名规范矩阵
+
+### 2.1 CSS类名规范
+| 类型 | 格式 | 示例 | 说明 |
+|------|------|------|------|
+| **组件根类** | `[组件名]-[描述]` | `user-avatar`, `chat-message` | 语义优先 |
+| **CSS类名** | `[元素]-[描述]-[状态(可选)]` | `btn-primary`, `text-title`, `ring-bg-active` | 短横线拼接 |
+| **修饰类** | `[前缀]-[描述]` | `ring-bg-active`, `shadow-hover` |
+| **CSS变量** | `--[类型]-[语义]` | `--color-primary`, `--size-base` | 语义优先 |
+
+
+### 2.2 计算属性样式命名
+| 类型 | 规则 | 示例 |
+|------|------|------|
+| **样式对象** | `[元素][Style/Class]` | `inputStyle`, `buttonClass`, `avatarStyle` |
+| **状态判断** | `is[描述][状态]` | `isBtnDisabled`, `isMenuVisible` |
+| **布局相关** | `[元素][布局]` | `cameraWidth`, `dialogPadding` |
+| **属性相关** | `[元素][属性]` | `avatarSrc`, `videoPosition` |
+
+---
+
+## 3. SFC 结构规范
+
+### 3.1 模板结构
+```vue
+<template>
+  <div class="component-root">
+    <!-- 内容 -->
+  </div>
+</template>
+
+<script setup>
+// 脚本内容
+</script>
+
+<style scoped lang="scss">
+// 样式内容
+</style>
+```
+
+### 3.2 属性书写顺序
+**顺序**：指令 → 点击事件 → 组件属性 → 组件自定义事件 → 动态属性 → 静态属性
+```vue
+<components
+    v-if="isChange"
+    @click="clickChange"
+    :props="propsObj"
+    @onEmits="onEmitsListener"
+    :style="avatarStyle"
+    :class="{'components-change': isChange}"
+    class="components-view">
+</components>
+```
+
+### 3.3 样式组织结构
+```scss
+// 1. 导入 → 2. 根样式 → 3. 子元素 → 4. 状态 → 5. 响应式 → 6. :deep()
+```
+
+---
+
+## 4. Styles 目录统一管理
+
+### 4.1 目录结构规范
+| 文件类型 | 路径 | 用途 | 示例 |
+|----------|------|------|------|
+| **颜色变量** | `src/styles/color.scss` | 全局色彩系统 | `--color-primary` |
+| **全局变量** | `src/styles/global.scss` | 尺寸、间距等 | `--height-navbar` |
+| **混入函数** | `src/styles/mixins.scss` | 可复用样式逻辑 | `@mixin button-style` |
+| **公共样式** | `src/styles/common.scss` | 通用样式类 | `.text-ellipsis` |
+| **滚动条样式** | `src/styles/scroll.scss` | 滚动条 | `::-webkit-scrollbar` |
+
+---
+
+## 5. 全局变量管理
+
+### 5.1 变量使用优先级
+| 优先级 | 文件路径 | 用途 | 示例 |
+|--------|----------|------|------|
+| **1 必须** | `src/styles/color.scss` | 颜色变量 | `var(--bg-secondary)` |
+| **2 优先** | `src/styles/global.scss` | 尺寸间距 | `var(--height-navbar)` |
+| **3 硬编码** | 组件内直接使用 | 不存在的变量 | `28px`、`#2563EB` |
+| **4 谨慎** | 组件内新增 | 特殊需求 | 需说明理由 |
+
+> **重要提醒**：使用变量前必须先确认该变量在对应文件中实际存在，如不存在则直接硬编码数值。
+
+### 5.2 禁止行为清单
+- ❌ 硬编码颜色值 `#007bff`
+- ❌ 重复定义同色值变量
+- ❌ 缺少语义的变量名 `--blue`
+- ❌ 使用项目中不存在的CSS变量 `--spacing-lg`、`--text-size-xl`
+
+---
+
+## 6. 组件样式规范
+
+### 6.1 图片组件使用
+```vue
+<!-- ✅ 正确 -->
+<l-img :src="'/static/images/icon_copy.png'" w="18px" h="18px"/>
+
+<!-- ❌ 错误 -->
+<img src="./icon.png"/>  <!-- 缺少宽高、相对路径 -->
+```
+
+### 6.2 设计资源处理
+- **图片格式**：优先使用 2倍 PNG 图片
+- **禁止直接使用**：SVG 设计稿（需转换为 PNG）
+- **路径规范**：所有图片资源使用根路径 `/static/images/`
+
+---
+
+## 7. 响应式设计
+
+### 7.1 盒模型处理
+```scss
+// 固定尺寸 + padding 时必须添加
+.fixed-container {
+  width: 300px;
+  padding: 20px;
+  box-sizing: border-box;  // 必须
+}
+```
+### 7.2 布局技术选择
+- **推荐** Flexbox 布局 / Grid 布局
+- **避免** Position 定位（除非必要）
+
+---
+
+## 8. 性能与质量
+
+### 8.1 选择器性能等级
+| 等级 | 类型 | 示例 | 使用建议 |
+|------|------|------|----------|
+| **🟢 推荐** | 类选择器 | `.btn-primary` | 优先使用 |
+| **🟡 谨慎** | 嵌套选择器 | `.container .header` | ≤3层 |
+| **🔴 避免** | 通配符 | `*` | 禁止使用 |
+
+### 8.2 深度选择器规范
+```scss
+// ✅ 正确：有主类前缀
+.my-component {
+  :deep(.el-button) { /* 样式 */ }
+}
+
+// ❌ 错误：缺少主类
+:deep(.el-button) { /* 样式 */ }
+```
+
+### 8.3 样式冲突解决顺序
+**顺序**：提升选择器权重 → 具体类名 → 调整引入顺序 → !important(最后)
+
+### 8.4 性能优化
+- **优先使用** CSS3 硬件加速（例如 `transform` 和 `opacity`）
+
+---
+
+## 9. 代码检查清单
+
+### 9.1 必检项目
+- [ ] `<style scoped lang="scss">`
+- [ ] 使用全局颜色变量
+- [ ] CSS类名符合命名规范  
+- [ ] 图片使用l-img组件含宽高
+- [ ] :deep()有主类前缀
+- [ ] 响应式使用flex/grid
+
+### 9.2 性能检查
+- [ ] 选择器层级≤3层
+- [ ] 无硬编码颜色尺寸
+- [ ] 合理使用!important
+- [ ] 模板属性顺序正确
+
+### 9.3 变量使用检查
+- [ ] 确认CSS变量在项目中实际存在
+- [ ] 优先使用color.scss和global.scss中的变量
+- [ ] 不存在的变量直接硬编码数值
+- [ ] 避免假设项目有完整的设计系统变量
+
+---
+
+> **注意**：本规范需要与项目总规和 Vue3 编码规范配合使用，如有冲突以项目总规为准。
+
+
+
+

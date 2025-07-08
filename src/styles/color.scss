@@ -1,0 +1,70 @@
+// color.scss - 颜色变量配置
+
+// 主色系
+$button-primary: #000000; // 主按钮色
+$button-plugin: #2563EB; // 插件主按钮色
+$select-plugin-active: rgba($button-plugin, 0.05); // 插件选中背景色
+
+
+// 背景色
+$bg-primary: #F5F5F7; // 一级背景色
+$bg-secondary: #FFFFFF; // 二级背景色
+$modal-bg-primary: #FFFFFF; // 弹窗一级背景
+$modal-bg-secondary: #F5F5F7; // 弹窗二级背景
+$tool-session-item-hover: #EFF6FF; // 聊天会话项hover背景
+
+// 文本颜色
+$text-title: #1B2432; // 黑字（标题、正文）
+$text-description: #6B7280; // 中灰（描述、说明型文案）
+$text-label: #9CA3AF; // 灰（时间标记、标签）
+
+// 边框颜色
+$border-color: #E5E7EB; // 描边颜色
+
+// 状态颜色
+$success-deep: #16A34A; // 成功状态深色
+$success-light: #EEFFF3; // 成功状态浅色背景
+$warning-deep: #FBBF21; // 警告状态深色
+$warning-light: #FFFCEE; // 警告状态浅色背景
+$error-deep: #DF2D29; // 错误状态深色
+$error-light: #FEF2F2; // 错误状态浅色背景
+
+// 透明度处理
+$disabled-opacity: 0.5; // 禁用状态透明度为50%
+
+// 导出为CSS变量，方便全局使用
+:root {
+  // 主色系
+  --button-primary: #{$button-primary};
+  --button-plugin: #{$button-plugin};
+  --select-plugin-active: #{$select-plugin-active};
+  
+  // 背景色
+  --bg-primary: #{$bg-primary};
+  --bg-secondary: #{$bg-secondary};
+  --modal-bg-primary: #{$modal-bg-primary};
+  --modal-bg-secondary: #{$modal-bg-secondary};
+  --tool-session-item-hover: #{$tool-session-item-hover};
+  
+  // 文本颜色
+  --text-title: #{$text-title};
+  --text-description: #{$text-description};
+  --text-label: #{$text-label};
+  
+  // 边框颜色
+  --border-color: #{$border-color};
+  
+  // 状态颜色
+  --success-deep: #{$success-deep};
+  --success-light: #{$success-light};
+  --warning-deep: #{$warning-deep};
+  --warning-light: #{$warning-light};
+  --error-deep: #{$error-deep};
+  --error-light: #{$error-light};
+  
+  // 透明度
+  --disabled-opacity: #{$disabled-opacity};
+  // 宽度
+  --width-chat: 60vw;
+}
+

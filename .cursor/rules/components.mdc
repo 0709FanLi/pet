@@ -1,0 +1,39 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 事件命名规范
+- 避免使用原生事件名：
+  1.不要使用与原生 DOM 事件同名的事件名（如 click、change、input 等）
+  2.推荐使用 on 前缀加原生事件名，如 onClick、onChange、onInput
+
+- 明确声明组件发出的事件：
+  1.使用 emits 选项显式声明组件可能触发的所有事件。例如：emits: ['onClick', 'onFocus', 'onBlur']
+
+- 事件命名采用驼峰式：例如：onClick、onValueChange、onSubmit
+
+
+# 事件处理规范
+- 阻止事件冒泡：
+  1.在模板中使用 .stop 修饰符：@click.stop="handleClick"
+  2.在事件处理函数中使用 e.stopPropagation()
+
+- 实现防抖处理：
+
+# 组件定义规范
+- 谨慎使用 name 属性：
+  1.只在必要时（如递归组件、需要在 Vue DevTools 中识别）使用 name 属性
+  2.如果使用 name 属性，确保它与组件文件名和导入名保持一致
+- 明确声明 props 和 emits：
+  1.使用 props 选项明确定义组件接收的属性
+  2.使用 emits 选项明确定义组件可能触发的事件
+- 避免重复注册：
+  1.避免同时使用局部注册和全局注册同一个组件
+  2.确保组件在项目中的注册方式一致
+
+# 组件使用规范
+- 事件监听命名一致：
+  1.在使用组件时，事件监听名称应与组件定义的事件名一致。例如：组件定义 onClick 事件，使用时应写 @onClick="handleClick"
+- 避免在模板中直接使用复杂表达式：
+  1.事件处理应引用方法而非内联表达式。例如：使用 @onClick="handleClick" 而非 @onClick="doSomething(); doSomethingElse()"

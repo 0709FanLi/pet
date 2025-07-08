@@ -1,0 +1,178 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 网络请求开发规范
+
+## 1. 架构概述
+
+项目采用三层网络请求架构：
+- **HttpClient**: axios基础封装，处理拦截器和错误
+- **ApiClient**: 类型安全的请求客户端
+- **业务API服务类**: 具体业务逻辑封装
+
+
+## 2. 核心原则
+
+### 2.1 架构禁令
+- **禁止**直接使用axios，必须通过ApiClient或业务API服务类
+- **禁止**在组件中重复配置HTTP实例
+- **禁止**硬编码API URL，必须使用api-url.ts中的常量
+
+### 2.2 API URL管理
+- **必须**在`api-url.ts`中定义所有接口URL常量
+- **命名格式**: `API_[模块]_[功能]`，全大写+下划线
+- **分组要求**: 按业务模块分组，添加注释说明
+- **示例**: `API_USER_LOGIN`、`API_CHARACTER_CREATE`
+
+### 2.3 类型安全要求
+- **必须**为API响应定义Model类并**继承BaseResponseData**
+- **必须**传递ResponseClass参数给ApiClient方法
+- **禁止**使用any类型，启用TypeScript严格模式
+
+
+## 3. 数据模型定义规范
+
+### 3.1 基础模型继承
+- 所有数据模型必须继承BaseResponseData
+
+### 3.2 GenericResponseData使用规则
+- **使用场景**: 当接口只返回通用成功/失败状态，无特定业务数据时使用
+- **适用操作**: 删除、激活、停用、重置等无具体返回数据的类型接口
+- **响应特征**: 只关心操作是否成功，不需要具体返回数据
+
+### 3.3 模型类属性规范
+- **JSDoc注释**: 每个属性必须添加中文注释
+- **默认值**: 所有属性提供合理默认值
+- **计算属性**: 可添加getter方法
+
+### 3.4 参数接口定义规则
+- **少于4个参数**: 直接使用基础类型，无需定义接口
+- **4个及以上参数**: 在对应model文件中定义接口
+
+
+## 4. API服务类规范
+
+### 4.1 创建业务API服务类
+```typescript
+// 文件命名: api-[模块名].ts
+export class Api[ModuleName] {
+    static async @methodName: Promise<ApiResponse<ResponseType>> {
+        return await ApiClient.post(API_URL_CONSTANT, params, ResponseClass);
+    }
+}
+```
+
+### 4.2 方法命名规范
+- **获取数据**: `get[ResourceName]` 或 `fetch[ResourceName]`
+- **创建资源**: `create[ResourceName]`
+- **更新资源**: `update[ResourceName]`
+- **删除资源**: `delete[ResourceName]`
+- **特殊操作**: 动词+名词，如`sendMessage`、`resetPassword`
+
+### 4.3 请求方法规范
+- **参数格式**: 少于4个用`(a, b, c)`，4个及以上用接口对象
+- **返回值**: 必须使用`Promise<ApiResponse<T>>`
+- **JSDoc**: 必须添加完整的方法说明和参数说明
+
+
+## 5. ApiClient使用规范
+
+### 5.1 请求方法选择
+- **POST请求**: 默认全部使用post，除非有明确特殊要求。
+
+### 5.2 类型安全要求
+- **必须指定泛型**: 明确响应数据类型
+- **传递模型类**: 第三个参数必须是对应的响应模型类
+- **避免any类型**: 使用具体类型定义
+
+
+## 6. 错误处理规范
+
+### 6.1 统一错误处理
+HttpClient自动处理以下错误：
+- **200**: 检查业务code，code非200时显示错误
+- **401**: 自动弹出重新登录对话框
+- **500**: 显示服务器错误消息
+- **其他**: 显示通用错误消息
+
+### 6.2 业务层错误处理
+```typescript
+static async login(email: string, password: string): Promise<ApiResponse<UserLoginInfo>> {
+    try {
+        await ApiClient.post(API_AUTH_LOGIN, { email, password },UserLoginInfo);
+    } catch (error) {
+        console.error('Login failed:', error);
+        // 特定业务错误处理
+        throw error; // 重新抛出让调用方处理
+    }
+}
+```
+
+## 7. 开发流程指导
+
+### 7.1 新增API接口步骤
+1. **定义URL常量**: 在`api-url.ts`中添加`API_`前缀的常量
+2. **创建数据模型**: 在对应`*-models.ts`文件中定义响应模型类
+3. **实现API方法**: 在对应`api-*.ts`文件中添加静态方法
+4. **参数接口定义**: 如参数≥4个，在model文件中定义接口
+5. **添加JSDoc**: 为方法和参数添加完整注释
+
+### 7.2 修改现有API流程
+1. **评估影响**: 确认对现有代码的影响范围
+2. **更新模型**: 如数据结构变化，更新对应模型类
+3. **修改方法**: 更新API方法实现
+4. **更新调用**: 修改所有使用该API的地方
+5. **测试验证**: 确保不破坏现有功能
+
+
+## 8. 文档注释规范
+
+### 8.1 方法注释要求
+- **方法说明**: 简洁描述方法功能
+- **参数说明**: 每个参数的用途和格式
+- **返回值说明**: 返回数据的结构说明
+
+### 8.2 属性注释要求
+- **属性注释**: 每个模型属性必须有中文JSDoc注释
+- **类型说明**: 复杂类型需要额外说明
+
+
+## 9. 禁止事项
+- **禁止**在组件中直接使用axios
+- **禁止**硬编码API URL地址
+- **禁止**跳过类型定义直接使用any
+- **禁止**在业务API类之外处理HTTP错误
+- **禁止**重复定义相同的URL常量
+
+
+## 10. AI开发指导
+
+### 10.1 分析现有API
+- **使用refresh方法获取最新 API 文档**，避免使用缓存或过时版本。
+- 查看`api-url.ts`了解已有接口
+- 检查对应业务API服务类的实现模式
+- 复用已有的URL常量和请求方法
+
+### 10.2 创建新API
+- 先在`api-url.ts`添加URL常量
+- 在对应模块的API服务类中实现方法
+- 确保Model类正确继承BaseResponseData
+
+### 10.3 查询路径
+- API URL常量: `src/api/api-url.ts`
+- 业务API服务: `src/api/api-[模块名].ts`
+- 数据模型: `src/models/[模块名]-models.ts`
+- 基础HTTP配置: `src/api/client-http.ts`
+- 统一API客户端: `src/api/client-api.ts`
+- 类型定义: `src/api/definitions.ts`
+- 通用响应模型: `src/models/base-models.ts` (GenericResponseData)
+
+## 11. 自检清单
+- [ ] 无重复定义相同URL常量
+- [ ] 响应模型 BaseResponseData 与 GenericResponseData 的使用
+- [ ] 接口参数格式：<4个用直接传参，≥4个用接口对象
+- [ ] 禁止使用any类型
+- [ ] 使用try-catch处理API调用
+- [ ] 敏感信息不在URL中传递
