@@ -3,11 +3,11 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import { VantResolver } from '@vant/auto-import-resolver';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '')
+  const env = loadEnv(mode, path.resolve(process.cwd(), '..'), '')
   const isProd = mode === 'production'
 
   const viteEnv = {}
@@ -21,10 +21,10 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue(),
       Components({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [VantResolver()],
       }),
       AutoImport({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [VantResolver()],
       }),
     ],
     resolve: {
@@ -32,9 +32,9 @@ export default defineConfig(({ mode }) => {
         "@": path.resolve(process.cwd(), "src"),
       },
     },
-    define: {
-      "process.env": JSON.stringify({...viteEnv, BUILD_TARGET: 'mobile'}),
-    },
+    // define: {
+    //   "process.env": JSON.stringify({...viteEnv, BUILD_TARGET: 'mobile'}),
+    // },
     server: {
       host: '0.0.0.0',
       open: true,
@@ -43,10 +43,10 @@ export default defineConfig(({ mode }) => {
     build: {
       rollupOptions: {
         input: {
-          main: path.resolve(__dirname, 'mobile.html')
+          main: path.resolve(process.cwd(), 'index.html')
         }
       },
-      outDir: "dist-mobile",
+      outDir: "dist",
       assetsDir: "assets",
     },
   };

@@ -1,124 +1,24 @@
 <template>
-  <div class="mobile-app-status-navbar"></div>
-  <div id="mobile-app" class="mobile-app" :style="{ height: mainHeight }">
-    <!-- 404页面：显示移动端404组件 -->
-    <MobileNotFoundView v-if="isNotFoundPage" />
+  <div id="mobile-app" class="mobile-app">
     
     <!-- 正常页面：路由过渡动画容器 -->
-    <router-view v-else v-slot="{ Component, route }">
+    <router-view v-slot="{ Component, route }">
       <keep-alive>
         <component :is="Component" :key="route.path" v-if="route.meta.keepAlive" style="flex: 1;" />
       </keep-alive>
       <component :is="Component" :key="route.path" v-if="!route.meta.keepAlive" style="flex: 1;" />
     </router-view>
   </div>
-  <div class="mobile-app-status-bottom"></div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, watch ,onUnmounted, getCurrentInstance, nextTick} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { pxToRem } from '@/utils/px-to-rem';
-import { useNetworkStatusStore } from '@/store/modules/network-status';
-import { useI18n } from 'vue-i18n';
-import MobileNotFoundView from '@/mobile/views/mobile-not-found.vue';
 
- // 使用网络状态store
- const networkStatusStore = useNetworkStatusStore();
- const { t } = useI18n();
-    // 网络状态变化处理函数
-    const handleNetworkStatusChange = (isOnline) => {
-        if (!isOnline) {
-            showToast(t('youAreOffline'));
-        } else {
-            showToast(t('youAreOnline'));
-        }
-    };
 // 路由相关
 const route = useRoute();
 const router = useRouter();
 
-// 响应式数据
-const isGlobalLoading = ref(false);
-const isDevelopment = computed(() => import.meta.env.DEV);
-const mainHeight = ref(pxToRem(window.innerHeight));
-
-// 路由加载状态
-const isNavigating = ref(false);
-
-// 移动端404检测逻辑 - 参考PC端App.vue的实现
-const isNotFoundPage = computed(() => {
-  // 如果路由还没有准备好或正在导航中，不显示404
-  if (isNavigating.value) {
-    return false;
-  }
-  
-  // 只有在路由完全准备好且没有匹配时，才显示404
-  return route.matched.length === 0;
-});
-
-// 处理路由变化
-const handleRouteChange = (newRoute, oldRoute) => {
-  // 页面切换时的逻辑
-  console.log('📱 [APP] 页面切换:', newRoute.meta?.title);
-  
-  // 设置页面标题
-  if (newRoute.meta?.title) {
-    document.title = newRoute.meta.title;
-  }
-  
-  // 可以在这里添加页面统计、埋点等逻辑
-  if (typeof window !== 'undefined' && window._hmt) {
-    window._hmt.push(['_trackPageview', newRoute.path]);
-  }
-};
-
-// 监听路由变化
-watch(route, (newRoute, oldRoute) => {
-  console.log('📱 [APP] 路由变化:', oldRoute?.path, '->', newRoute.path);
-  
-  // 路由变化时的逻辑处理
-  handleRouteChange(newRoute, oldRoute);
-}, { immediate: true });
-
-// 监听路由变化，管理导航状态
-router.beforeEach((to, from, next) => {
-  isNavigating.value = true;
-  next();
-});
-
-router.afterEach((to, from, failure) => {
-  // 使用 nextTick 确保组件完全渲染后再设置状态
-  nextTick(() => {
-    isNavigating.value = false;
-  });
-});
-
-onMounted(() => {
-  networkStatusStore.setNetworkStatusChangeCallback(handleNetworkStatusChange);
-  networkStatusStore.initNetworkListener();
-  // 设置全局变量
-  const { proxy } = getCurrentInstance();
-  proxy.$isMobile = true;
-  let agent = navigator.userAgent.toLowerCase();
-  let iLastTouch = null;
-
-  if (agent.indexOf('iphone') >= 0 || agent.indexOf('ipad') >= 0) {
-    document.body.addEventListener('touchend', function (event) {
-      let a = new Date().getTime();
-      iLastTouch = iLastTouch || a + 1;
-      let c = a - iLastTouch;
-      if (c < 500 && c > 0) {
-        event.preventDefault();
-        return false;
-      }
-      iLastTouch = a;
-    }, false);
-  }
-});
-onUnmounted(() => {
-  networkStatusStore.removeNetworkListener();
-});
 </script>
 
 <style lang="scss">

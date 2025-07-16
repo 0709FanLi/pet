@@ -3,10 +3,7 @@
  * 初始化Vue应用和移动端路由系统
  */
 import { createApp } from 'vue';
-import App from './mobile-app.vue';
-import { setupStore } from '@/store'
-import i18n from './language'
-import './styles/color.scss'
+import App from './app.vue';
 // 移动端路由系统
 import router from './router/index.js';
 
@@ -14,29 +11,15 @@ import router from './router/index.js';
 import Vant from 'vant';
 import 'vant/lib/index.css';
 
-// 全局媒体任务轮询管理器
-import { initMediaTaskPolling } from './presenter/media-task-polling'
-//全局通知
-import {showNotificationBase} from '@/utils/mobile-ui-feedback.js'
 
 // 创建Vue应用实例
 const app = createApp(App);
-
-app.use(i18n)
 
 // 注册Vant UI组件库
 app.use(Vant);
 // app.use(ElementPlusX)
 
-// 注册store
-setupStore(app)
-// 注册移动端路由
-if (router) {
-    app.use(router);
-    console.log('📱 [MAIN] 移动端路由注册成功');
-} else {
-    console.error('📱 [MAIN] 移动端路由初始化失败');
-}
+app.use(router);
 
 // 全局错误处理
 app.config.errorHandler = (err, vm, info) => {
@@ -47,9 +30,6 @@ app.config.errorHandler = (err, vm, info) => {
         // sendErrorToMonitoring(err, info);
     }
 };
-
-// 初始化全局媒体任务轮询管理器
-initMediaTaskPolling(showNotificationBase)
 
 // 挂载应用
 app.mount('#app');
