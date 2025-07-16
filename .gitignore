@@ -37,3 +37,10 @@ dist-pc-*
 pnpm-lock.yaml
 jsconfig.json
 .coderabbit.yaml
+
+
+/mobile/node_modules
+/mobile/dist
+
+/pc/node_modules
+/pc/dist
