@@ -28,12 +28,10 @@
     <div v-else class="app-container">
         <div class="app-content">
             <router-view v-slot="{ Component, route }">
-                <transition name="fade" mode="out-in">
-                    <keep-alive>
-                        <component :is="Component" :key="route.path" v-if="route.meta.keepAlive" />
-                    </keep-alive>
-                    <component :is="Component" :key="route.path" v-if="!route.meta.keepAlive" />
-                </transition>
+                <keep-alive>
+                    <component :is="Component" :key="route.path" v-if="route.meta.keepAlive" />
+                </keep-alive>
+                <component :is="Component" :key="route.path" v-if="!route.meta.keepAlive" />
             </router-view>
         </div>
     </div>
