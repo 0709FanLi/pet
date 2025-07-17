@@ -46,15 +46,15 @@ if (BUILD_TARGET === 'pc') {
 
 // ===== PC端路由配置 =====
 const getPCRoutes = () => {
-    console.log('🖥️  [PC-ROUTER] 构建PC端路由配置...');
+    console.log('🖥️ [PC-ROUTER] 构建PC端路由配置...');
 
-    // 基础路由配置
-    const basicRoutes = [
+    // 公开访问路由 - 无需登录
+    const publicRoutes = [
         {
             path: ROUTER_PATHS.HOME,
             name: 'home',
             component: HomeView,
-            meta: createRouteMeta(process.env.VITE_APP_TITLE, ROUTER_PERMISSION.PUBLIC)
+            meta: createRouteMeta(import.meta.env.VITE_APP_TITLE, ROUTER_PERMISSION.PUBLIC)
         },
         {
             path: ROUTER_PATHS.LOGIN,
@@ -64,8 +64,27 @@ const getPCRoutes = () => {
         }
     ];
 
-    return basicRoutes;
+    // 需要登录的路由
+    const authenticatedRoutes = [
+        // 暂无
+    ];
+
+    // 仅管理员访问的路由
+    const adminRoutes = [
+        // 暂无
+    ];
+
+    return [
+        ...publicRoutes,
+        ...authenticatedRoutes,
+        ...adminRoutes
+    ];
 };
+
+// 导出路由
+export const routes = getRoutes();
+
+console.log(`✅ [ROUTER] PC端路由配置完成，共${routes.length}个路由`);
 
 // ===== 移动端路由配置 =====
 const getMobileRoutes = () => {

@@ -45,16 +45,26 @@
                     <h2>最新发布</h2>
                 </div>
                 
-                <!-- 示例卡片 -->
-                <div class="pet-card" v-for="i in 6" :key="i">
+                <!-- 宠物卡片 -->
+                <div class="pet-card" v-for="pet in petList" :key="pet.id" @click="viewPetDetail(pet)">
                     <div class="pet-image">
-                        <l-img src="/static/avatar_def.png" w="100%" h="120px" />
+                        <l-img :src="pet.image" w="100%" h="120px" />
                     </div>
                     <div class="pet-info">
-                        <h3 class="pet-location">最后出现地点：公园附近</h3>
-                        <p class="pet-amount">悬赏金额：¥500</p>
-                        <p class="pet-time">发布时间：2小时前</p>
+                        <h3 class="pet-location">{{ pet.location }}</h3>
+                        <p class="pet-amount">悬赏金额：¥{{ pet.amount }}</p>
+                        <p class="pet-time">{{ formatTime(pet.createTime) }}</p>
                     </div>
+                    <div class="pet-status">
+                        <span class="status-badge" :class="pet.status">{{ getStatusText(pet.status) }}</span>
+                    </div>
+                </div>
+                
+                <!-- 空状态 -->
+                <div class="empty-state" v-if="petList.length === 0">
+                    <div class="empty-icon">🐾</div>
+                    <p class="empty-text">暂无宠物信息</p>
+                    <p class="empty-desc">快来发布第一条寻宠信息吧</p>
                 </div>
             </div>
         </div>
@@ -78,6 +88,17 @@ const router = useRouter();
 
 // 响应式数据
 const windowWidth = ref(window.innerWidth);
+const petList = ref([
+  {
+    id: 1,
+    location: '北京市朝阳区',
+    amount: 500,
+    createTime: new Date('2024-01-15'),
+    image: '/static/images/pet1.jpg',
+    status: 'finding'
+  },
+  // ... 其他示例数据
+]);
 
 // 计算属性
 const isMobile = computed(() => windowWidth.value <= 768);
@@ -89,14 +110,28 @@ const handleResize = () => {
 
 // 发布按钮点击
 const handlePublish = () => {
-    console.log('发布丢失信息');
-    // 跳转到发布页面
-    // router.push('/publish');
+    router.push('/publish');
+};
+
+// 查看宠物详情
+const viewPetDetail = (pet) => {
+    router.push(`/pet/${pet.id}`);
+};
+
+// 格式化时间
+const formatTime = (time) => {
+  // ... 实现
+};
+
+// 获取状态文本
+const getStatusText = (status) => {
+  // ... 实现
 };
 
 // 生命周期
 onMounted(() => {
     window.addEventListener('resize', handleResize);
+    // loadPetList()
 });
 
 onUnmounted(() => {
@@ -372,4 +407,18 @@ onUnmounted(() => {
     display: none;
   }
 }
+
+/* 添加状态徽章样式 */
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge.finding {
+  background: #E3F2FD;
+  color: #1976D2;
+}
+// ... 其他状态
 </style>

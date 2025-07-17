@@ -19,4 +19,16 @@ router.beforeEach((to, from, next) => {
     next();
 });
 
+// 路由导航完成后的钩子
+router.afterEach((to, from, failure) => {
+    if (failure) {
+        console.error('🏁 [ROUTER] 导航失败:', failure);
+    }
+});
+
+// 路由错误处理
+router.onError((error) => {
+    console.error('💥 [ROUTER] 路由错误:', error);
+});
+
 export default router;

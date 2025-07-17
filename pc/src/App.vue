@@ -24,10 +24,17 @@
         <NotFoundView />
     </div>
 
-    <!-- 正常页面 -->
+    <!-- 正常页面：路由过渡动画容器 -->
     <div v-else class="app-container">
         <div class="app-content">
-            <router-view :key="route.name"></router-view>
+            <router-view v-slot="{ Component, route }">
+                <transition name="fade" mode="out-in">
+                    <keep-alive>
+                        <component :is="Component" :key="route.path" v-if="route.meta.keepAlive" />
+                    </keep-alive>
+                    <component :is="Component" :key="route.path" v-if="!route.meta.keepAlive" />
+                </transition>
+            </router-view>
         </div>
     </div>
 </template>
@@ -70,4 +77,15 @@
         tap-highlight-color: transparent;
       }
   }
+
+    /* 路由过渡动画 */
+    .fade-enter-active,
+    .fade-leave-active {
+      transition: opacity 0.3s ease;
+    }
+
+    .fade-enter-from,
+    .fade-leave-to {
+      opacity: 0;
+    }
 </style>

@@ -100,7 +100,7 @@ import { ElMessage } from 'element-plus';
 import { Close } from '@element-plus/icons-vue';
 import LImg from '@/components/l-img.vue';
 import LButton from '@/components/l-button.vue';
-import { UserAuthApi, PhoneLoginRequest, SendCodeRequest } from '@/api/user-auth-api';
+import { UserAuthApi } from '@/api/user-auth-api';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -242,13 +242,11 @@ const handleAuth = async () => {
 
 // 查看用户协议
 const viewTerms = () => {
-    // 跳转到用户协议页面
     router.push('/terms');
 };
 
 // 查看隐私政策
 const viewPrivacy = () => {
-    // 跳转到隐私政策页面
     router.push('/privacy');
 };
 
