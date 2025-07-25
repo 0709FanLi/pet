@@ -1,0 +1,5 @@
+export const DATE_FORMATS = {
+    FULL_DATETIME: 'YYYY-MM-DD HH:mm:ss',
+    US_DATETIME_WITHOUT_SECONDS: 'MM/DD, YYYY HH:mm',
+    US_DATE: "MM/DD, YYYY",
+}

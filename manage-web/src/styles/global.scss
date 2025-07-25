@@ -1,0 +1,23 @@
+$height-navbar: 66px; // 导航栏高度
+$width-search-sidebar: 500px; // 搜索侧边栏宽度
+$height-base-view: calc(100vh - var(--height-navbar)); // 视图高度（减去导航栏高度）
+$height-small-navbar: 60px; // 小导航栏高度
+$height-small-base-view:calc(100vh - var(--height-small-navbar)); // 小导航栏视图高度
+/* rem基准值系统 - 保持统一基准值 */
+html {
+  font-size: 16px; /* 统一基准值 - 1rem = 16px */
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+:root {
+    // 高度相关
+    --height-navbar: #{$height-navbar}; 
+    --height-base-view: #{$height-base-view};
+    --height-small-navbar: #{$height-small-navbar};
+    --height-small-base-view: #{$height-small-base-view};
+    --width-search-sidebar: #{$width-search-sidebar};
+}

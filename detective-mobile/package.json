@@ -1,0 +1,56 @@
+{
+  "name": "ai_pc_kaka",
+  "private": true,
+  "version": "1.0.2",
+  "type": "module",
+  "scripts": {
+    "// =============== PC端命令 ===============": "",
+    "dev": "vite --mode development",
+    "build": "vite build --mode production",
+    "build:dev": "vite build --mode development",
+    "build:bump:pro": "node scripts/version-bumper.js prod && vite build --mode production",
+    "build:bump:dev": "node scripts/version-bumper.js dev && vite build --mode development",
+    "preview": "vite preview",
+    "// =============== Mobile端命令 ===============": "",
+    "mobile:dev": "vite --config vite.config.mobile.js --mode development",
+    "mobile:build": "vite build --config vite.config.mobile.js --mode production",
+    "mobile:build:dev": "vite build --config vite.config.mobile.js --mode development",
+    "mobile:build:bump:prod": "node scripts/mobile-version-bumper.js prod && vite build --config vite.config.mobile.js --mode production",
+    "mobile:build:bump:dev": "node scripts/mobile-version-bumper.js dev && vite build --config vite.config.mobile.js --mode development",
+    "mobile:preview": "vite preview --config vite.config.mobile.js",
+    "// =============== 通用命令 ===============": "",
+    "build:all": "npm run build && npm run mobile:build",
+    "build:all:dev": "npm run build:dev && npm run mobile:build:dev",
+    "build:all:bump:prod": "npm run build:bump:pro && npm run mobile:build:bump:prod",
+    "build:all:bump:dev": "npm run build:bump:dev && npm run mobile:build:bump:dev"
+  },
+  "dependencies": {
+    "axios": "^1.10.0",
+    "element-plus": "^2.9.10",
+    "pinia": "^3.0.2",
+    "scss": "^0.2.4",
+    "vant": "^4.9.21",
+    "vue": "^3.5.13",
+    "vue-i18n": "^11.1.3",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@vant/auto-import-resolver": "^1.3.0",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "sass-embedded": "^1.89.0",
+    "unplugin-auto-import": "^19.3.0",
+    "unplugin-vue-components": "^28.8.0",
+    "vite": "^6.3.5"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "Chrome >= 60",
+    "Firefox >= 60",
+    "Edge >= 16",
+    "Safari >= 10"
+  ]
+}
