@@ -13,7 +13,9 @@
 ├── src/
 │   ├── app.vue
 │   ├── components/
-│   │   └── l-img.vue
+│   │   ├── l-img.vue
+│   │   ├── PrivacyPolicy.vue
+│   │   └── UserAgreement.vue
 │   ├── main.js
 │   ├── router/
 │   │   ├── constants.js

@@ -20,11 +20,13 @@
 │   │   ├── upload-evidence.vue
 │   │   ├── location-picker.vue
 │   │   ├── success-case-card.vue
-│   │   └── common/
+│   │   ├── common/
 │   │       ├── l-button.vue
 │   │       ├── l-input.vue
 │   │       ├── l-loading.vue
 │   │       └── l-pagination.vue
+│   │   ├── UserAgreement.vue
+│   │   └── PrivacyPolicy.vue
 │   ├── composables/
 │   ├── main.js
 │   ├── router/

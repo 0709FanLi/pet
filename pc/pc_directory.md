@@ -22,7 +22,9 @@
 │   │   ├── l-pagination.vue
 │   │   ├── l-send-button.vue
 │   │   ├── l-tooltip.vue
-│   │   └── l-video.vue
+│   │   ├── l-video.vue
+│   │   ├── UserAgreement.vue
+│   │   └── PrivacyPolicy.vue
 │   ├── composables/
 │   ├── language/
 │   │   ├── en.json
