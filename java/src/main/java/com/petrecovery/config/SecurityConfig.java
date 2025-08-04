@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.http.HttpMethod;
 
 import java.util.Arrays;
 
@@ -44,6 +45,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 // 允许访问的公共接口
                 .antMatchers("/api/users/register", "/api/users/login", "/api/users/login-or-register", "/api/users/phone-login", "/api/users/send-code", "/api/users/test").permitAll()
+                // 宠物相关接口 - 完全开放
+                .antMatchers("/api/lost-pets/**").permitAll()
+                .antMatchers("/api/lost-pets").permitAll()
+                // 文件上传接口
+                .antMatchers("/api/upload/**").permitAll()
+                // 静态文件访问
+                .antMatchers("/uploads/**").permitAll()
                 // Swagger相关接口
                 .antMatchers("/swagger-ui/**", "/api-docs/**", "/swagger-ui.html").permitAll()
                 // H2数据库控制台（如果使用）

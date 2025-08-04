@@ -1,0 +1,12 @@
+{
+  "login.title": "Login",
+  "login.phone": "Phone Number",
+  "login.code": "Verification Code",
+  "login.sendCode": "Send Code",
+  "login.loginButton": "Login/Register",
+  "login.agree": "I agree to the",
+  "login.userAgreement": "User Agreement",
+  "login.and": "and",
+  "login.privacyPolicy": "Privacy Policy",
+  "login.agreeRequired": "Please agree to the User Agreement and Privacy Policy"
+}

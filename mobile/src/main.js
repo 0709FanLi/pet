@@ -11,6 +11,8 @@ import router from './router/index.js';
 import Vant from 'vant';
 import 'vant/lib/index.css';
 
+// vue-i18n
+import i18n from './language/index.js';
 
 // 创建Vue应用实例
 const app = createApp(App);
@@ -20,6 +22,7 @@ app.use(Vant);
 // app.use(ElementPlusX)
 
 app.use(router);
+app.use(i18n);
 
 // 全局错误处理
 app.config.errorHandler = (err, vm, info) => {

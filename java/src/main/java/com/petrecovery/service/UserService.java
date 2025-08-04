@@ -190,10 +190,7 @@ public class UserService {
         try {
             // 验证验证码
             String storedCode = verificationCodes.get(phone);
-            // 如果没有存储的验证码，且输入的是1111，则允许通过（开发测试用）
-            if (storedCode == null && "1111".equals(verificationCode)) {
-                // 开发测试模式：直接允许1111验证码
-            } else if (storedCode == null || !storedCode.equals(verificationCode)) {
+            if (storedCode == null || !storedCode.equals(verificationCode)) {
                 result.put("code", 400);
                 result.put("message", "验证码错误或已过期");
                 return result;
@@ -246,12 +243,15 @@ public class UserService {
         Map<String, Object> result = new HashMap<>();
         
         try {
-            // 简化实现：固定验证码为1111
+            // 为测试设置固定验证码
             String code = "1111";
             verificationCodes.put(phone, code);
             
+            // TODO: 集成真实短信服务发送验证码
+            System.out.println("[模拟发送] 验证码 " + code + " 已发送到 " + phone);
+            
             result.put("code", 200);
-            result.put("message", "验证码发送成功（演示：1111）");
+            result.put("message", "验证码发送成功");
             result.put("data", "验证码已发送到手机号: " + phone);
             
         } catch (Exception e) {
