@@ -185,8 +185,9 @@
             {{ submitting ? '发布中...' : '立即发布' }}
           </van-button>
           <div class="submit-tips">
-            发布即表示同意<span class="link-text">《用户协议》</span>和<span
-              class="link-text"
+            发布即表示同意<span class="link-text" @click="showUserAgreement"
+              >《用户协议》</span
+            >和<span class="link-text" @click="showPrivacyPolicy"
               >《隐私政策》</span
             >
           </div>
@@ -201,6 +202,18 @@
         <div class="loading-text">上传图片中...</div>
       </div>
     </van-overlay>
+
+    <!-- 用户协议弹框 -->
+    <UserAgreement
+      :show="showAgreementDialog"
+      @close="showAgreementDialog = false"
+    />
+
+    <!-- 隐私政策弹框 -->
+    <PrivacyPolicy
+      :show="showPrivacyDialog"
+      @close="showPrivacyDialog = false"
+    />
   </div>
 </template>
 
@@ -222,6 +235,8 @@
     showFailToast,
   } from 'vant'
   import axios from 'axios'
+  import UserAgreement from '@/components/UserAgreement.vue'
+  import PrivacyPolicy from '@/components/PrivacyPolicy.vue'
 
   const router = useRouter()
 
@@ -242,6 +257,10 @@
   const submitting = ref(false)
   const uploading = ref(false)
   const formRef = ref(null)
+
+  // 弹框状态
+  const showAgreementDialog = ref(false)
+  const showPrivacyDialog = ref(false)
 
   // 悬赏验证规则
   const rewardRules = [
@@ -272,6 +291,16 @@
   // 返回上一页
   const goBack = () => {
     router.go(-1)
+  }
+
+  // 显示用户协议
+  const showUserAgreement = () => {
+    showAgreementDialog.value = true
+  }
+
+  // 显示隐私政策
+  const showPrivacyPolicy = () => {
+    showPrivacyDialog.value = true
   }
 
   // 文件上传前验证
@@ -695,6 +724,17 @@
 
   .link-text {
     color: #667eea;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+  }
+
+  .link-text:hover {
+    color: #5a67d8;
+  }
+
+  .link-text:active {
+    color: #4c51bf;
   }
 
   /* 弹窗样式 */

@@ -22,6 +22,7 @@ const Publish = () => import('@/views/publish.vue')
 const PublishSuccess = () => import('@/views/publish-success.vue')
 const PetDetail = () => import('@/views/pet-detail.vue')
 const MyLostPets = () => import('@/views/my-lost-pets.vue')
+const Profile = () => import('@/views/profile.vue')
 
 const getRoutes = () => {
   console.log('📱 [MOBILE-ROUTER] 构建移动端路由配置...')
@@ -70,6 +71,12 @@ const getRoutes = () => {
       name: 'my-lost-pets',
       component: MyLostPets,
       meta: createRouteMeta('我的发布', ROUTER_PERMISSION.AUTHENTICATED),
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile,
+      meta: createRouteMeta('个人中心', ROUTER_PERMISSION.AUTHENTICATED),
     },
   ]
 

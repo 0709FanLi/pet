@@ -82,7 +82,7 @@
   const switchTab = tab => {
     currentTab.value = tab
     if (tab === 'my') {
-      router.push('/mobile/profile')
+      router.push('/profile')
     }
   }
 
