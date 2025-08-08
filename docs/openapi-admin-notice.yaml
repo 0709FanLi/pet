@@ -1,0 +1,286 @@
+openapi: 3.0.3
+info:
+  title: 宠物找回平台-管理后台启事审核 API
+  version: 1.0.0
+  description: 管理后台启事审核相关接口（列表/详情/审核/回退/运营位、统计）
+servers:
+  - url: http://192.168.1.11:8080
+paths:
+  /api/admin/notices/pending:
+    get:
+      summary: 查询待审核启事列表
+      parameters:
+        - in: query
+          name: page
+          schema: { type: integer, minimum: 1, default: 1 }
+        - in: query
+          name: pageSize
+          schema: { type: integer, minimum: 1, maximum: 200, default: 20 }
+        - in: query
+          name: keyword
+          schema: { type: string }
+        - in: query
+          name: city
+          schema: { type: string }
+        - in: query
+          name: rewardMin
+          schema: { type: number, format: float }
+        - in: query
+          name: rewardMax
+          schema: { type: number, format: float }
+        - in: query
+          name: startDate
+          schema: { type: string, format: date-time }
+        - in: query
+          name: endDate
+          schema: { type: string, format: date-time }
+        - in: query
+          name: stage
+          schema: { type: string, enum: [pending_first, pending_final] }
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Notice'
+                  total:
+                    type: integer
+  /api/admin/notices/{id}:
+    get:
+      summary: 查询启事详情
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoticeDetail'
+  /api/admin/notices/{id}/approve:
+    post:
+      summary: 审核通过
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewRequest'
+      responses:
+        '200': { description: 成功 }
+  /api/admin/notices/{id}/reject:
+    post:
+      summary: 审核不通过
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewRejectRequest'
+      responses:
+        '200': { description: 成功 }
+  /api/admin/notices/{id}/rollback:
+    post:
+      summary: 复审回退至初审
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason: { type: string }
+      responses:
+        '200': { description: 成功 }
+  /api/admin/notices/{id}/operate:
+    post:
+      summary: 运营位操作（屏蔽/置顶/推荐）
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OperateRequest'
+      responses:
+        '200': { description: 成功 }
+  /api/admin/stats/overview:
+    get:
+      summary: 后台总览指标
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OverviewStats'
+  /api/admin/stats/notices/trends:
+    get:
+      summary: 启事发布/审核趋势
+      parameters:
+        - in: query
+          name: range
+          schema: { type: string, enum: [day, week, month] }
+        - in: query
+          name: start
+          schema: { type: string, format: date }
+        - in: query
+          name: end
+          schema: { type: string, format: date }
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trends'
+  /api/admin/stats/notices/distribution:
+    get:
+      summary: 启事分布
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Distribution'
+
+components:
+  schemas:
+    Notice:
+      type: object
+      properties:
+        id: { type: integer }
+        title: { type: string }
+        city: { type: string }
+        location: { type: string }
+        reward: { type: number }
+        images: { type: array, items: { type: string } }
+        status:
+          {
+            type: string,
+            enum: [pending_first, pending_final, approved, rejected, blocked],
+          }
+        createdAt: { type: string, format: date-time }
+    NoticeDetail:
+      allOf:
+        - $ref: '#/components/schemas/Notice'
+        - type: object
+          properties:
+            user:
+              type: object
+              properties:
+                id: { type: integer }
+                nickname: { type: string }
+                mobile: { type: string }
+            lostTime: { type: string, format: date-time }
+            content: { type: string }
+            reviewHistory:
+              type: array
+              items:
+                $ref: '#/components/schemas/ReviewRecord'
+    ReviewRecord:
+      type: object
+      properties:
+        stage: { type: string, enum: [first, final] }
+        result: { type: string, enum: [approved, rejected, rollback] }
+        tags: { type: array, items: { type: string } }
+        comment: { type: string }
+        reviewerId: { type: integer }
+        createdAt: { type: string, format: date-time }
+    ReviewRequest:
+      type: object
+      required: [stage]
+      properties:
+        stage: { type: string, enum: [first, final] }
+        tags: { type: array, items: { type: string } }
+        comment: { type: string }
+    ReviewRejectRequest:
+      allOf:
+        - $ref: '#/components/schemas/ReviewRequest'
+        - type: object
+          required: [comment]
+    OperateRequest:
+      type: object
+      required: [action]
+      properties:
+        action:
+          {
+            type: string,
+            enum: [block, unblock, pin, unpin, recommend, unrecommend],
+          }
+        expireAt: { type: string, format: date-time }
+        weight: { type: integer, minimum: 0, maximum: 100 }
+        reason: { type: string }
+        scopes:
+          type: array
+          description: 推荐位范围（如 home/city/topic）
+          items: { type: string }
+    OverviewStats:
+      type: object
+      properties:
+        users: { type: integer }
+        detectives: { type: integer }
+        ordersToday: { type: integer }
+        ordersTotal: { type: integer }
+        noticesToday: { type: integer }
+        noticesTotal: { type: integer }
+        noticeApproveRate: { type: number }
+        noticeAvgReviewMinutes: { type: number }
+    Trends:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              date: { type: string, format: date }
+              published: { type: integer }
+              approved: { type: integer }
+              rejected: { type: integer }
+    Distribution:
+      type: object
+      properties:
+        byCity:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string }
+              value: { type: integer }
+        byTag:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string }
+              value: { type: integer }

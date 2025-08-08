@@ -43,11 +43,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
+                // 允许所有预检请求（解决跨域OPTIONS 403）
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // 允许访问的公共接口
                 .antMatchers("/api/users/register", "/api/users/login", "/api/users/login-or-register", "/api/users/phone-login", "/api/users/send-code", "/api/users/test").permitAll()
                 // 宠物相关接口 - 完全开放
                 .antMatchers("/api/lost-pets/**").permitAll()
                 .antMatchers("/api/lost-pets").permitAll()
+                // 管理后台登录
+                .antMatchers("/api/admin/login").permitAll()
                 // 通用配置接口
                 .antMatchers("/api/config/**").permitAll()
                 // 文件上传接口
