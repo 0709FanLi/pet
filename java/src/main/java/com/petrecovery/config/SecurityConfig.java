@@ -48,6 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 宠物相关接口 - 完全开放
                 .antMatchers("/api/lost-pets/**").permitAll()
                 .antMatchers("/api/lost-pets").permitAll()
+                // 通用配置接口
+                .antMatchers("/api/config/**").permitAll()
                 // 文件上传接口
                 .antMatchers("/api/upload/**").permitAll()
                 // 静态文件访问

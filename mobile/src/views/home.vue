@@ -3,13 +3,21 @@
     <!-- 顶部状态栏占位 -->
     <div class="status-bar-placeholder"></div>
 
+    <!-- 顶部筛选 Header -->
+    <div class="home-header">
+      <van-dropdown-menu active-color="#667eea">
+        <van-dropdown-item v-model="selectedType" :options="petTypeOptions" />
+        <van-dropdown-item v-model="selectedCity" :options="cityOptions" />
+      </van-dropdown-menu>
+    </div>
+
     <!-- 主内容区域 -->
     <div class="main-content">
       <!-- 宠物列表 -->
       <div class="pet-list">
         <div
           class="pet-card"
-          v-for="pet in petList"
+          v-for="pet in displayedPetList"
           :key="pet.id"
           @click="viewPetDetail(pet)"
         >
@@ -65,7 +73,7 @@
 </template>
 
 <script setup>
-  import { ref, reactive, onMounted } from 'vue'
+  import { ref, reactive, onMounted, computed } from 'vue'
   import { useRouter } from 'vue-router'
   import LImg from '@/components/l-img.vue'
   import axios from 'axios'
@@ -77,6 +85,33 @@
 
   // 宠物列表数据
   const petList = ref([])
+
+  // 筛选选项与选择
+  const petTypeOptions = ref([{ text: '全部种类', value: 'all' }])
+  const cityOptions = ref([{ text: '全部地区', value: 'all' }])
+  const selectedType = ref('all')
+  const selectedCity = ref('all')
+
+  // 计算后的展示列表（根据筛选项）
+  const displayedPetList = computed(() => {
+    return petList.value.filter(pet => {
+      const typeOk =
+        selectedType.value === 'all' ||
+        (pet.petType &&
+          (pet.petType.includes(selectedType.value) ||
+            // 兼容中英文
+            (selectedType.value === 'cat' && pet.petType.includes('猫')) ||
+            (selectedType.value === 'dog' && pet.petType.includes('狗')) ||
+            (selectedType.value === 'other' && pet.petType.includes('其它'))))
+      const cityOk =
+        selectedCity.value === 'all' ||
+        (pet.rawLostLocation &&
+          pet.rawLostLocation.includes(
+            selectedCity.valueLabel || selectedCity.value
+          ))
+      return typeOk && cityOk
+    })
+  })
 
   // 切换标签
   const switchTab = tab => {
@@ -127,6 +162,8 @@
       const response = await axios.get('http://localhost:8080/api/lost-pets')
       petList.value = response.data.map(pet => ({
         id: pet.id,
+        petType: pet.petType,
+        rawLostLocation: pet.lostLocation,
         location: pet.lostLocation,
         amount: pet.reward,
         lostTime: pet.lostTime, // 改为丢失时间
@@ -149,8 +186,53 @@
       console.error('Failed to load pet list:', error)
     }
   }
+
+  // 加载筛选选项（宠物种类与城市）
+  const loadFilterOptions = async () => {
+    try {
+      const [typesRes, citiesRes] = await Promise.all([
+        axios.get('http://localhost:8080/api/config/pet-types'),
+        axios.get('http://localhost:8080/api/config/cities'),
+      ])
+      const types = Array.isArray(typesRes.data?.data) ? typesRes.data.data : []
+      const cities = Array.isArray(citiesRes.data?.data)
+        ? citiesRes.data.data
+        : []
+
+      petTypeOptions.value = [
+        { text: '全部种类', value: 'all' },
+        ...types.map(t => ({
+          text: t,
+          value: t === '猫' ? 'cat' : t === '狗' ? 'dog' : 'other',
+        })),
+      ]
+      cityOptions.value = [
+        { text: '全部地区', value: 'all' },
+        ...cities.map(c => ({ text: c, value: c })),
+      ]
+    } catch (e) {
+      // 失败时提供默认选项
+      petTypeOptions.value = [
+        { text: '全部种类', value: 'all' },
+        { text: '猫', value: 'cat' },
+        { text: '狗', value: 'dog' },
+        { text: '其它', value: 'other' },
+      ]
+      cityOptions.value = [
+        { text: '全部地区', value: 'all' },
+        { text: '北京', value: '北京' },
+        { text: '上海', value: '上海' },
+        { text: '广州', value: '广州' },
+        { text: '深圳', value: '深圳' },
+        { text: '杭州', value: '杭州' },
+        { text: '厦门', value: '厦门' },
+        { text: '郑州', value: '郑州' },
+      ]
+    }
+  }
   // 页面初始化
   onMounted(() => {
+    loadFilterOptions()
     loadPetList()
   })
 </script>
@@ -167,6 +249,25 @@
   .status-bar-placeholder {
     height: env(safe-area-inset-top, 20px);
     background: #ffffff;
+  }
+
+  /* 顶部筛选 Header */
+  .home-header {
+    background: #ffffff;
+    padding: 4px 0 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  /* 调整 Vant 下拉菜单样式以贴合主题 */
+  :deep(.van-dropdown-menu__bar) {
+    box-shadow: none;
+    padding: 0 8px;
+  }
+  :deep(.van-dropdown-menu__item) {
+    margin: 0 6px;
+    border-radius: 10px;
+    background: #f7f8fa;
+    padding: 2px 8px;
   }
 
   /* 主内容区域 */

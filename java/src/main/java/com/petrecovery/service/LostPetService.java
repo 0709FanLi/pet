@@ -33,6 +33,17 @@ public class LostPetService {
         return lostPetRepository.findByStatus("lost");
     }
 
+    public List<LostPet> getAllLostPets(String petType, String city) {
+        // 如果没有筛选条件，返回所有丢失状态的宠物
+        if ((petType == null || petType.isEmpty() || "all".equals(petType)) && 
+            (city == null || city.isEmpty() || "all".equals(city))) {
+            return lostPetRepository.findByStatus("lost");
+        }
+        
+        // 根据筛选条件查询
+        return lostPetRepository.findByFilters("lost", petType, city);
+    }
+
     public List<LostPet> getUserLostPets(Long userId) {
         return lostPetRepository.findByUserId(userId);
     }

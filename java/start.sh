@@ -76,17 +76,34 @@ mvn clean compile -q || {
 }
 echo "✅ 项目编译成功"
 
-# 启动项目
+# 启动项目（后台）
 echo "6. 启动项目..."
-echo "正在启动Spring Boot应用..."
-echo "请等待应用完全启动后再进行测试"
-echo
-echo "启动完成后可访问:"
-echo "- 测试接口: http://localhost:8080/api/users/test"
-echo "- API文档: http://localhost:8080/swagger-ui.html"
-echo
-echo "按 Ctrl+C 停止服务"
-echo "==========================================="
-echo
+echo "以后台方式启动Spring Boot应用并写入 spring-boot.log"
+nohup mvn spring-boot:run > spring-boot.log 2>&1 &
+APP_PID=$!
+sleep 3
 
-mvn spring-boot:run
+# 轮询健康检查（以公开接口代替）
+echo "7. 健康检查..."
+RETRY=30
+until curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/api/users/test | grep -q "200"; do
+  RETRY=$((RETRY-1))
+  if [ $RETRY -le 0 ]; then
+    echo "❌ 应用启动检测超时，请查看 spring-boot.log"
+    exit 1
+  fi
+  sleep 1
+done
+
+echo "✅ 应用已启动成功"
+echo
+echo "可访问:"
+echo "- 测试接口: http://localhost:8080/api/users/test"
+echo "- 配置-种类: http://localhost:8080/api/config/pet-types"
+echo "- 配置-城市: http://localhost:8080/api/config/cities"
+echo "- API文档: http://localhost:8080/swagger-ui.html"
+echo "日志文件: $(pwd)/spring-boot.log"
+echo
+echo "后台进程PID: $APP_PID"
+echo "==========================================="
+exit 0
