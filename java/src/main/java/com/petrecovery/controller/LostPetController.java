@@ -7,14 +7,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import java.io.File;
-import java.io.IOException;
+import org.springframework.http.MediaType;
+// removed unused imports
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.Optional;
 
 @RestController
@@ -78,6 +76,80 @@ public class LostPetController {
         lostPet.setStatus("lost"); // 设置默认状态
         LostPet created = lostPetService.createLostPet(lostPet, userId);
         return ResponseEntity.ok(created);
+    }
+
+    /**
+     * 新增：JSON 提交方式，便于前端直接以 application/json 发送
+     */
+    @PostMapping(value = "/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "发布丢失宠物信息(JSON)", description = "接收 JSON 请求创建记录")
+    public ResponseEntity<LostPet> createLostPetJson(@RequestBody CreateLostPetRequest req) {
+        LostPet lostPet = new LostPet();
+        lostPet.setPetName(req.getPetName());
+        lostPet.setPetType(req.getPetType());
+        lostPet.setPetBreed(req.getPetBreed());
+        lostPet.setPetDescription(req.getPetDescription());
+        lostPet.setLostLocation(req.getLostLocation());
+        // 解析时间
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            lostPet.setLostTime(LocalDateTime.parse(req.getLostTime(), formatter));
+        } catch (Exception e) {
+            lostPet.setLostTime(LocalDateTime.now());
+        }
+        lostPet.setContactInfo(req.getContactInfo());
+        lostPet.setReward(req.getReward());
+        // 处理图片
+        List<String> imageUrls = new ArrayList<>();
+        if (req.getImages() != null) {
+            for (String imageUrl : req.getImages()) {
+                if (imageUrl != null && !imageUrl.trim().isEmpty()) {
+                    imageUrls.add(imageUrl.trim());
+                }
+            }
+        }
+        if (!imageUrls.isEmpty()) {
+            lostPet.setImages("[\"" + String.join("\",\"", imageUrls) + "\"]");
+        } else {
+            lostPet.setImages("[]");
+        }
+        lostPet.setStatus("lost");
+        LostPet created = lostPetService.createLostPet(lostPet, req.getUserId());
+        return ResponseEntity.ok(created);
+    }
+
+    public static class CreateLostPetRequest {
+        private Long userId;
+        private String petName;
+        private String petType;
+        private String petBreed;
+        private String petDescription;
+        private String lostLocation;
+        private String lostTime; // 格式：yyyy-MM-dd HH:mm:ss
+        private String contactInfo;
+        private String reward;
+        private List<String> images;
+
+        public Long getUserId() { return userId; }
+        public void setUserId(Long userId) { this.userId = userId; }
+        public String getPetName() { return petName; }
+        public void setPetName(String petName) { this.petName = petName; }
+        public String getPetType() { return petType; }
+        public void setPetType(String petType) { this.petType = petType; }
+        public String getPetBreed() { return petBreed; }
+        public void setPetBreed(String petBreed) { this.petBreed = petBreed; }
+        public String getPetDescription() { return petDescription; }
+        public void setPetDescription(String petDescription) { this.petDescription = petDescription; }
+        public String getLostLocation() { return lostLocation; }
+        public void setLostLocation(String lostLocation) { this.lostLocation = lostLocation; }
+        public String getLostTime() { return lostTime; }
+        public void setLostTime(String lostTime) { this.lostTime = lostTime; }
+        public String getContactInfo() { return contactInfo; }
+        public void setContactInfo(String contactInfo) { this.contactInfo = contactInfo; }
+        public String getReward() { return reward; }
+        public void setReward(String reward) { this.reward = reward; }
+        public List<String> getImages() { return images; }
+        public void setImages(List<String> images) { this.images = images; }
     }
 
     @GetMapping

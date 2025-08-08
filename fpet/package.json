@@ -1,0 +1,10 @@
+{
+  "name": "fpet",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "dayjs": "^1.11.11",
+    "uview-plus": "^3.2.20"
+  }
+}
