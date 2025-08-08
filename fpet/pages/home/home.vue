@@ -3,8 +3,16 @@
     <!-- 顶部筛选 -->
     <view class="header">
       <u-dropdown activeColor="#5B8FF9">
-        <u-dropdown-item v-model="selectedType" :options="petTypeOptions" />
-        <u-dropdown-item v-model="selectedCity" :options="cityOptions" />
+        <u-dropdown-item
+          v-model="selectedType"
+          :options="petTypeOptions"
+          :title="typeTitle"
+        />
+        <u-dropdown-item
+          v-model="selectedCity"
+          :options="cityOptions"
+          :title="cityTitle"
+        />
       </u-dropdown>
     </view>
 
@@ -55,6 +63,15 @@
   const cityOptions = ref([{ label: '全部地区', value: 'all' }])
   const selectedType = ref('all')
   const selectedCity = ref('all')
+
+  const typeTitle = computed(() => {
+    const match = petTypeOptions.value.find(o => o.value === selectedType.value)
+    return match?.label || '全部种类'
+  })
+  const cityTitle = computed(() => {
+    const match = cityOptions.value.find(o => o.value === selectedCity.value)
+    return match?.label || '全部地区'
+  })
 
   const filteredList = computed(() => {
     return list.value.filter(p => {
