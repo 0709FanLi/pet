@@ -31,6 +31,12 @@
 			}
 		},
 		{
+			"path": "pages/detective/apply",
+			"style": {
+				"navigationBarTitleText": "申请成为宠物侦探"
+			}
+		},
+		{
 			"path": "pages/my/lost-pets",
 			"style": {
 				"navigationBarTitleText": "我的发布"

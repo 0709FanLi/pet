@@ -22,6 +22,11 @@ export const API = {
   lostPets: '/api/lost-pets',
   petTypes: '/api/config/pet-types',
   cities: '/api/config/cities',
+  detective: {
+    apply: '/api/detective/apply',
+    application: '/api/detective/application',
+    reviewLog: '/api/detective/application/review-log',
+  },
 }
 
 export const STORAGE_KEYS = {

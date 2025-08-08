@@ -56,6 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/config/**").permitAll()
                 // 文件上传接口
                 .antMatchers("/api/upload/**").permitAll()
+                // 侦探申请开放（前台提交/查询）
+                .antMatchers("/api/detective/**").permitAll()
                 // 静态文件访问
                 .antMatchers("/uploads/**").permitAll()
                 // Swagger相关接口

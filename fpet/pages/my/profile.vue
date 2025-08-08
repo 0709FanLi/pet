@@ -12,6 +12,7 @@
     </view>
     <u-cell-group>
       <u-cell title="我的发布" isLink @click="goMyPosts" />
+      <u-cell title="申请成为宠物侦探" isLink @click="goDetectiveApply" />
       <u-cell title="帮助与反馈" isLink @click="showHelp = true" />
       <u-cell title="关于我们" isLink @click="showAbout = true" />
     </u-cell-group>
@@ -33,6 +34,8 @@
   const showHelp = ref(false)
   const showAbout = ref(false)
   const goMyPosts = () => uni.navigateTo({ url: '/pages/my/lost-pets' })
+  const goDetectiveApply = () =>
+    uni.navigateTo({ url: '/pages/detective/apply' })
   const logout = () => {
     uni.removeStorageSync('token')
     uni.removeStorageSync('userInfo')

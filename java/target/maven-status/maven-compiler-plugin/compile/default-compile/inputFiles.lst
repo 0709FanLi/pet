@@ -13,4 +13,7 @@
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/PetRecoveryApplication.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/service/LostPetService.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/controller/UserController.java
+/Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/entity/DetectiveApplication.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/repository/LostPetRepository.java
+/Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/repository/DetectiveApplicationRepository.java
+/Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/controller/DetectiveApplicationController.java
