@@ -3,7 +3,7 @@ declare const uni: any
 function computeBaseUrl(): string {
   try {
     // 允许在运行时通过本地存储覆盖，适配真机调试
-    // 可在控制台执行：uni.setStorageSync('base_url', 'http://192.168.1.14:8080')
+    // 可在控制台执行：uni.setStorageSync('base_url', 'http://192.168.1.11:8080')
     // @ts-ignore
     const stored =
       typeof uni !== 'undefined' && uni.getStorageSync
@@ -12,8 +12,17 @@ function computeBaseUrl(): string {
     if (stored) return String(stored).replace(/\/+$/, '')
   } catch {}
 
-  // 默认统一为你提供的局域网 IP
-  return 'http://192.168.1.14:8080'
+  // H5 场景：随当前主机自动拼接端口，避免每次改IP
+  try {
+    // @ts-ignore
+    const loc = typeof window !== 'undefined' ? window.location : null
+    if (loc && loc.hostname) {
+      return `${loc.protocol}//${loc.hostname}:8080`
+    }
+  } catch {}
+
+  // 默认回退为你的局域网 IP（也可用 base_url 覆盖）
+  return 'http://192.168.1.11:8080'
 }
 
 export const BASE_URL = computeBaseUrl()

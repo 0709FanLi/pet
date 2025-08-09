@@ -37,6 +37,12 @@
 			}
 		},
 		{
+			"path": "pages/detective/pending",
+			"style": {
+				"navigationBarTitleText": "审核中"
+			}
+		},
+		{
 			"path": "pages/my/lost-pets",
 			"style": {
 				"navigationBarTitleText": "我的发布"

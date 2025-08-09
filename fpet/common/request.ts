@@ -50,7 +50,17 @@ export function upload(
   const token = uni.getStorageSync(STORAGE_KEYS.token)
   return new Promise((resolve, reject) => {
     const fullUrl = url.startsWith('http') ? url : BASE_URL + url
-    console.log('[upload] using url:', fullUrl)
+    try {
+      // 记录更详细的上下文
+      console.log('[upload] using url:', fullUrl)
+      console.log('[upload] file:', { filePath, name })
+      console.log('[upload] formData:', formData)
+      console.log('[upload] hasToken:', !!token)
+      uni.getNetworkType({
+        success: (r: any) =>
+          console.log('[upload] networkType:', r?.networkType),
+      })
+    } catch {}
     uni.uploadFile({
       url: fullUrl,
       filePath,
@@ -70,6 +80,11 @@ export function upload(
       },
       fail: err => {
         console.error('[upload] fail:', err)
+        console.error(
+          '[upload] hint: 确认 BASE_URL 是否正确:',
+          BASE_URL,
+          '，以及服务端是否可达（同一局域网/IP未变更）。可在控制台执行 uni.setStorageSync("base_url", "http://192.168.1.11:8080") 后重试。'
+        )
         reject(err)
       },
     })

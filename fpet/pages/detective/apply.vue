@@ -61,10 +61,10 @@
               class="img-item add"
               @click="chooseDeviceImage"
             >
-              <view class="inner"
-                ><text class="plus">＋</text
-                ><text class="hint">添加照片</text></view
-              >
+              <view class="inner">
+                <text class="plus">＋</text>
+                <text class="hint">添加照片</text>
+              </view>
             </view>
           </view>
         </u-form-item>
@@ -108,23 +108,29 @@
       <view class="section">
         <view class="section-title">🪪 认证与资质</view>
         <u-form-item label="身份证正面" prop="idCardFront" required>
-          <u-button size="small" @click="pickId('front')">上传图片</u-button>
-          <image
-            v-if="form.idCardFront"
-            class="thumb"
-            :src="display(form.idCardFront)"
-          />
+          <view class="picker-row">
+            <u-button size="small" @click="pickId('front')">上传图片</u-button>
+            <image
+              v-if="form.idCardFront"
+              class="thumb-lg"
+              :src="display(form.idCardFront)"
+            />
+          </view>
         </u-form-item>
         <u-form-item label="身份证反面" prop="idCardBack" required>
-          <u-button size="small" @click="pickId('back')">上传图片</u-button>
-          <image
-            v-if="form.idCardBack"
-            class="thumb"
-            :src="display(form.idCardBack)"
-          />
+          <view class="picker-row">
+            <u-button size="small" @click="pickId('back')">上传图片</u-button>
+            <image
+              v-if="form.idCardBack"
+              class="thumb-lg"
+              :src="display(form.idCardBack)"
+            />
+          </view>
         </u-form-item>
         <u-form-item label="资质/证书" prop="certificates">
-          <u-button size="small" @click="pickCert">上传图片</u-button>
+          <view class="picker-row">
+            <u-button size="small" @click="pickCert">上传图片</u-button>
+          </view>
           <view class="upload-grid small">
             <view v-for="(img, idx) in certImages" :key="idx" class="img-item">
               <image :src="img.url" mode="aspectFill" />
@@ -158,11 +164,7 @@
     </u-form>
 
     <view class="bottom">
-      <u-button
-        type="primary"
-        :disabled="!canSubmit"
-        @click="submit"
-        :customStyle="primaryStyle"
+      <u-button type="primary" @click="submit" :customStyle="primaryStyle"
         >提交申请</u-button
       >
     </view>
@@ -302,6 +304,7 @@
   }
 
   const canSubmit = computed(() => {
+    // 保留完整性判断（仅用于可能的UI提示），但按钮不再禁用
     const f = form
     return !!(
       f.realName &&
@@ -321,17 +324,53 @@
     )
   })
 
+  const getMissingFields = () => {
+    // 提交前动态校验，返回缺失字段中文名称列表
+    const f = form
+    // 确保把服务范围输入框的文本同步到数组
+    onAreasBlur()
+    const missing = []
+    if (!f.realName) missing.push('真实姓名')
+    if (!f.phone) missing.push('手机号')
+    if (!f.city) missing.push('所在城市')
+    if (!f.teamSize || Number(f.teamSize) <= 0) missing.push('团队人数')
+    if (!f.devices || f.devices.length === 0) missing.push('设备清单')
+    if (!f.devicePhotos || f.devicePhotos.length === 0) missing.push('设备照片')
+    if (!f.experienceYears || Number(f.experienceYears) <= 0)
+      missing.push('经验年限')
+    if (!f.serviceAreas || f.serviceAreas.length === 0) missing.push('服务范围')
+    if (!f.availableTimes || f.availableTimes.length === 0)
+      missing.push('可服务时间')
+    if (!f.idCardFront) missing.push('身份证正面')
+    if (!f.idCardBack) missing.push('身份证反面')
+    if (!f.payout?.type) missing.push('收款方式')
+    if (!f.payout?.account) missing.push('收款账号')
+    if (!f.agree) missing.push('同意协议')
+    return missing
+  }
+
   const submit = async () => {
+    const missing = getMissingFields()
+    if (missing.length > 0) {
+      console.warn('[detective-apply] missing fields:', missing)
+      const brief =
+        missing.slice(0, 4).join('、') + (missing.length > 4 ? ' 等' : '')
+      uni.showToast({ title: `请完善：${brief}`, icon: 'none' })
+      return
+    }
     try {
       const payload = JSON.parse(JSON.stringify(form))
+      console.log('[detective-apply] submit payload:', payload)
       const res = await request({
         url: API.detective.apply,
         method: 'POST',
         data: payload,
       })
+      console.log('[detective-apply] submit resp:', res)
       uni.showToast({ title: '提交成功', icon: 'success' })
-      setTimeout(() => uni.navigateBack(), 1000)
+      setTimeout(() => uni.redirectTo({ url: '/pages/detective/pending' }), 500)
     } catch (e) {
+      console.error('[detective-apply] submit error:', e)
       uni.showToast({ title: '提交失败', icon: 'none' })
     }
   }
@@ -392,16 +431,16 @@
   }
   .upload-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    padding: 6px 0 12px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 8px 0 14px;
   }
   .upload-grid.small {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
   .img-item {
     width: 100%;
-    padding-top: 100%;
+    padding-top: 75%;
     position: relative;
     border-radius: 12px;
     overflow: hidden;
@@ -429,18 +468,31 @@
     inset: 0;
   }
   .plus {
-    font-size: 28px;
+    font-size: 32px;
     line-height: 1;
   }
   .hint {
-    font-size: 12px;
+    font-size: 13px;
+    margin-top: 4px;
   }
   .thumb {
-    width: 80px;
-    height: 60px;
+    width: 120px;
+    height: 90px;
     margin-left: 10px;
     border-radius: 6px;
     border: 1px solid #eee;
+  }
+  .thumb-lg {
+    width: 160px;
+    height: 120px;
+    margin-left: 10px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+  }
+  .picker-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
   .bottom {
     position: fixed;
