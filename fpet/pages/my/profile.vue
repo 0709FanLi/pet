@@ -30,12 +30,20 @@
 
 <script setup>
   import { ref, onMounted } from 'vue'
+  import { STORAGE_KEYS } from '@/common/config'
   const user = ref({ username: '', phoneNumber: '', avatar: '' })
   const showHelp = ref(false)
   const showAbout = ref(false)
   const goMyPosts = () => uni.navigateTo({ url: '/pages/my/lost-pets' })
-  const goDetectiveApply = () =>
+  const goDetectiveApply = () => {
+    const token = uni.getStorageSync(STORAGE_KEYS.token)
+    if (!token) {
+      uni.showToast({ title: '请先登录', icon: 'none' })
+      setTimeout(() => uni.navigateTo({ url: '/pages/auth/login' }), 300)
+      return
+    }
     uni.navigateTo({ url: '/pages/detective/apply' })
+  }
   const logout = () => {
     uni.removeStorageSync('token')
     uni.removeStorageSync('userInfo')

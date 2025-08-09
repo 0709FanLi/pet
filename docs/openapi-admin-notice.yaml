@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: 管理后台启事审核相关接口（列表/详情/审核/回退/运营位、统计）
 servers:
-  - url: http://192.168.1.11:8080
+  - url: http://192.168.1.14:8080
 paths:
   /api/admin/notices/pending:
     get:
