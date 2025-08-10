@@ -4,6 +4,7 @@ import com.petrecovery.entity.DetectiveApplication;
 import com.petrecovery.entity.User;
 import com.petrecovery.repository.DetectiveApplicationRepository;
 import com.petrecovery.repository.UserRepository;
+import com.petrecovery.util.JwtUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/detective")
@@ -24,11 +26,26 @@ public class DetectiveApplicationController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @PostMapping("/apply")
     @Operation(summary = "提交/更新侦探申请")
     public ResponseEntity<Map<String, Object>> apply(@RequestBody Map<String, Object> body, @RequestHeader(value = "Authorization", required = false) String auth) {
-        // 简化：用固定用户或从token中提取，当前以用户名"admin"兜底
-        User user = userRepository.findAll().stream().findFirst().orElse(null);
+        // 优先根据 Authorization: Bearer <token> 解析当前用户，其次用手机号兜底，最后使用首个用户（开发期）
+        User user = resolveUserFromAuth(auth);
+        if (user == null && body != null) {
+            Object phoneObj = body.get("phone");
+            if (phoneObj != null) {
+                try {
+                    Optional<User> byPhone = userRepository.findByPhoneNumber(String.valueOf(phoneObj));
+                    if (byPhone.isPresent()) user = byPhone.get();
+                } catch (Exception ignored) {}
+            }
+        }
+        if (user == null) {
+            user = userRepository.findAll().stream().findFirst().orElse(null);
+        }
         if (user == null) {
             Map<String, Object> r = new HashMap<>();
             r.put("code", 400);
@@ -75,7 +92,10 @@ public class DetectiveApplicationController {
     @GetMapping("/application")
     @Operation(summary = "获取当前侦探申请与状态")
     public ResponseEntity<Map<String, Object>> getApplication(@RequestHeader(value = "Authorization", required = false) String auth) {
-        User user = userRepository.findAll().stream().findFirst().orElse(null);
+        User user = resolveUserFromAuth(auth);
+        if (user == null) {
+            user = userRepository.findAll().stream().findFirst().orElse(null);
+        }
         Map<String, Object> res = new HashMap<>();
         if (user == null) {
             res.put("code", 400);
@@ -93,6 +113,32 @@ public class DetectiveApplicationController {
             data.put("submittedAt", String.valueOf(app.getCreatedAt()));
         }
         res.put("data", data);
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/status")
+    @Operation(summary = "获取侦探申请状态（简化版）")
+    public ResponseEntity<Map<String, Object>> getStatus(@RequestHeader(value = "Authorization", required = false) String auth) {
+        User user = resolveUserFromAuth(auth);
+        if (user == null) {
+            user = userRepository.findAll().stream().findFirst().orElse(null);
+        }
+        Map<String, Object> res = new HashMap<>();
+        String status = "none";
+        String reason = null;
+        if (user != null) {
+            DetectiveApplication app = applicationRepository.findTopByUserOrderByCreatedAtDesc(user).orElse(null);
+            if (app != null) {
+                status = app.getStatus();
+                reason = app.getReason();
+            }
+        }
+        res.put("code", 200);
+        Map<String, Object> data = new HashMap<>();
+        data.put("status", status);
+        if (reason != null) data.put("reason", reason);
+        res.put("data", data);
+        res.put("message", "success");
         return ResponseEntity.ok(res);
     }
 
@@ -129,6 +175,26 @@ public class DetectiveApplicationController {
         Map<String, Object> m = new HashMap<>();
         for (int i = 0; i + 1 < kv.length; i += 2) m.put(String.valueOf(kv[i]), kv[i + 1]);
         return m;
+    }
+
+    /**
+     * 从 Authorization 头部解析当前用户（Bearer token），失败则返回 null。
+     */
+    private User resolveUserFromAuth(String authHeader) {
+        if (authHeader == null) return null;
+        String lower = authHeader.toLowerCase(Locale.ROOT);
+        if (!lower.startsWith("bearer ")) return null;
+        String token = authHeader.substring(7).trim();
+        try {
+            String subject = jwtUtil.getUsernameFromToken(token);
+            if (subject == null || subject.isEmpty()) return null;
+            // admin 登录令牌可能是 "admin:xxx"，普通用户就是用户名
+            if (subject.startsWith("admin:")) subject = subject.substring(6);
+            Optional<User> u = userRepository.findByUsername(subject);
+            return u.orElse(null);
+        } catch (Exception ignored) {
+            return null;
+        }
     }
 }
 

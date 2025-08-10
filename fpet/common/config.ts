@@ -35,6 +35,7 @@ export const API = {
     apply: '/api/detective/apply',
     application: '/api/detective/application',
     reviewLog: '/api/detective/application/review-log',
+    status: '/api/detective/status',
   },
 }
 
