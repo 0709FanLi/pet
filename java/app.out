@@ -1,53 +1,53 @@
-23:58:49,442 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
-23:58:49,443 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [jar:file:/Users/Zhuanz/Desktop/pet/java/target/pet-recovery-platform-0.0.1-SNAPSHOT.jar!/BOOT-INF/classes!/logback.xml]
-23:58:49,500 |-INFO in ch.qos.logback.core.joran.spi.ConfigurationWatchList@78047b92 - URL [jar:file:/Users/Zhuanz/Desktop/pet/java/target/pet-recovery-platform-0.0.1-SNAPSHOT.jar!/BOOT-INF/classes!/logback.xml] is not of type file
-23:58:49,611 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - debug attribute not set
-23:58:49,613 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
-23:58:49,627 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [CONSOLE]
-23:58:49,643 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
-23:58:49,769 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
-23:58:49,780 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [FILE]
-23:58:49,822 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@143695640 - No compression will be used
-23:58:49,826 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@143695640 - Will use the pattern logs/pet-recovery.%d{yyyy-MM-dd}.%i.log for the active file
-23:58:49,829 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@79ca92b9 - The date pattern is 'yyyy-MM-dd' from file name pattern 'logs/pet-recovery.%d{yyyy-MM-dd}.%i.log'.
-23:58:49,829 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@79ca92b9 - Roll-over at midnight.
-23:58:49,846 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@79ca92b9 - Setting initial period to Mon Aug 11 23:58:21 CST 2025
-23:58:49,847 |-WARN in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@79ca92b9 - SizeAndTimeBasedFNATP is deprecated. Use SizeAndTimeBasedRollingPolicy instead
-23:58:49,847 |-WARN in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@79ca92b9 - For more information see http://logback.qos.ch/manual/appenders.html#SizeAndTimeBasedRollingPolicy
-23:58:49,857 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
-23:58:49,860 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[FILE] - Active log file name: logs/pet-recovery.log
-23:58:49,861 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[FILE] - File property is set to [logs/pet-recovery.log]
-23:58:49,862 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
-23:58:49,862 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [ERROR_FILE]
-23:58:49,867 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@341878976 - No compression will be used
-23:58:49,868 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@341878976 - Will use the pattern logs/pet-recovery-error.%d{yyyy-MM-dd}.%i.log for the active file
-23:58:49,870 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@4f638935 - The date pattern is 'yyyy-MM-dd' from file name pattern 'logs/pet-recovery-error.%d{yyyy-MM-dd}.%i.log'.
-23:58:49,870 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@4f638935 - Roll-over at midnight.
-23:58:49,871 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@4f638935 - Setting initial period to Mon Aug 11 00:21:49 CST 2025
-23:58:49,871 |-WARN in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@4f638935 - SizeAndTimeBasedFNATP is deprecated. Use SizeAndTimeBasedRollingPolicy instead
-23:58:49,871 |-WARN in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@4f638935 - For more information see http://logback.qos.ch/manual/appenders.html#SizeAndTimeBasedRollingPolicy
-23:58:49,874 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
-23:58:49,875 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[ERROR_FILE] - Active log file name: logs/pet-recovery-error.log
-23:58:49,875 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[ERROR_FILE] - File property is set to [logs/pet-recovery-error.log]
-23:58:49,877 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [com.petrecovery] to DEBUG
-23:58:49,877 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [com.petrecovery] to false
-23:58:49,877 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [CONSOLE] to Logger[com.petrecovery]
-23:58:49,881 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [FILE] to Logger[com.petrecovery]
-23:58:49,881 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [ERROR_FILE] to Logger[com.petrecovery]
-23:58:49,881 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.security] to DEBUG
-23:58:49,881 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [org.springframework.security] to false
-23:58:49,881 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [CONSOLE] to Logger[org.springframework.security]
-23:58:49,881 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [FILE] to Logger[org.springframework.security]
-23:58:49,881 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.hibernate.SQL] to DEBUG
-23:58:49,881 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [org.hibernate.SQL] to false
-23:58:49,881 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [CONSOLE] to Logger[org.hibernate.SQL]
-23:58:49,881 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [FILE] to Logger[org.hibernate.SQL]
-23:58:49,881 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to INFO
-23:58:49,881 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [CONSOLE] to Logger[ROOT]
-23:58:49,881 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [FILE] to Logger[ROOT]
-23:58:49,881 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [ERROR_FILE] to Logger[ROOT]
-23:58:49,881 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
-23:58:49,883 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@4387b79e - Registering current configuration as safe fallback point
+00:16:52,865 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+00:16:52,865 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [jar:file:/Users/Zhuanz/Desktop/pet/java/target/pet-recovery-platform-0.0.1-SNAPSHOT.jar!/BOOT-INF/classes!/logback.xml]
+00:16:52,884 |-INFO in ch.qos.logback.core.joran.spi.ConfigurationWatchList@78047b92 - URL [jar:file:/Users/Zhuanz/Desktop/pet/java/target/pet-recovery-platform-0.0.1-SNAPSHOT.jar!/BOOT-INF/classes!/logback.xml] is not of type file
+00:16:52,957 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - debug attribute not set
+00:16:52,958 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+00:16:52,968 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [CONSOLE]
+00:16:52,978 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+00:16:53,061 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+00:16:53,067 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [FILE]
+00:16:53,086 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@143695640 - No compression will be used
+00:16:53,087 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@143695640 - Will use the pattern logs/pet-recovery.%d{yyyy-MM-dd}.%i.log for the active file
+00:16:53,089 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@79ca92b9 - The date pattern is 'yyyy-MM-dd' from file name pattern 'logs/pet-recovery.%d{yyyy-MM-dd}.%i.log'.
+00:16:53,089 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@79ca92b9 - Roll-over at midnight.
+00:16:53,102 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@79ca92b9 - Setting initial period to Tue Aug 12 00:14:42 CST 2025
+00:16:53,102 |-WARN in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@79ca92b9 - SizeAndTimeBasedFNATP is deprecated. Use SizeAndTimeBasedRollingPolicy instead
+00:16:53,102 |-WARN in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@79ca92b9 - For more information see http://logback.qos.ch/manual/appenders.html#SizeAndTimeBasedRollingPolicy
+00:16:53,105 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+00:16:53,108 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[FILE] - Active log file name: logs/pet-recovery.log
+00:16:53,108 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[FILE] - File property is set to [logs/pet-recovery.log]
+00:16:53,109 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+00:16:53,109 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [ERROR_FILE]
+00:16:53,115 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@341878976 - No compression will be used
+00:16:53,115 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@341878976 - Will use the pattern logs/pet-recovery-error.%d{yyyy-MM-dd}.%i.log for the active file
+00:16:53,116 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@4f638935 - The date pattern is 'yyyy-MM-dd' from file name pattern 'logs/pet-recovery-error.%d{yyyy-MM-dd}.%i.log'.
+00:16:53,116 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@4f638935 - Roll-over at midnight.
+00:16:53,116 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@4f638935 - Setting initial period to Mon Aug 11 00:21:49 CST 2025
+00:16:53,116 |-WARN in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@4f638935 - SizeAndTimeBasedFNATP is deprecated. Use SizeAndTimeBasedRollingPolicy instead
+00:16:53,116 |-WARN in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@4f638935 - For more information see http://logback.qos.ch/manual/appenders.html#SizeAndTimeBasedRollingPolicy
+00:16:53,117 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+00:16:53,119 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[ERROR_FILE] - Active log file name: logs/pet-recovery-error.log
+00:16:53,119 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[ERROR_FILE] - File property is set to [logs/pet-recovery-error.log]
+00:16:53,120 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [com.petrecovery] to DEBUG
+00:16:53,120 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [com.petrecovery] to false
+00:16:53,120 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [CONSOLE] to Logger[com.petrecovery]
+00:16:53,121 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [FILE] to Logger[com.petrecovery]
+00:16:53,121 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [ERROR_FILE] to Logger[com.petrecovery]
+00:16:53,121 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.security] to DEBUG
+00:16:53,121 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [org.springframework.security] to false
+00:16:53,121 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [CONSOLE] to Logger[org.springframework.security]
+00:16:53,121 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [FILE] to Logger[org.springframework.security]
+00:16:53,121 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.hibernate.SQL] to DEBUG
+00:16:53,121 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [org.hibernate.SQL] to false
+00:16:53,121 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [CONSOLE] to Logger[org.hibernate.SQL]
+00:16:53,121 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [FILE] to Logger[org.hibernate.SQL]
+00:16:53,121 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to INFO
+00:16:53,121 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [CONSOLE] to Logger[ROOT]
+00:16:53,121 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [FILE] to Logger[ROOT]
+00:16:53,121 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [ERROR_FILE] to Logger[ROOT]
+00:16:53,121 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
+00:16:53,122 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@4387b79e - Registering current configuration as safe fallback point
 
 
   .   ____          _            __ _ _
@@ -58,73 +58,74 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::               (v2.7.18)
 
-2025-08-11 23:58:55.796 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
-2025-08-11 23:58:55.817 [main] INFO  c.petrecovery.PetRecoveryApplication - Starting PetRecoveryApplication v0.0.1-SNAPSHOT using Java 21.0.7 on liguangyuan.local with PID 11094 (/Users/Zhuanz/Desktop/pet/java/target/pet-recovery-platform-0.0.1-SNAPSHOT.jar started by Zhuanz in /Users/Zhuanz/Desktop/pet/java)
-2025-08-11 23:58:55.818 [main] DEBUG c.petrecovery.PetRecoveryApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
-2025-08-11 23:58:55.818 [main] INFO  c.petrecovery.PetRecoveryApplication - No active profile set, falling back to 1 default profile: "default"
-2025-08-11 23:58:56.697 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-08-11 23:58:56.767 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 54 ms. Found 3 JPA repository interfaces.
-2025-08-11 23:58:57.331 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-2025-08-11 23:58:57.339 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2025-08-11 23:58:57.342 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-08-11 23:58:57.342 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
-2025-08-11 23:58:57.404 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-08-11 23:58:57.404 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1516 ms
-2025-08-11 23:58:57.548 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-08-11 23:58:57.599 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
-2025-08-11 23:58:57.751 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2025-08-11 23:58:57.835 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-08-11 23:58:58.006 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-08-11 23:58:58.022 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
-2025-08-11 23:58:58.659 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2025-08-11 23:58:58.668 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-08-11 23:58:58.810 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-08-11 23:58:59.389 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+2025-08-12 00:16:58.801 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2025-08-12 00:16:58.826 [main] INFO  c.petrecovery.PetRecoveryApplication - Starting PetRecoveryApplication v0.0.1-SNAPSHOT using Java 21.0.7 on liguangyuan.local with PID 12436 (/Users/Zhuanz/Desktop/pet/java/target/pet-recovery-platform-0.0.1-SNAPSHOT.jar started by Zhuanz in /Users/Zhuanz/Desktop/pet/java)
+2025-08-12 00:16:58.826 [main] DEBUG c.petrecovery.PetRecoveryApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2025-08-12 00:16:58.827 [main] INFO  c.petrecovery.PetRecoveryApplication - No active profile set, falling back to 1 default profile: "default"
+2025-08-12 00:16:59.669 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-08-12 00:16:59.733 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 53 ms. Found 3 JPA repository interfaces.
+2025-08-12 00:17:00.534 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-08-12 00:17:00.543 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-08-12 00:17:00.547 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-12 00:17:00.548 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-08-12 00:17:00.624 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-12 00:17:00.624 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1731 ms
+2025-08-12 00:17:00.798 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-08-12 00:17:00.863 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2025-08-12 00:17:01.087 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-08-12 00:17:01.212 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-08-12 00:17:01.449 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-08-12 00:17:01.471 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-08-12 00:17:02.349 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-08-12 00:17:02.361 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-08-12 00:17:02.548 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-08-12 00:17:03.192 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
 
-Using generated security password: 6c558e14-cc69-4425-ba51-4c29d16faa7e
+Using generated security password: 5114b0b1-a27f-41de-9d56-117540040f0b
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2025-08-11 23:58:59.498 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/**', OPTIONS]
-2025-08-11 23:58:59.500 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/register']
-2025-08-11 23:58:59.500 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/login']
-2025-08-11 23:58:59.500 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/login-or-register']
-2025-08-11 23:58:59.500 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/phone-login']
-2025-08-11 23:58:59.501 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/send-code']
-2025-08-11 23:58:59.501 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/test']
-2025-08-11 23:58:59.501 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/lost-pets/**']
-2025-08-11 23:58:59.501 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/lost-pets']
-2025-08-11 23:58:59.501 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/admin/login']
-2025-08-11 23:58:59.501 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/admin/notices/**']
-2025-08-11 23:58:59.501 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/config/**']
-2025-08-11 23:58:59.502 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/upload/**']
-2025-08-11 23:58:59.502 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/detective/**']
-2025-08-11 23:58:59.502 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/admin/detectives']
-2025-08-11 23:58:59.502 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/admin/detectives/**']
-2025-08-11 23:58:59.502 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/uploads/**']
-2025-08-11 23:58:59.502 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/swagger-ui/**']
-2025-08-11 23:58:59.502 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api-docs/**']
-2025-08-11 23:58:59.502 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/swagger-ui.html']
-2025-08-11 23:58:59.502 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/h2-console/**']
-2025-08-11 23:58:59.502 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [authenticated] for any request
-2025-08-11 23:58:59.510 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@47f04e4d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3520963d, org.springframework.security.web.context.SecurityContextPersistenceFilter@7ae0cc89, org.springframework.security.web.header.HeaderWriterFilter@6dd36ab6, org.springframework.web.filter.CorsFilter@388d14e, org.springframework.security.web.authentication.logout.LogoutFilter@32ec9c90, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@13e5d243, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7bcecef6, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1cd43562, org.springframework.security.web.session.SessionManagementFilter@74606204, org.springframework.security.web.access.ExceptionTranslationFilter@1d858300, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7ab1127c]
-2025-08-11 23:59:00.281 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2025-08-11 23:59:00.297 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
-2025-08-11 23:59:00.306 [main] INFO  c.petrecovery.PetRecoveryApplication - Started PetRecoveryApplication in 10.213 seconds (JVM running for 11.68)
-2025-08-11 23:59:17.277 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-08-11 23:59:17.278 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2025-08-11 23:59:17.282 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
-2025-08-11 23:59:17.298 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-11 23:59:17.298 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
-2025-08-11 23:59:17.302 [http-nio-8080-exec-2] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-11 23:59:17.302 [http-nio-8080-exec-1] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-11 23:59:17.358 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-11 23:59:17.358 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-11 23:59:17.369 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=] with attributes [permitAll]
-2025-08-11 23:59:17.369 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
-2025-08-11 23:59:17.371 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
-2025-08-11 23:59:17.371 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-11 23:59:17.493 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+2025-08-12 00:17:03.294 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/**', OPTIONS]
+2025-08-12 00:17:03.296 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/register']
+2025-08-12 00:17:03.296 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/login']
+2025-08-12 00:17:03.296 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/login-or-register']
+2025-08-12 00:17:03.296 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/phone-login']
+2025-08-12 00:17:03.296 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/send-code']
+2025-08-12 00:17:03.296 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/test']
+2025-08-12 00:17:03.296 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/lost-pets/**']
+2025-08-12 00:17:03.297 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/lost-pets']
+2025-08-12 00:17:03.297 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/admin/login']
+2025-08-12 00:17:03.297 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/admin/notices/**']
+2025-08-12 00:17:03.297 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/config/**']
+2025-08-12 00:17:03.297 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/upload/**']
+2025-08-12 00:17:03.297 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/detective/**']
+2025-08-12 00:17:03.297 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/admin/detectives']
+2025-08-12 00:17:03.297 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/admin/detectives/**']
+2025-08-12 00:17:03.297 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/uploads/**']
+2025-08-12 00:17:03.297 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/swagger-ui/**']
+2025-08-12 00:17:03.298 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api-docs/**']
+2025-08-12 00:17:03.298 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/swagger-ui.html']
+2025-08-12 00:17:03.298 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/h2-console/**']
+2025-08-12 00:17:03.298 [main] DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [authenticated] for any request
+2025-08-12 00:17:03.306 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@47f04e4d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3520963d, org.springframework.security.web.context.SecurityContextPersistenceFilter@7ae0cc89, org.springframework.security.web.header.HeaderWriterFilter@6dd36ab6, org.springframework.web.filter.CorsFilter@388d14e, org.springframework.security.web.authentication.logout.LogoutFilter@32ec9c90, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@13e5d243, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7bcecef6, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1cd43562, org.springframework.security.web.session.SessionManagementFilter@74606204, org.springframework.security.web.access.ExceptionTranslationFilter@1d858300, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7ab1127c]
+2025-08-12 00:17:04.262 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-08-12 00:17:04.278 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-08-12 00:17:04.286 [main] INFO  c.petrecovery.PetRecoveryApplication - Started PetRecoveryApplication in 11.006 seconds (JVM running for 12.179)
+2025-08-12 00:17:16.746 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-08-12 00:17:16.746 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-08-12 00:17:16.748 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-08-12 00:17:16.759 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/users/test
+2025-08-12 00:17:16.763 [http-nio-8080-exec-1] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
+2025-08-12 00:17:16.772 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-12 00:17:16.781 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/users/test] with attributes [permitAll]
+2025-08-12 00:17:16.781 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/users/test
+2025-08-12 00:17:16.849 [http-nio-8080-exec-1] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
+2025-08-12 00:17:16.871 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/history?page=1&pageSize=10
+2025-08-12 00:17:16.871 [http-nio-8080-exec-3] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
+2025-08-12 00:17:16.872 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-12 00:17:16.872 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/history?page=1&pageSize=10] with attributes [permitAll]
+2025-08-12 00:17:16.872 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/history?page=1&pageSize=10
+2025-08-12 00:17:16.922 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
     select
         lostpet0_.id as id1_1_,
         lostpet0_.contact_info as contact_2_1_,
@@ -141,9 +142,7 @@ This generated password is for development use only. Your security configuration
         lostpet0_.updated_at as updated13_1_,
         lostpet0_.user_id as user_id14_1_ 
     from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
+        lost_pets lostpet0_
 Hibernate: 
     select
         lostpet0_.id as id1_1_,
@@ -161,11 +160,8 @@ Hibernate:
         lostpet0_.updated_at as updated13_1_,
         lostpet0_.user_id as user_id14_1_ 
     from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-11 23:59:17.497 [http-nio-8080-exec-2] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-11 23:59:17.536 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+        lost_pets lostpet0_
+2025-08-12 00:17:16.949 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
     select
         user0_.id as id1_2_0_,
         user0_.created_at as created_2_2_0_,
@@ -191,18 +187,19 @@ Hibernate:
         users user0_ 
     where
         user0_.id=?
-2025-08-11 23:59:17.584 [http-nio-8080-exec-1] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-11 23:59:23.749 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
-2025-08-11 23:59:23.749 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-11 23:59:23.749 [http-nio-8080-exec-3] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-11 23:59:23.749 [http-nio-8080-exec-4] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-11 23:59:23.750 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-11 23:59:23.750 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-11 23:59:23.750 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
-2025-08-11 23:59:23.750 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=] with attributes [permitAll]
-2025-08-11 23:59:23.750 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
-2025-08-11 23:59:23.750 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-11 23:59:23.752 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+2025-08-12 00:17:16.988 [http-nio-8080-exec-3] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
+2025-08-12 00:17:46.434 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
+2025-08-12 00:17:46.434 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/history?page=1&pageSize=10&keyword=&city=&result=
+2025-08-12 00:17:46.434 [http-nio-8080-exec-5] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
+2025-08-12 00:17:46.434 [http-nio-8080-exec-6] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
+2025-08-12 00:17:46.442 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-12 00:17:46.442 [http-nio-8080-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-12 00:17:46.443 [http-nio-8080-exec-6] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/history?page=1&pageSize=10&keyword=&city=&result=] with attributes [permitAll]
+2025-08-12 00:17:46.443 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
+2025-08-12 00:17:46.443 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/history?page=1&pageSize=10&keyword=&city=&result=
+2025-08-12 00:17:46.443 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
+2025-08-12 00:17:46.445 [http-nio-8080-exec-5] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
+2025-08-12 00:17:46.478 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
     select
         lostpet0_.id as id1_1_,
         lostpet0_.contact_info as contact_2_1_,
@@ -219,10 +216,7 @@ Hibernate:
         lostpet0_.updated_at as updated13_1_,
         lostpet0_.user_id as user_id14_1_ 
     from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-11 23:59:23.752 [http-nio-8080-exec-3] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
+        lost_pets lostpet0_
 Hibernate: 
     select
         lostpet0_.id as id1_1_,
@@ -240,10 +234,8 @@ Hibernate:
         lostpet0_.updated_at as updated13_1_,
         lostpet0_.user_id as user_id14_1_ 
     from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-11 23:59:23.755 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+        lost_pets lostpet0_
+2025-08-12 00:17:46.481 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
     select
         user0_.id as id1_2_0_,
         user0_.created_at as created_2_2_0_,
@@ -269,18 +261,13 @@ Hibernate:
         users user0_ 
     where
         user0_.id=?
-2025-08-11 23:59:23.758 [http-nio-8080-exec-4] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:00:17.095 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
-2025-08-12 00:00:17.095 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:00:17.098 [http-nio-8080-exec-5] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:00:17.098 [http-nio-8080-exec-6] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:00:17.099 [http-nio-8080-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:00:17.099 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:00:17.099 [http-nio-8080-exec-6] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=] with attributes [permitAll]
-2025-08-12 00:00:17.099 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:00:17.099 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
-2025-08-12 00:00:17.099 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
-2025-08-12 00:00:17.100 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+2025-08-12 00:17:46.488 [http-nio-8080-exec-6] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
+2025-08-12 00:25:41.881 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/history?page=1&pageSize=10&keyword=123&city=&result=
+2025-08-12 00:25:41.882 [http-nio-8080-exec-9] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
+2025-08-12 00:25:41.882 [http-nio-8080-exec-9] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-12 00:25:41.883 [http-nio-8080-exec-9] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/history?page=1&pageSize=10&keyword=123&city=&result=] with attributes [permitAll]
+2025-08-12 00:25:41.883 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/history?page=1&pageSize=10&keyword=123&city=&result=
+2025-08-12 00:25:41.886 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
     select
         lostpet0_.id as id1_1_,
         lostpet0_.contact_info as contact_2_1_,
@@ -297,9 +284,7 @@ Hibernate:
         lostpet0_.updated_at as updated13_1_,
         lostpet0_.user_id as user_id14_1_ 
     from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
+        lost_pets lostpet0_
 Hibernate: 
     select
         lostpet0_.id as id1_1_,
@@ -317,11 +302,8 @@ Hibernate:
         lostpet0_.updated_at as updated13_1_,
         lostpet0_.user_id as user_id14_1_ 
     from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:00:17.101 [http-nio-8080-exec-5] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:00:17.103 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+        lost_pets lostpet0_
+2025-08-12 00:25:41.891 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
     select
         user0_.id as id1_2_0_,
         user0_.created_at as created_2_2_0_,
@@ -347,18 +329,19 @@ Hibernate:
         users user0_ 
     where
         user0_.id=?
-2025-08-12 00:00:17.106 [http-nio-8080-exec-6] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:02:11.698 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
-2025-08-12 00:02:11.698 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:02:11.699 [http-nio-8080-exec-9] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:02:11.699 [http-nio-8080-exec-10] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:02:11.699 [http-nio-8080-exec-10] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:02:11.699 [http-nio-8080-exec-9] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:02:11.700 [http-nio-8080-exec-10] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=] with attributes [permitAll]
-2025-08-12 00:02:11.700 [http-nio-8080-exec-9] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
-2025-08-12 00:02:11.700 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:02:11.700 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
-2025-08-12 00:02:11.701 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+2025-08-12 00:25:41.895 [http-nio-8080-exec-9] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
+2025-08-12 00:26:00.238 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/history?page=1&pageSize=10&keyword=&city=&result=
+2025-08-12 00:26:00.238 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
+2025-08-12 00:26:00.239 [http-nio-8080-exec-10] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
+2025-08-12 00:26:00.239 [http-nio-8080-exec-1] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
+2025-08-12 00:26:00.239 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-12 00:26:00.240 [http-nio-8080-exec-10] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-12 00:26:00.240 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
+2025-08-12 00:26:00.240 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
+2025-08-12 00:26:00.240 [http-nio-8080-exec-10] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/history?page=1&pageSize=10&keyword=&city=&result=] with attributes [permitAll]
+2025-08-12 00:26:00.240 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/history?page=1&pageSize=10&keyword=&city=&result=
+2025-08-12 00:26:00.242 [http-nio-8080-exec-1] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
+2025-08-12 00:26:00.243 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
     select
         lostpet0_.id as id1_1_,
         lostpet0_.contact_info as contact_2_1_,
@@ -375,10 +358,7 @@ Hibernate:
         lostpet0_.updated_at as updated13_1_,
         lostpet0_.user_id as user_id14_1_ 
     from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:02:11.701 [http-nio-8080-exec-9] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
+        lost_pets lostpet0_
 Hibernate: 
     select
         lostpet0_.id as id1_1_,
@@ -396,10 +376,8 @@ Hibernate:
         lostpet0_.updated_at as updated13_1_,
         lostpet0_.user_id as user_id14_1_ 
     from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:02:11.704 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+        lost_pets lostpet0_
+2025-08-12 00:26:00.246 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
     select
         user0_.id as id1_2_0_,
         user0_.created_at as created_2_2_0_,
@@ -425,1465 +403,4 @@ Hibernate:
         users user0_ 
     where
         user0_.id=?
-2025-08-12 00:02:11.707 [http-nio-8080-exec-10] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:02:43.878 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:02:43.878 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
-2025-08-12 00:02:43.880 [http-nio-8080-exec-1] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:02:43.880 [http-nio-8080-exec-2] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:02:43.880 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:02:43.881 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=] with attributes [permitAll]
-2025-08-12 00:02:43.881 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:02:43.881 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:02:43.881 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
-2025-08-12 00:02:43.881 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
-2025-08-12 00:02:43.882 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:02:43.883 [http-nio-8080-exec-2] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:02:43.885 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-Hibernate: 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-2025-08-12 00:02:43.888 [http-nio-8080-exec-1] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:02:47.124 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
-2025-08-12 00:02:47.124 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:02:47.124 [http-nio-8080-exec-3] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:02:47.124 [http-nio-8080-exec-4] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:02:47.125 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:02:47.125 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:02:47.125 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=] with attributes [permitAll]
-2025-08-12 00:02:47.125 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
-2025-08-12 00:02:47.125 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:02:47.125 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
-2025-08-12 00:02:47.127 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:02:47.127 [http-nio-8080-exec-3] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:02:47.129 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-Hibernate: 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-2025-08-12 00:02:47.133 [http-nio-8080-exec-4] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:02:57.946 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
-2025-08-12 00:02:57.946 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:02:57.947 [http-nio-8080-exec-6] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:02:57.947 [http-nio-8080-exec-5] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:02:57.947 [http-nio-8080-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:02:57.947 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:02:57.948 [http-nio-8080-exec-6] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=] with attributes [permitAll]
-2025-08-12 00:02:57.948 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
-2025-08-12 00:02:57.948 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:02:57.948 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
-2025-08-12 00:02:57.950 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:02:57.950 [http-nio-8080-exec-5] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:02:57.953 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-Hibernate: 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-2025-08-12 00:02:57.955 [http-nio-8080-exec-6] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:03:01.049 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
-2025-08-12 00:03:01.049 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:03:01.049 [http-nio-8080-exec-7] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:03:01.049 [http-nio-8080-exec-8] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:03:01.050 [http-nio-8080-exec-8] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:03:01.050 [http-nio-8080-exec-7] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:03:01.050 [http-nio-8080-exec-7] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
-2025-08-12 00:03:01.050 [http-nio-8080-exec-8] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=] with attributes [permitAll]
-2025-08-12 00:03:01.050 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
-2025-08-12 00:03:01.050 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:03:01.052 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:03:01.052 [http-nio-8080-exec-7] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:03:01.054 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-Hibernate: 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-2025-08-12 00:03:01.057 [http-nio-8080-exec-8] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:04:47.249 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:04:47.249 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
-2025-08-12 00:04:47.250 [http-nio-8080-exec-1] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:04:47.250 [http-nio-8080-exec-2] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:04:47.250 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:04:47.250 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:04:47.251 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=] with attributes [permitAll]
-2025-08-12 00:04:47.251 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
-2025-08-12 00:04:47.252 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:04:47.252 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
-2025-08-12 00:04:47.255 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:04:47.259 [http-nio-8080-exec-2] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:04:47.277 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-Hibernate: 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-2025-08-12 00:04:47.281 [http-nio-8080-exec-1] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:05:08.107 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:05:08.107 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
-2025-08-12 00:05:08.107 [http-nio-8080-exec-4] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:05:08.108 [http-nio-8080-exec-3] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:05:08.108 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:05:08.108 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:05:08.108 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
-2025-08-12 00:05:08.108 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=] with attributes [permitAll]
-2025-08-12 00:05:08.108 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
-2025-08-12 00:05:08.109 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:05:08.110 [http-nio-8080-exec-3] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:05:08.111 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:05:08.201 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-Hibernate: 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-2025-08-12 00:05:08.237 [http-nio-8080-exec-4] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:02.411 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
-2025-08-12 00:10:02.412 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:10:02.413 [http-nio-8080-exec-7] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:02.413 [http-nio-8080-exec-8] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:02.413 [http-nio-8080-exec-7] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:02.413 [http-nio-8080-exec-8] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:02.414 [http-nio-8080-exec-8] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=] with attributes [permitAll]
-2025-08-12 00:10:02.414 [http-nio-8080-exec-7] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
-2025-08-12 00:10:02.414 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:10:02.414 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
-2025-08-12 00:10:02.415 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:10:02.415 [http-nio-8080-exec-7] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:10:02.427 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-Hibernate: 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-2025-08-12 00:10:02.430 [http-nio-8080-exec-8] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:04.440 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:10:04.440 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
-2025-08-12 00:10:04.441 [http-nio-8080-exec-9] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:04.441 [http-nio-8080-exec-10] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:04.441 [http-nio-8080-exec-9] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:04.441 [http-nio-8080-exec-10] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:04.442 [http-nio-8080-exec-10] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
-2025-08-12 00:10:04.442 [http-nio-8080-exec-9] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=] with attributes [permitAll]
-2025-08-12 00:10:04.442 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:10:04.442 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
-2025-08-12 00:10:04.443 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:10:04.443 [http-nio-8080-exec-10] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:04.446 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-Hibernate: 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-2025-08-12 00:10:04.448 [http-nio-8080-exec-9] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:06.291 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/3
-2025-08-12 00:10:06.291 [http-nio-8080-exec-2] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:06.291 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:06.292 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/3] with attributes [permitAll]
-2025-08-12 00:10:06.292 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/3
-2025-08-12 00:10:06.338 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_0_,
-        lostpet0_.contact_info as contact_2_1_0_,
-        lostpet0_.created_at as created_3_1_0_,
-        lostpet0_.images as images4_1_0_,
-        lostpet0_.lost_location as lost_loc5_1_0_,
-        lostpet0_.lost_time as lost_tim6_1_0_,
-        lostpet0_.pet_breed as pet_bree7_1_0_,
-        lostpet0_.pet_description as pet_desc8_1_0_,
-        lostpet0_.pet_name as pet_name9_1_0_,
-        lostpet0_.pet_type as pet_typ10_1_0_,
-        lostpet0_.reward as reward11_1_0_,
-        lostpet0_.status as status12_1_0_,
-        lostpet0_.updated_at as updated13_1_0_,
-        lostpet0_.user_id as user_id14_1_0_,
-        user1_.id as id1_2_1_,
-        user1_.created_at as created_2_2_1_,
-        user1_.email as email3_2_1_,
-        user1_.password as password4_2_1_,
-        user1_.phone_number as phone_nu5_2_1_,
-        user1_.updated_at as updated_6_2_1_,
-        user1_.username as username7_2_1_ 
-    from
-        lost_pets lostpet0_ 
-    inner join
-        users user1_ 
-            on lostpet0_.user_id=user1_.id 
-    where
-        lostpet0_.id=?
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_0_,
-        lostpet0_.contact_info as contact_2_1_0_,
-        lostpet0_.created_at as created_3_1_0_,
-        lostpet0_.images as images4_1_0_,
-        lostpet0_.lost_location as lost_loc5_1_0_,
-        lostpet0_.lost_time as lost_tim6_1_0_,
-        lostpet0_.pet_breed as pet_bree7_1_0_,
-        lostpet0_.pet_description as pet_desc8_1_0_,
-        lostpet0_.pet_name as pet_name9_1_0_,
-        lostpet0_.pet_type as pet_typ10_1_0_,
-        lostpet0_.reward as reward11_1_0_,
-        lostpet0_.status as status12_1_0_,
-        lostpet0_.updated_at as updated13_1_0_,
-        lostpet0_.user_id as user_id14_1_0_,
-        user1_.id as id1_2_1_,
-        user1_.created_at as created_2_2_1_,
-        user1_.email as email3_2_1_,
-        user1_.password as password4_2_1_,
-        user1_.phone_number as phone_nu5_2_1_,
-        user1_.updated_at as updated_6_2_1_,
-        user1_.username as username7_2_1_ 
-    from
-        lost_pets lostpet0_ 
-    inner join
-        users user1_ 
-            on lostpet0_.user_id=user1_.id 
-    where
-        lostpet0_.id=?
-2025-08-12 00:10:06.346 [http-nio-8080-exec-2] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:06.358 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /uploads/pet/d2480cdd-fcac-43e1-85ec-6ee58e454c5b.jpg
-2025-08-12 00:10:06.359 [http-nio-8080-exec-3] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:06.359 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /uploads/pet/c9ab9c47-6d5a-4ad1-a8ad-4f40d5bd705a.jpg
-2025-08-12 00:10:06.359 [http-nio-8080-exec-1] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:06.359 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /uploads/pet/9c4160fb-2e8c-4de3-95c5-b273d715ab92.png
-2025-08-12 00:10:06.359 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:06.359 [http-nio-8080-exec-4] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:06.359 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:06.360 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:06.360 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /uploads/pet/9c4160fb-2e8c-4de3-95c5-b273d715ab92.png] with attributes [permitAll]
-2025-08-12 00:10:06.360 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /uploads/pet/9c4160fb-2e8c-4de3-95c5-b273d715ab92.png
-2025-08-12 00:10:06.360 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /uploads/pet/d2480cdd-fcac-43e1-85ec-6ee58e454c5b.jpg] with attributes [permitAll]
-2025-08-12 00:10:06.360 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /uploads/pet/c9ab9c47-6d5a-4ad1-a8ad-4f40d5bd705a.jpg] with attributes [permitAll]
-2025-08-12 00:10:06.361 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /uploads/pet/d2480cdd-fcac-43e1-85ec-6ee58e454c5b.jpg
-2025-08-12 00:10:06.361 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /uploads/pet/c9ab9c47-6d5a-4ad1-a8ad-4f40d5bd705a.jpg
-2025-08-12 00:10:06.375 [http-nio-8080-exec-1] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:06.380 [http-nio-8080-exec-4] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:06.385 [http-nio-8080-exec-3] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:07.285 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/3
-2025-08-12 00:10:07.285 [http-nio-8080-exec-5] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:07.285 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:07.286 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/3] with attributes [permitAll]
-2025-08-12 00:10:07.286 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/3
-2025-08-12 00:10:07.288 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_0_,
-        lostpet0_.contact_info as contact_2_1_0_,
-        lostpet0_.created_at as created_3_1_0_,
-        lostpet0_.images as images4_1_0_,
-        lostpet0_.lost_location as lost_loc5_1_0_,
-        lostpet0_.lost_time as lost_tim6_1_0_,
-        lostpet0_.pet_breed as pet_bree7_1_0_,
-        lostpet0_.pet_description as pet_desc8_1_0_,
-        lostpet0_.pet_name as pet_name9_1_0_,
-        lostpet0_.pet_type as pet_typ10_1_0_,
-        lostpet0_.reward as reward11_1_0_,
-        lostpet0_.status as status12_1_0_,
-        lostpet0_.updated_at as updated13_1_0_,
-        lostpet0_.user_id as user_id14_1_0_,
-        user1_.id as id1_2_1_,
-        user1_.created_at as created_2_2_1_,
-        user1_.email as email3_2_1_,
-        user1_.password as password4_2_1_,
-        user1_.phone_number as phone_nu5_2_1_,
-        user1_.updated_at as updated_6_2_1_,
-        user1_.username as username7_2_1_ 
-    from
-        lost_pets lostpet0_ 
-    inner join
-        users user1_ 
-            on lostpet0_.user_id=user1_.id 
-    where
-        lostpet0_.id=?
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_0_,
-        lostpet0_.contact_info as contact_2_1_0_,
-        lostpet0_.created_at as created_3_1_0_,
-        lostpet0_.images as images4_1_0_,
-        lostpet0_.lost_location as lost_loc5_1_0_,
-        lostpet0_.lost_time as lost_tim6_1_0_,
-        lostpet0_.pet_breed as pet_bree7_1_0_,
-        lostpet0_.pet_description as pet_desc8_1_0_,
-        lostpet0_.pet_name as pet_name9_1_0_,
-        lostpet0_.pet_type as pet_typ10_1_0_,
-        lostpet0_.reward as reward11_1_0_,
-        lostpet0_.status as status12_1_0_,
-        lostpet0_.updated_at as updated13_1_0_,
-        lostpet0_.user_id as user_id14_1_0_,
-        user1_.id as id1_2_1_,
-        user1_.created_at as created_2_2_1_,
-        user1_.email as email3_2_1_,
-        user1_.password as password4_2_1_,
-        user1_.phone_number as phone_nu5_2_1_,
-        user1_.updated_at as updated_6_2_1_,
-        user1_.username as username7_2_1_ 
-    from
-        lost_pets lostpet0_ 
-    inner join
-        users user1_ 
-            on lostpet0_.user_id=user1_.id 
-    where
-        lostpet0_.id=?
-2025-08-12 00:10:07.292 [http-nio-8080-exec-5] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:07.317 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /uploads/pet/d2480cdd-fcac-43e1-85ec-6ee58e454c5b.jpg
-2025-08-12 00:10:07.317 [http-nio-8080-exec-6] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:07.317 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /uploads/pet/c9ab9c47-6d5a-4ad1-a8ad-4f40d5bd705a.jpg
-2025-08-12 00:10:07.318 [http-nio-8080-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:07.319 [http-nio-8080-exec-7] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:07.319 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing GET /uploads/pet/9c4160fb-2e8c-4de3-95c5-b273d715ab92.png
-2025-08-12 00:10:07.319 [http-nio-8080-exec-7] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:07.319 [http-nio-8080-exec-6] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /uploads/pet/d2480cdd-fcac-43e1-85ec-6ee58e454c5b.jpg] with attributes [permitAll]
-2025-08-12 00:10:07.319 [http-nio-8080-exec-8] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:07.319 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Secured GET /uploads/pet/d2480cdd-fcac-43e1-85ec-6ee58e454c5b.jpg
-2025-08-12 00:10:07.320 [http-nio-8080-exec-7] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /uploads/pet/c9ab9c47-6d5a-4ad1-a8ad-4f40d5bd705a.jpg] with attributes [permitAll]
-2025-08-12 00:10:07.320 [http-nio-8080-exec-8] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:07.320 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Secured GET /uploads/pet/c9ab9c47-6d5a-4ad1-a8ad-4f40d5bd705a.jpg
-2025-08-12 00:10:07.320 [http-nio-8080-exec-8] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /uploads/pet/9c4160fb-2e8c-4de3-95c5-b273d715ab92.png] with attributes [permitAll]
-2025-08-12 00:10:07.320 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Secured GET /uploads/pet/9c4160fb-2e8c-4de3-95c5-b273d715ab92.png
-2025-08-12 00:10:07.323 [http-nio-8080-exec-7] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:07.345 [http-nio-8080-exec-6] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:07.348 [http-nio-8080-exec-8] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:25.733 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/admin/notices/3/approve
-2025-08-12 00:10:25.735 [http-nio-8080-exec-10] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:25.735 [http-nio-8080-exec-10] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:25.737 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing PUT /api/admin/notices/3/approve
-2025-08-12 00:10:25.737 [http-nio-8080-exec-9] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:25.738 [http-nio-8080-exec-9] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:25.738 [http-nio-8080-exec-9] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [PUT /api/admin/notices/3/approve] with attributes [permitAll]
-2025-08-12 00:10:25.738 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Secured PUT /api/admin/notices/3/approve
-2025-08-12 00:10:25.740 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_0_,
-        lostpet0_.contact_info as contact_2_1_0_,
-        lostpet0_.created_at as created_3_1_0_,
-        lostpet0_.images as images4_1_0_,
-        lostpet0_.lost_location as lost_loc5_1_0_,
-        lostpet0_.lost_time as lost_tim6_1_0_,
-        lostpet0_.pet_breed as pet_bree7_1_0_,
-        lostpet0_.pet_description as pet_desc8_1_0_,
-        lostpet0_.pet_name as pet_name9_1_0_,
-        lostpet0_.pet_type as pet_typ10_1_0_,
-        lostpet0_.reward as reward11_1_0_,
-        lostpet0_.status as status12_1_0_,
-        lostpet0_.updated_at as updated13_1_0_,
-        lostpet0_.user_id as user_id14_1_0_,
-        user1_.id as id1_2_1_,
-        user1_.created_at as created_2_2_1_,
-        user1_.email as email3_2_1_,
-        user1_.password as password4_2_1_,
-        user1_.phone_number as phone_nu5_2_1_,
-        user1_.updated_at as updated_6_2_1_,
-        user1_.username as username7_2_1_ 
-    from
-        lost_pets lostpet0_ 
-    inner join
-        users user1_ 
-            on lostpet0_.user_id=user1_.id 
-    where
-        lostpet0_.id=?
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_0_,
-        lostpet0_.contact_info as contact_2_1_0_,
-        lostpet0_.created_at as created_3_1_0_,
-        lostpet0_.images as images4_1_0_,
-        lostpet0_.lost_location as lost_loc5_1_0_,
-        lostpet0_.lost_time as lost_tim6_1_0_,
-        lostpet0_.pet_breed as pet_bree7_1_0_,
-        lostpet0_.pet_description as pet_desc8_1_0_,
-        lostpet0_.pet_name as pet_name9_1_0_,
-        lostpet0_.pet_type as pet_typ10_1_0_,
-        lostpet0_.reward as reward11_1_0_,
-        lostpet0_.status as status12_1_0_,
-        lostpet0_.updated_at as updated13_1_0_,
-        lostpet0_.user_id as user_id14_1_0_,
-        user1_.id as id1_2_1_,
-        user1_.created_at as created_2_2_1_,
-        user1_.email as email3_2_1_,
-        user1_.password as password4_2_1_,
-        user1_.phone_number as phone_nu5_2_1_,
-        user1_.updated_at as updated_6_2_1_,
-        user1_.username as username7_2_1_ 
-    from
-        lost_pets lostpet0_ 
-    inner join
-        users user1_ 
-            on lostpet0_.user_id=user1_.id 
-    where
-        lostpet0_.id=?
-2025-08-12 00:10:25.779 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
-    update
-        lost_pets 
-    set
-        contact_info=?,
-        created_at=?,
-        images=?,
-        lost_location=?,
-        lost_time=?,
-        pet_breed=?,
-        pet_description=?,
-        pet_name=?,
-        pet_type=?,
-        reward=?,
-        status=?,
-        updated_at=?,
-        user_id=? 
-    where
-        id=?
-Hibernate: 
-    update
-        lost_pets 
-    set
-        contact_info=?,
-        created_at=?,
-        images=?,
-        lost_location=?,
-        lost_time=?,
-        pet_breed=?,
-        pet_description=?,
-        pet_name=?,
-        pet_type=?,
-        reward=?,
-        status=?,
-        updated_at=?,
-        user_id=? 
-    where
-        id=?
-2025-08-12 00:10:25.791 [http-nio-8080-exec-9] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:27.605 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
-2025-08-12 00:10:27.605 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:10:27.606 [http-nio-8080-exec-1] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:27.606 [http-nio-8080-exec-2] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:27.606 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:27.606 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:27.607 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
-2025-08-12 00:10:27.607 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=] with attributes [permitAll]
-2025-08-12 00:10:27.607 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
-2025-08-12 00:10:27.607 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:10:27.608 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:10:27.608 [http-nio-8080-exec-2] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:10:27.627 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-Hibernate: 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-2025-08-12 00:10:27.629 [http-nio-8080-exec-1] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:30.258 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/4
-2025-08-12 00:10:30.259 [http-nio-8080-exec-4] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:30.259 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:30.259 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/4] with attributes [permitAll]
-2025-08-12 00:10:30.259 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/4
-2025-08-12 00:10:30.277 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_0_,
-        lostpet0_.contact_info as contact_2_1_0_,
-        lostpet0_.created_at as created_3_1_0_,
-        lostpet0_.images as images4_1_0_,
-        lostpet0_.lost_location as lost_loc5_1_0_,
-        lostpet0_.lost_time as lost_tim6_1_0_,
-        lostpet0_.pet_breed as pet_bree7_1_0_,
-        lostpet0_.pet_description as pet_desc8_1_0_,
-        lostpet0_.pet_name as pet_name9_1_0_,
-        lostpet0_.pet_type as pet_typ10_1_0_,
-        lostpet0_.reward as reward11_1_0_,
-        lostpet0_.status as status12_1_0_,
-        lostpet0_.updated_at as updated13_1_0_,
-        lostpet0_.user_id as user_id14_1_0_,
-        user1_.id as id1_2_1_,
-        user1_.created_at as created_2_2_1_,
-        user1_.email as email3_2_1_,
-        user1_.password as password4_2_1_,
-        user1_.phone_number as phone_nu5_2_1_,
-        user1_.updated_at as updated_6_2_1_,
-        user1_.username as username7_2_1_ 
-    from
-        lost_pets lostpet0_ 
-    inner join
-        users user1_ 
-            on lostpet0_.user_id=user1_.id 
-    where
-        lostpet0_.id=?
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_0_,
-        lostpet0_.contact_info as contact_2_1_0_,
-        lostpet0_.created_at as created_3_1_0_,
-        lostpet0_.images as images4_1_0_,
-        lostpet0_.lost_location as lost_loc5_1_0_,
-        lostpet0_.lost_time as lost_tim6_1_0_,
-        lostpet0_.pet_breed as pet_bree7_1_0_,
-        lostpet0_.pet_description as pet_desc8_1_0_,
-        lostpet0_.pet_name as pet_name9_1_0_,
-        lostpet0_.pet_type as pet_typ10_1_0_,
-        lostpet0_.reward as reward11_1_0_,
-        lostpet0_.status as status12_1_0_,
-        lostpet0_.updated_at as updated13_1_0_,
-        lostpet0_.user_id as user_id14_1_0_,
-        user1_.id as id1_2_1_,
-        user1_.created_at as created_2_2_1_,
-        user1_.email as email3_2_1_,
-        user1_.password as password4_2_1_,
-        user1_.phone_number as phone_nu5_2_1_,
-        user1_.updated_at as updated_6_2_1_,
-        user1_.username as username7_2_1_ 
-    from
-        lost_pets lostpet0_ 
-    inner join
-        users user1_ 
-            on lostpet0_.user_id=user1_.id 
-    where
-        lostpet0_.id=?
-2025-08-12 00:10:30.282 [http-nio-8080-exec-4] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:30.287 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /uploads/pet/test.jpg
-2025-08-12 00:10:30.287 [http-nio-8080-exec-3] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:30.287 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:30.288 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /uploads/pet/test.jpg] with attributes [permitAll]
-2025-08-12 00:10:30.288 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /uploads/pet/test.jpg
-2025-08-12 00:10:30.290 [http-nio-8080-exec-3] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:30.293 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /error
-2025-08-12 00:10:30.293 [http-nio-8080-exec-3] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:30.293 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:30.293 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /error
-2025-08-12 00:10:30.323 [http-nio-8080-exec-3] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:34.099 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/admin/notices/4/approve
-2025-08-12 00:10:34.099 [http-nio-8080-exec-5] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:34.099 [http-nio-8080-exec-5] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:10:34.101 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing PUT /api/admin/notices/4/approve
-2025-08-12 00:10:34.101 [http-nio-8080-exec-7] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:10:34.101 [http-nio-8080-exec-7] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:10:34.102 [http-nio-8080-exec-7] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [PUT /api/admin/notices/4/approve] with attributes [permitAll]
-2025-08-12 00:10:34.102 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Secured PUT /api/admin/notices/4/approve
-2025-08-12 00:10:34.104 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_0_,
-        lostpet0_.contact_info as contact_2_1_0_,
-        lostpet0_.created_at as created_3_1_0_,
-        lostpet0_.images as images4_1_0_,
-        lostpet0_.lost_location as lost_loc5_1_0_,
-        lostpet0_.lost_time as lost_tim6_1_0_,
-        lostpet0_.pet_breed as pet_bree7_1_0_,
-        lostpet0_.pet_description as pet_desc8_1_0_,
-        lostpet0_.pet_name as pet_name9_1_0_,
-        lostpet0_.pet_type as pet_typ10_1_0_,
-        lostpet0_.reward as reward11_1_0_,
-        lostpet0_.status as status12_1_0_,
-        lostpet0_.updated_at as updated13_1_0_,
-        lostpet0_.user_id as user_id14_1_0_,
-        user1_.id as id1_2_1_,
-        user1_.created_at as created_2_2_1_,
-        user1_.email as email3_2_1_,
-        user1_.password as password4_2_1_,
-        user1_.phone_number as phone_nu5_2_1_,
-        user1_.updated_at as updated_6_2_1_,
-        user1_.username as username7_2_1_ 
-    from
-        lost_pets lostpet0_ 
-    inner join
-        users user1_ 
-            on lostpet0_.user_id=user1_.id 
-    where
-        lostpet0_.id=?
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_0_,
-        lostpet0_.contact_info as contact_2_1_0_,
-        lostpet0_.created_at as created_3_1_0_,
-        lostpet0_.images as images4_1_0_,
-        lostpet0_.lost_location as lost_loc5_1_0_,
-        lostpet0_.lost_time as lost_tim6_1_0_,
-        lostpet0_.pet_breed as pet_bree7_1_0_,
-        lostpet0_.pet_description as pet_desc8_1_0_,
-        lostpet0_.pet_name as pet_name9_1_0_,
-        lostpet0_.pet_type as pet_typ10_1_0_,
-        lostpet0_.reward as reward11_1_0_,
-        lostpet0_.status as status12_1_0_,
-        lostpet0_.updated_at as updated13_1_0_,
-        lostpet0_.user_id as user_id14_1_0_,
-        user1_.id as id1_2_1_,
-        user1_.created_at as created_2_2_1_,
-        user1_.email as email3_2_1_,
-        user1_.password as password4_2_1_,
-        user1_.phone_number as phone_nu5_2_1_,
-        user1_.updated_at as updated_6_2_1_,
-        user1_.username as username7_2_1_ 
-    from
-        lost_pets lostpet0_ 
-    inner join
-        users user1_ 
-            on lostpet0_.user_id=user1_.id 
-    where
-        lostpet0_.id=?
-2025-08-12 00:10:34.107 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
-    update
-        lost_pets 
-    set
-        contact_info=?,
-        created_at=?,
-        images=?,
-        lost_location=?,
-        lost_time=?,
-        pet_breed=?,
-        pet_description=?,
-        pet_name=?,
-        pet_type=?,
-        reward=?,
-        status=?,
-        updated_at=?,
-        user_id=? 
-    where
-        id=?
-Hibernate: 
-    update
-        lost_pets 
-    set
-        contact_info=?,
-        created_at=?,
-        images=?,
-        lost_location=?,
-        lost_time=?,
-        pet_breed=?,
-        pet_description=?,
-        pet_name=?,
-        pet_type=?,
-        reward=?,
-        status=?,
-        updated_at=?,
-        user_id=? 
-    where
-        id=?
-2025-08-12 00:10:34.130 [http-nio-8080-exec-7] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:13:28.101 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:13:28.101 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
-2025-08-12 00:13:28.102 [http-nio-8080-exec-2] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:13:28.102 [http-nio-8080-exec-1] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:13:28.102 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:13:28.102 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:13:28.103 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
-2025-08-12 00:13:28.103 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=] with attributes [permitAll]
-2025-08-12 00:13:28.103 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
-2025-08-12 00:13:28.103 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:13:28.104 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:13:28.104 [http-nio-8080-exec-2] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:13:28.106 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-Hibernate: 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-2025-08-12 00:13:28.109 [http-nio-8080-exec-1] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:13:33.563 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:13:33.563 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
-2025-08-12 00:13:33.563 [http-nio-8080-exec-3] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:13:33.563 [http-nio-8080-exec-4] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:13:33.563 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:13:33.563 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:13:33.564 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=] with attributes [permitAll]
-2025-08-12 00:13:33.564 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
-2025-08-12 00:13:33.564 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:13:33.564 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
-2025-08-12 00:13:33.565 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:13:33.565 [http-nio-8080-exec-4] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:13:33.577 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-Hibernate: 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-2025-08-12 00:13:33.579 [http-nio-8080-exec-3] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:13:44.912 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=%E4%B8%8A%E6%B5%B7
-2025-08-12 00:13:44.912 [http-nio-8080-exec-5] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:13:44.912 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:13:44.913 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=%E4%B8%8A%E6%B5%B7] with attributes [permitAll]
-2025-08-12 00:13:44.913 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=%E4%B8%8A%E6%B5%B7
-2025-08-12 00:13:44.914 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:13:44.927 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-Hibernate: 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-2025-08-12 00:13:44.929 [http-nio-8080-exec-5] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
-2025-08-12 00:13:45.914 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:13:45.914 [http-nio-8080-exec-7] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
-2025-08-12 00:13:45.915 [http-nio-8080-exec-7] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
-2025-08-12 00:13:45.915 [http-nio-8080-exec-7] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=] with attributes [permitAll]
-2025-08-12 00:13:45.915 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/pending?page=1&pageSize=10&keyword=&city=
-2025-08-12 00:13:45.916 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-Hibernate: 
-    select
-        lostpet0_.id as id1_1_,
-        lostpet0_.contact_info as contact_2_1_,
-        lostpet0_.created_at as created_3_1_,
-        lostpet0_.images as images4_1_,
-        lostpet0_.lost_location as lost_loc5_1_,
-        lostpet0_.lost_time as lost_tim6_1_,
-        lostpet0_.pet_breed as pet_bree7_1_,
-        lostpet0_.pet_description as pet_desc8_1_,
-        lostpet0_.pet_name as pet_name9_1_,
-        lostpet0_.pet_type as pet_typ10_1_,
-        lostpet0_.reward as reward11_1_,
-        lostpet0_.status as status12_1_,
-        lostpet0_.updated_at as updated13_1_,
-        lostpet0_.user_id as user_id14_1_ 
-    from
-        lost_pets lostpet0_ 
-    where
-        lostpet0_.status=?
-2025-08-12 00:13:45.927 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-Hibernate: 
-    select
-        user0_.id as id1_2_0_,
-        user0_.created_at as created_2_2_0_,
-        user0_.email as email3_2_0_,
-        user0_.password as password4_2_0_,
-        user0_.phone_number as phone_nu5_2_0_,
-        user0_.updated_at as updated_6_2_0_,
-        user0_.username as username7_2_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-2025-08-12 00:13:45.930 [http-nio-8080-exec-7] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
+2025-08-12 00:26:00.252 [http-nio-8080-exec-10] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request

@@ -159,6 +159,88 @@ public class AdminNoticeController {
         resp.put("data", detail);
         return ResponseEntity.ok(resp);
     }
+
+    @GetMapping("/history")
+    @Operation(summary = "查询审核历史", description = "基于 LostPet 中 status=approved/rejected 的数据生成审核历史，支持关键词/城市/结果筛选，简单分页")
+    public ResponseEntity<Map<String, Object>> getReviewHistory(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String result
+    ) {
+        List<LostPet> all = lostPetRepository.findAll();
+
+        String kw = keyword == null ? null : keyword.trim().toLowerCase(Locale.ROOT);
+        String cityFilter = city == null ? null : city.trim();
+        String resultFilter = result == null ? null : result.trim().toLowerCase(Locale.ROOT);
+
+        List<LostPet> filtered = all.stream()
+                .filter(lp -> {
+                    String st = safe(lp.getStatus()).toLowerCase(Locale.ROOT);
+                    boolean isReviewed = st.equals("approved") || st.equals("rejected");
+                    if (!isReviewed) return false;
+                    if (resultFilter == null || resultFilter.isEmpty()) return true;
+                    return st.equals(resultFilter);
+                })
+                .filter(lp -> kw == null || kw.isEmpty() ||
+                        (safe(lp.getPetName()).toLowerCase(Locale.ROOT).contains(kw) ||
+                         safe(lp.getPetDescription()).toLowerCase(Locale.ROOT).contains(kw)))
+                .filter(lp -> cityFilter == null || cityFilter.isEmpty() ||
+                        safe(lp.getLostLocation()).contains(cityFilter))
+                .sorted((a,b) -> {
+                    // 最新审核在前
+                    java.time.LocalDateTime ta = a.getUpdatedAt() != null ? a.getUpdatedAt() : a.getCreatedAt();
+                    java.time.LocalDateTime tb = b.getUpdatedAt() != null ? b.getUpdatedAt() : b.getCreatedAt();
+                    if (ta == null && tb == null) return 0;
+                    if (ta == null) return 1;
+                    if (tb == null) return -1;
+                    return tb.compareTo(ta);
+                })
+                .collect(Collectors.toList());
+
+        int total = filtered.size();
+        int fromIndex = Math.max(0, Math.min((page - 1) * pageSize, total));
+        int toIndex = Math.max(fromIndex, Math.min(fromIndex + pageSize, total));
+        List<LostPet> pageList = filtered.subList(fromIndex, toIndex);
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        List<Map<String, Object>> list = new ArrayList<>();
+        for (LostPet lp : pageList) {
+            Map<String, Object> item = new HashMap<>();
+            item.put("id", lp.getId());
+            String desc = safe(lp.getPetDescription());
+            String shortDesc = desc.length() > 20 ? desc.substring(0, 20) + "…" : desc;
+            String title = safe(lp.getPetName());
+            if (!shortDesc.isEmpty()) {
+                title = title.isEmpty() ? shortDesc : (title + " · " + shortDesc);
+            }
+            item.put("title", title);
+            item.put("city", safe(lp.getLostLocation()));
+            item.put("result", safe(lp.getStatus()));
+            java.time.LocalDateTime rt = lp.getUpdatedAt() != null ? lp.getUpdatedAt() : lp.getCreatedAt();
+            item.put("reviewedAt", rt == null ? "" : dtf.format(rt));
+            item.put("reviewer", "Admin");
+            Map<String, Object> user = new HashMap<>();
+            if (lp.getUser() != null) {
+                user.put("id", lp.getUser().getId());
+                user.put("username", safe(lp.getUser().getUsername()));
+                user.put("phoneNumber", safe(lp.getUser().getPhoneNumber()));
+            }
+            item.put("user", user);
+            list.add(item);
+        }
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("list", list);
+        data.put("total", total);
+
+        Map<String, Object> resp = new HashMap<>();
+        resp.put("code", 0);
+        resp.put("message", "ok");
+        resp.put("data", data);
+        return ResponseEntity.ok(resp);
+    }
     @PutMapping("/{id}/approve")
     @Operation(summary = "审核通过", description = "将启事标记为已通过（示例：更新 LostPet.status=approved）")
     public ResponseEntity<Map<String, Object>> approve(@PathVariable Long id) {
