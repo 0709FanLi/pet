@@ -404,3 +404,77 @@ Hibernate:
     where
         user0_.id=?
 2025-08-12 00:26:00.252 [http-nio-8080-exec-10] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
+2025-08-12 00:37:31.009 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/cities
+2025-08-12 00:37:31.009 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/admin/notices/history?page=1&pageSize=10&keyword=&city=&result=
+2025-08-12 00:37:31.011 [http-nio-8080-exec-4] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
+2025-08-12 00:37:31.011 [http-nio-8080-exec-5] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Set SecurityContextHolder to empty SecurityContext
+2025-08-12 00:37:31.011 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-12 00:37:31.011 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-12 00:37:31.012 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/cities] with attributes [permitAll]
+2025-08-12 00:37:31.012 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.i.FilterSecurityInterceptor - Authorized filter invocation [GET /api/admin/notices/history?page=1&pageSize=10&keyword=&city=&result=] with attributes [permitAll]
+2025-08-12 00:37:31.012 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/cities
+2025-08-12 00:37:31.012 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/admin/notices/history?page=1&pageSize=10&keyword=&city=&result=
+2025-08-12 00:37:31.013 [http-nio-8080-exec-4] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
+2025-08-12 00:37:31.014 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        lostpet0_.id as id1_1_,
+        lostpet0_.contact_info as contact_2_1_,
+        lostpet0_.created_at as created_3_1_,
+        lostpet0_.images as images4_1_,
+        lostpet0_.lost_location as lost_loc5_1_,
+        lostpet0_.lost_time as lost_tim6_1_,
+        lostpet0_.pet_breed as pet_bree7_1_,
+        lostpet0_.pet_description as pet_desc8_1_,
+        lostpet0_.pet_name as pet_name9_1_,
+        lostpet0_.pet_type as pet_typ10_1_,
+        lostpet0_.reward as reward11_1_,
+        lostpet0_.status as status12_1_,
+        lostpet0_.updated_at as updated13_1_,
+        lostpet0_.user_id as user_id14_1_ 
+    from
+        lost_pets lostpet0_
+Hibernate: 
+    select
+        lostpet0_.id as id1_1_,
+        lostpet0_.contact_info as contact_2_1_,
+        lostpet0_.created_at as created_3_1_,
+        lostpet0_.images as images4_1_,
+        lostpet0_.lost_location as lost_loc5_1_,
+        lostpet0_.lost_time as lost_tim6_1_,
+        lostpet0_.pet_breed as pet_bree7_1_,
+        lostpet0_.pet_description as pet_desc8_1_,
+        lostpet0_.pet_name as pet_name9_1_,
+        lostpet0_.pet_type as pet_typ10_1_,
+        lostpet0_.reward as reward11_1_,
+        lostpet0_.status as status12_1_,
+        lostpet0_.updated_at as updated13_1_,
+        lostpet0_.user_id as user_id14_1_ 
+    from
+        lost_pets lostpet0_
+2025-08-12 00:37:31.017 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        user0_.id as id1_2_0_,
+        user0_.created_at as created_2_2_0_,
+        user0_.email as email3_2_0_,
+        user0_.password as password4_2_0_,
+        user0_.phone_number as phone_nu5_2_0_,
+        user0_.updated_at as updated_6_2_0_,
+        user0_.username as username7_2_0_ 
+    from
+        users user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    select
+        user0_.id as id1_2_0_,
+        user0_.created_at as created_2_2_0_,
+        user0_.email as email3_2_0_,
+        user0_.password as password4_2_0_,
+        user0_.phone_number as phone_nu5_2_0_,
+        user0_.updated_at as updated_6_2_0_,
+        user0_.username as username7_2_0_ 
+    from
+        users user0_ 
+    where
+        user0_.id=?
+2025-08-12 00:37:31.022 [http-nio-8080-exec-5] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - Cleared SecurityContextHolder to complete request
