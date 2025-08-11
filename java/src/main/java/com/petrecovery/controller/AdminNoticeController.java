@@ -102,6 +102,63 @@ public class AdminNoticeController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "查询启事详情", description = "基于 LostPet 数据返回启事详情，含基本信息与图片、发布人等")
+    public ResponseEntity<Map<String, Object>> getNoticeDetail(@PathVariable Long id) {
+        Map<String, Object> resp = new HashMap<>();
+        LostPet lp = lostPetRepository.findById(id).orElse(null);
+        if (lp == null) {
+            resp.put("code", 404);
+            resp.put("message", "not found");
+            return ResponseEntity.status(404).body(resp);
+        }
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        Map<String, Object> detail = new HashMap<>();
+        detail.put("id", lp.getId());
+        detail.put("title", safe(lp.getPetName()));
+        detail.put("content", safe(lp.getPetDescription()));
+        detail.put("city", safe(lp.getLostLocation()));
+        detail.put("location", safe(lp.getLostLocation()));
+        detail.put("reward", safe(lp.getReward()));
+        detail.put("lostTime", lp.getLostTime() == null ? "" : dtf.format(lp.getLostTime()));
+        detail.put("createdAt", lp.getCreatedAt() == null ? "" : dtf.format(lp.getCreatedAt()));
+
+        java.util.List<String> imgs = new java.util.ArrayList<>();
+        try {
+            String json = safe(lp.getImages());
+            if (!json.isEmpty()) {
+                json = json.trim();
+                if (json.startsWith("[") && json.endsWith("]")) {
+                    String body = json.substring(1, json.length() - 1).trim();
+                    if (!body.isEmpty()) {
+                        for (String part : body.split(",")) {
+                            String p = part.trim();
+                            if (p.startsWith("\"") && p.endsWith("\"")) {
+                                p = p.substring(1, p.length() - 1);
+                            }
+                            if (!p.isEmpty()) imgs.add(p);
+                        }
+                    }
+                }
+            }
+        } catch (Exception ignored) {}
+        detail.put("images", imgs);
+
+        Map<String, Object> user = new HashMap<>();
+        if (lp.getUser() != null) {
+            user.put("id", lp.getUser().getId());
+            user.put("username", safe(lp.getUser().getUsername()));
+            user.put("phoneNumber", safe(lp.getUser().getPhoneNumber()));
+        }
+        detail.put("user", user);
+
+        resp.put("code", 0);
+        resp.put("message", "ok");
+        resp.put("data", detail);
+        return ResponseEntity.ok(resp);
+    }
     @PutMapping("/{id}/approve")
     @Operation(summary = "审核通过", description = "将启事标记为已通过（示例：更新 LostPet.status=approved）")
     public ResponseEntity<Map<String, Object>> approve(@PathVariable Long id) {

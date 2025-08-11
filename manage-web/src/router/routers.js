@@ -19,6 +19,7 @@ const createRouteMeta = (title, permissionLevel, options = {}) => ({
 const HomeView = () => import('@/views/Home.vue')
 const LoginView = () => import('@/views/Login.vue')
 const AuditPending = () => import('@/views/audit/Pending.vue')
+const AuditDetail = () => import('@/views/audit/Detail.vue')
 const AuditHistory = () => import('@/views/audit/History.vue')
 const OpsPin = () => import('@/views/ops/Pin.vue')
 const OpsBlock = () => import('@/views/ops/Block.vue')
@@ -46,6 +47,11 @@ const getPCRoutes = () => {
           path: 'audit/pending',
           component: AuditPending,
           meta: createRouteMeta('启事·待审核', ROUTER_PERMISSION.PUBLIC),
+        },
+        {
+          path: 'audit/detail/:id',
+          component: AuditDetail,
+          meta: createRouteMeta('启事·详情', ROUTER_PERMISSION.PUBLIC),
         },
         {
           path: 'audit/history',

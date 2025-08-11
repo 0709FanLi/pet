@@ -36,11 +36,13 @@
         <el-table-column prop="city" label="城市" width="120" />
         <el-table-column prop="reward" label="悬赏" width="100" />
         <el-table-column prop="createdAt" label="发布时间" width="180" />
-        <el-table-column label="操作" width="160">
+        <el-table-column label="操作" width="220">
           <template #default="{ row }">
             <el-button type="primary" link @click="openReview(row)"
               >审核</el-button
             >
+            <el-divider direction="vertical" />
+            <el-button link @click="toDetail(row)">详情</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -113,6 +115,7 @@
 
 <script setup>
   import { ref, reactive, onMounted } from 'vue'
+  import { useRouter } from 'vue-router'
   const loading = ref(false)
   const rows = ref([])
   const total = ref(0)
@@ -154,6 +157,10 @@
     reason: '',
   })
   const reviewFormRef = ref(null)
+  const router = useRouter()
+  const toDetail = row => {
+    router.push(`/audit/detail/${row.id}`)
+  }
   const openReview = row => {
     review.id = row.id
     review.title = row.title
