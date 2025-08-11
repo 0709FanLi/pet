@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/admin/detectives")
-@Tag(name = "后台-侦探管理", description = "侦探列表/查询")
+@Tag(name = "后台-侦探管理", description = "侦探列表/查询/状态变更")
 @CrossOrigin(origins = "*")
 public class AdminDetectiveController {
 
@@ -37,28 +37,48 @@ public class AdminDetectiveController {
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false) String status
     ) {
-        // 简化：以已通过或最近一次申请存在的用户作为侦探候选
+        // 聚合为每个用户最近一次申请
         List<DetectiveApplication> all = applicationRepository.findAll();
-        // 这里模拟状态，真实应有独立侦探表或状态字段
-        List<Map<String, Object>> rows = new ArrayList<>();
+        Map<Long, DetectiveApplication> latestByUser = new HashMap<>();
         for (DetectiveApplication app : all) {
             User u = app.getUser();
             if (u == null) continue;
+            DetectiveApplication exist = latestByUser.get(u.getId());
+            if (exist == null || (app.getCreatedAt() != null && exist.getCreatedAt() != null && app.getCreatedAt().isAfter(exist.getCreatedAt()))) {
+                latestByUser.put(u.getId(), app);
+            }
+        }
+
+        List<Map<String, Object>> rows = new ArrayList<>();
+        for (DetectiveApplication app : latestByUser.values()) {
+            String st = app.getStatus();
+            // 默认仅展示 通过/不通过/下架 三类，如需包含 pending 可传入 status=pending
+            if (status == null || status.isEmpty()) {
+                if ("pending".equalsIgnoreCase(st)) continue;
+            } else {
+                if (!status.equalsIgnoreCase(st)) continue;
+            }
+            if (keyword != null && !keyword.isEmpty()) {
+                if (!(String.valueOf(app.getRealName()).contains(keyword) || String.valueOf(app.getPhone()).contains(keyword))) {
+                    continue;
+                }
+            }
+            User u = app.getUser();
             Map<String, Object> m = new HashMap<>();
-            m.put("id", u.getId());
+            m.put("id", app.getId()); // 应用ID
+            m.put("userId", u.getId());
             m.put("realName", app.getRealName());
             m.put("phone", app.getPhone());
-            m.put("status", "active");
+            m.put("status", st); // approved|rejected|disabled
             m.put("orders", 0);
             m.put("successRate", "-");
-            m.put("createdAt", String.valueOf(u.getCreatedAt()));
+            m.put("createdAt", String.valueOf(app.getCreatedAt()));
             rows.add(m);
         }
-        // 关键词过滤
-        if (keyword != null && !keyword.isEmpty()) {
-            rows = rows.stream().filter(m -> String.valueOf(m.get("realName")).contains(keyword)
-                    || String.valueOf(m.get("phone")).contains(keyword)).collect(Collectors.toList());
-        }
+
+        // 排序（最新在前）
+        rows.sort((a, b) -> String.valueOf(b.get("createdAt")).compareTo(String.valueOf(a.get("createdAt"))));
+
         int total = rows.size();
         int from = Math.max(0, (page - 1) * pageSize);
         int to = Math.min(total, from + pageSize);
@@ -69,6 +89,47 @@ public class AdminDetectiveController {
         Map<String, Object> data = new HashMap<>();
         data.put("list", pageList);
         data.put("total", total);
+        res.put("data", data);
+        return ResponseEntity.ok(res);
+    }
+
+    @PutMapping("/{id}/approve")
+    @Operation(summary = "通过申请")
+    public ResponseEntity<Map<String, Object>> approve(@PathVariable Long id) {
+        return changeStatus(id, "approved", null);
+    }
+
+    @PutMapping("/{id}/reject")
+    @Operation(summary = "拒绝申请")
+    public ResponseEntity<Map<String, Object>> reject(@PathVariable Long id, @RequestBody(required = false) Map<String, Object> body) {
+        String reason = body == null ? null : String.valueOf(body.getOrDefault("reason", ""));
+        return changeStatus(id, "rejected", reason);
+    }
+
+    @PutMapping("/{id}/disable")
+    @Operation(summary = "下架侦探")
+    public ResponseEntity<Map<String, Object>> disable(@PathVariable Long id) {
+        return changeStatus(id, "disabled", null);
+    }
+
+    private ResponseEntity<Map<String, Object>> changeStatus(Long id, String status, String reason) {
+        Optional<DetectiveApplication> opt = applicationRepository.findById(id);
+        Map<String, Object> res = new HashMap<>();
+        if (!opt.isPresent()) {
+            res.put("code", 404);
+            res.put("message", "申请不存在");
+            return ResponseEntity.status(404).body(res);
+        }
+        DetectiveApplication app = opt.get();
+        app.setStatus(status);
+        if (reason != null) app.setReason(reason);
+        applicationRepository.save(app);
+        res.put("code", 200);
+        res.put("message", "success");
+        Map<String, Object> data = new HashMap<>();
+        data.put("id", app.getId());
+        data.put("status", app.getStatus());
+        data.put("reason", app.getReason());
         res.put("data", data);
         return ResponseEntity.ok(res);
     }

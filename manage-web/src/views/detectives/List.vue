@@ -6,8 +6,9 @@
         <el-input v-model="query.keyword" placeholder="姓名/手机号" clearable />
         <el-select v-model="query.status" clearable placeholder="状态">
           <el-option label="全部" value="" />
-          <el-option label="正常" value="active" />
-          <el-option label="已下架" value="disabled" />
+          <el-option label="通过" value="approved" />
+          <el-option label="不通过" value="rejected" />
+          <el-option label="下架" value="disabled" />
         </el-select>
         <el-button type="primary" @click="fetchList(1)">搜索</el-button>
       </div>
@@ -22,18 +23,48 @@
         <el-table-column prop="phone" label="手机号" width="140" />
         <el-table-column prop="status" label="状态" width="100">
           <template #default="{ row }">
-            <el-tag :type="row.status === 'active' ? 'success' : 'info'">{{
-              row.status === 'active' ? '正常' : '已下架'
-            }}</el-tag>
+            <el-tag
+              :type="
+                row.status === 'approved'
+                  ? 'success'
+                  : row.status === 'rejected'
+                  ? 'danger'
+                  : 'info'
+              "
+            >
+              {{
+                row.status === 'approved'
+                  ? '通过'
+                  : row.status === 'rejected'
+                  ? '不通过'
+                  : '下架'
+              }}
+            </el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="orders" label="接单数" width="100" />
         <el-table-column prop="successRate" label="成功率" width="100" />
         <el-table-column prop="createdAt" label="注册时间" width="180" />
-        <el-table-column label="操作" width="160">
-          <template #default>
-            <el-button link type="primary">详情</el-button>
-            <el-button link>下架</el-button>
+        <el-table-column label="操作" width="260">
+          <template #default="{ row }">
+            <el-button link type="primary" @click="view(row)">详情</el-button>
+            <el-button
+              link
+              type="success"
+              @click="approve(row)"
+              :disabled="row.status === 'approved'"
+              >通过</el-button
+            >
+            <el-button link type="warning" @click="reject(row)"
+              >不通过</el-button
+            >
+            <el-button
+              link
+              type="info"
+              @click="disableDetective(row)"
+              :disabled="row.status === 'disabled'"
+              >下架</el-button
+            >
           </template>
         </el-table-column>
         <template #empty>
@@ -82,6 +113,39 @@
     } finally {
       loading.value = false
     }
+  }
+
+  const post = async (url, body) => {
+    const resp = await fetch(url, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: body ? JSON.stringify(body) : undefined,
+    })
+    return resp.json()
+  }
+
+  const approve = async row => {
+    await post(
+      `http://192.168.1.11:8080/api/admin/detectives/${row.id}/approve`
+    )
+    fetchList()
+  }
+  const reject = async row => {
+    const reason = window.prompt('请输入不通过原因：', '') || ''
+    await post(
+      `http://192.168.1.11:8080/api/admin/detectives/${row.id}/reject`,
+      { reason }
+    )
+    fetchList()
+  }
+  const disableDetective = async row => {
+    await post(
+      `http://192.168.1.11:8080/api/admin/detectives/${row.id}/disable`
+    )
+    fetchList()
+  }
+  const view = row => {
+    window.alert(`【详情】\n姓名：${row.realName}\n电话：${row.phone}`)
   }
 
   onMounted(() => fetchList(1))
