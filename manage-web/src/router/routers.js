@@ -25,6 +25,7 @@ const OpsPin = () => import('@/views/ops/Pin.vue')
 const OpsBlock = () => import('@/views/ops/Block.vue')
 const DetectiveList = () => import('@/views/detectives/List.vue')
 const DetectiveRejected = () => import('@/views/detectives/Rejected.vue')
+const DetectiveDetail = () => import('@/views/detectives/Detail.vue')
 const OrdersList = () => import('@/views/orders/List.vue')
 const StatsOverview = () => import('@/views/stats/Overview.vue')
 const StatsDetails = () => import('@/views/stats/Details.vue')
@@ -72,6 +73,11 @@ const getPCRoutes = () => {
           path: 'detectives/list',
           component: DetectiveList,
           meta: createRouteMeta('侦探·列表', ROUTER_PERMISSION.PUBLIC),
+        },
+        {
+          path: 'detectives/detail/:id',
+          component: DetectiveDetail,
+          meta: createRouteMeta('侦探·详情', ROUTER_PERMISSION.PUBLIC),
         },
         {
           path: 'detectives/rejected',

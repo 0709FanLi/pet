@@ -112,6 +112,52 @@ public class AdminDetectiveController {
         return changeStatus(id, "disabled", null);
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "侦探申请详情")
+    public ResponseEntity<Map<String, Object>> detail(@PathVariable Long id) {
+        Optional<DetectiveApplication> opt = applicationRepository.findById(id);
+        Map<String, Object> res = new HashMap<>();
+        if (!opt.isPresent()) {
+            res.put("code", 404);
+            res.put("message", "申请不存在");
+            return ResponseEntity.status(404).body(res);
+        }
+        DetectiveApplication app = opt.get();
+        Map<String, Object> data = new HashMap<>();
+        data.put("id", app.getId());
+        Map<String, Object> user = new HashMap<>();
+        if (app.getUser() != null) {
+            user.put("id", app.getUser().getId());
+            user.put("username", String.valueOf(app.getUser().getUsername()));
+            user.put("phoneNumber", String.valueOf(app.getUser().getPhoneNumber()));
+        }
+        data.put("user", user);
+        data.put("realName", app.getRealName());
+        data.put("phone", app.getPhone());
+        data.put("city", app.getCity());
+        data.put("teamSize", app.getTeamSize());
+        data.put("experienceYears", app.getExperienceYears());
+        data.put("serviceAreas", app.getServiceAreas());
+        data.put("availableTimes", app.getAvailableTimes());
+        data.put("bio", app.getBio());
+        data.put("devices", app.getDevices());
+        data.put("devicePhotos", app.getDevicePhotos());
+        data.put("idCardFront", app.getIdCardFront());
+        data.put("idCardBack", app.getIdCardBack());
+        data.put("certificates", app.getCertificates());
+        data.put("payoutType", app.getPayoutType());
+        data.put("payoutAccount", app.getPayoutAccount());
+        data.put("status", app.getStatus());
+        data.put("reason", app.getReason());
+        data.put("createdAt", String.valueOf(app.getCreatedAt()));
+        data.put("updatedAt", String.valueOf(app.getUpdatedAt()));
+
+        res.put("code", 200);
+        res.put("message", "success");
+        res.put("data", data);
+        return ResponseEntity.ok(res);
+    }
+
     private ResponseEntity<Map<String, Object>> changeStatus(Long id, String status, String reason) {
         Optional<DetectiveApplication> opt = applicationRepository.findById(id);
         Map<String, Object> res = new HashMap<>();
