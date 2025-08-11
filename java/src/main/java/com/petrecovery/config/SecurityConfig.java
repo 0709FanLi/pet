@@ -52,6 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/lost-pets").permitAll()
                 // 管理后台登录
                 .antMatchers("/api/admin/login").permitAll()
+                // 启事审核相关接口（当前阶段开放以便联调）
+                .antMatchers("/api/admin/notices/**").permitAll()
                 // 通用配置接口
                 .antMatchers("/api/config/**").permitAll()
                 // 文件上传接口

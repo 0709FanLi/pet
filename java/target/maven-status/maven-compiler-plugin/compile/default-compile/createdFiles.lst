@@ -6,6 +6,7 @@ com/petrecovery/entity/User.class
 com/petrecovery/controller/UserController$PhoneLoginRequest.class
 com/petrecovery/service/LostPetService.class
 com/petrecovery/controller/UserController$LoginRequest.class
+com/petrecovery/controller/AdminNoticeController.class
 com/petrecovery/repository/DetectiveApplicationRepository.class
 com/petrecovery/entity/DetectiveApplication.class
 com/petrecovery/controller/UserController$LoginOrRegisterRequest.class
