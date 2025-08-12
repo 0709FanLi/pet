@@ -70,9 +70,11 @@ public class AdminDetectiveController {
             m.put("realName", app.getRealName());
             m.put("phone", app.getPhone());
             m.put("status", st); // approved|rejected|disabled
+            m.put("reason", app.getReason());
             m.put("orders", 0);
             m.put("successRate", "-");
             m.put("createdAt", String.valueOf(app.getCreatedAt()));
+            m.put("reviewedAt", String.valueOf(app.getUpdatedAt()));
             rows.add(m);
         }
 
