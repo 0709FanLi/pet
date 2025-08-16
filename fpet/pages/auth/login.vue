@@ -168,7 +168,7 @@
       const user = res?.data || {}
       if (token) {
         uni.setStorageSync(STORAGE_KEYS.token, token)
-        uni.setStorageSync('userInfo', user)
+        uni.setStorageSync(STORAGE_KEYS.userInfo, user)
         uni.showToast({ title: '登录成功', icon: 'success' })
         setTimeout(() => uni.switchTab({ url: '/pages/home/home' }), 500)
       } else {

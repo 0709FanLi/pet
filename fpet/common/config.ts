@@ -36,6 +36,12 @@ export const API = {
     application: '/api/detective/application',
     reviewLog: '/api/detective/application/review-log',
     status: '/api/detective/status',
+    cache: {
+      save: '/api/detective/cache/save',
+      get: '/api/detective/cache/get',
+      check: '/api/detective/cache/check',
+      clear: '/api/detective/cache/clear',
+    },
   },
   avatar: {
     upload: '/api/avatar/upload',
@@ -47,4 +53,6 @@ export const API = {
 export const STORAGE_KEYS = {
   token: 'token',
   userInfo: 'userInfo',
+  detectiveFormCache: 'detective_form_cache',
+  detectiveImageCache: 'detective_image_cache',
 }

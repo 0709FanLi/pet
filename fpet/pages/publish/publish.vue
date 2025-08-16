@@ -31,6 +31,13 @@
               placeholder="请输入宠物名称"
               :maxlength="20"
               @input="onPetNameInput"
+              @focus="onInputFocus"
+              :customStyle="{
+                paddingLeft: '16px',
+                paddingRight: '16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
+              }"
             />
           </u-form-item>
           <u-form-item label="宠物种类" prop="petType" :labelWidth="90">
@@ -41,7 +48,16 @@
             </u-radio-group>
           </u-form-item>
           <u-form-item label="宠物品种" prop="petBreed" :labelWidth="90">
-            <u-input v-model="form.petBreed" placeholder="可选，如 英短/金毛" />
+            <u-input
+              v-model="form.petBreed"
+              placeholder="可选，如 英短/金毛"
+              :customStyle="{
+                paddingLeft: '16px',
+                paddingRight: '16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
+              }"
+            />
           </u-form-item>
         </view>
 
@@ -65,7 +81,16 @@
             />
           </u-form-item>
           <u-form-item label="具体地点" prop="address" :labelWidth="90">
-            <u-input v-model="form.address" placeholder="道路、小区、门牌号" />
+            <u-input
+              v-model="form.address"
+              placeholder="道路、小区、门牌号"
+              :customStyle="{
+                paddingLeft: '16px',
+                paddingRight: '16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
+              }"
+            />
           </u-form-item>
           <u-form-item label="丢失时间" prop="lostTime" :labelWidth="90">
             <view class="fake-input" @tap="openTimePicker">{{
@@ -88,6 +113,7 @@
               v-model="form.petDescription"
               placeholder="如毛色、特征、项圈等（可选）"
               count
+              :customStyle="{ padding: '16px' }"
             />
           </u-form-item>
         </view>
@@ -99,10 +125,31 @@
             <text class="form-section__text">联系与悬赏</text>
           </view>
           <u-form-item label="联系方式" prop="contactInfo" :labelWidth="90">
-            <u-input v-model="form.contactInfo" placeholder="手机号或微信号" />
+            <u-input
+              v-model="form.contactInfo"
+              placeholder="手机号或微信号"
+              type="number"
+              @focus="onContactFocus"
+              :customStyle="{
+                paddingLeft: '16px',
+                paddingRight: '16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
+              }"
+            />
           </u-form-item>
           <u-form-item label="悬赏金额" prop="reward" :labelWidth="90">
-            <u-input v-model="form.reward" type="number" placeholder="如 500" />
+            <u-input
+              v-model="form.reward"
+              type="number"
+              placeholder="如 500"
+              :customStyle="{
+                paddingLeft: '16px',
+                paddingRight: '16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
+              }"
+            />
           </u-form-item>
         </view>
 
@@ -146,10 +193,10 @@
 </template>
 
 <script setup>
-  import { ref, computed } from 'vue'
+  import { ref, computed, onMounted } from 'vue'
   import dayjs from 'dayjs'
   import { request, upload } from '@/common/request'
-  import { BASE_URL } from '@/common/config'
+  import { BASE_URL, STORAGE_KEYS } from '@/common/config'
 
   const form = ref({
     petName: '',
@@ -182,6 +229,20 @@
     if (typeof val === 'string') {
       const cleaned = val.replace(/[\r\n]+/g, ' ')
       if (cleaned !== form.value.petName) form.value.petName = cleaned
+    }
+  }
+
+  // 输入框聚焦事件
+  const onInputFocus = e => {
+    console.log('[Publish] 输入框聚焦:', e)
+  }
+
+  // 联系方式聚焦事件
+  const onContactFocus = e => {
+    console.log('[Publish] 联系方式聚焦:', e)
+    // 如果联系方式为空且有用户信息，尝试重新填充
+    if (!form.value.contactInfo) {
+      initUserInfo()
     }
   }
 
@@ -344,6 +405,32 @@
     }
   }
 
+  // 初始化用户信息
+  const initUserInfo = () => {
+    try {
+      const userInfo = uni.getStorageSync(STORAGE_KEYS.userInfo)
+      console.log('[Publish] 获取用户信息:', userInfo)
+
+      if (userInfo) {
+        const userObj =
+          typeof userInfo === 'string' ? JSON.parse(userInfo) : userInfo
+        console.log('[Publish] 解析后的用户信息:', userObj)
+
+        // 自动填充联系方式（手机号）
+        const phoneNumber =
+          userObj?.phoneNumber || userObj?.phone || userObj?.username
+        if (phoneNumber && !form.value.contactInfo) {
+          form.value.contactInfo = phoneNumber
+          console.log('[Publish] 联系方式已自动填充:', phoneNumber)
+        }
+      } else {
+        console.log('[Publish] 未找到用户信息')
+      }
+    } catch (error) {
+      console.error('[Publish] 用户信息解析失败:', error)
+    }
+  }
+
   // 加载城市
   ;(async function loadCities() {
     try {
@@ -358,6 +445,11 @@
       console.error('[publish] load cities error:', e)
     }
   })()
+
+  // 页面加载时初始化
+  onMounted(() => {
+    initUserInfo()
+  })
 </script>
 
 <style lang="scss" scoped>
@@ -476,5 +568,63 @@
     border-radius: 8px;
     padding: 0 12px;
     color: #333;
+  }
+
+  /* uView输入框样式调整 - 使用更强的选择器 */
+  :deep(.u-input) {
+    padding: 0 !important;
+  }
+
+  :deep(.u-input .u-input__content) {
+    padding: 12px 16px !important;
+  }
+
+  :deep(.u-input__content) {
+    padding: 12px 16px !important;
+  }
+
+  :deep(.u-input__inner) {
+    padding: 0 !important;
+    margin: 0 !important;
+    text-indent: 0 !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  :deep(input) {
+    padding: 12px 16px !important;
+    box-sizing: border-box !important;
+  }
+
+  :deep(textarea) {
+    padding: 16px !important;
+    box-sizing: border-box !important;
+  }
+
+  :deep(.u-textarea) {
+    padding: 0 !important;
+  }
+
+  :deep(.u-textarea__inner) {
+    padding: 16px !important;
+    margin: 0 !important;
+    text-indent: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 更广泛的输入框样式覆盖 */
+  :deep(.u-form-item__body__content) {
+    padding: 0 !important;
+  }
+
+  :deep(.u-form-item__body__content input) {
+    padding: 12px 16px !important;
+  }
+
+  :deep(.u-form-item__body__content textarea) {
+    padding: 16px !important;
   }
 </style>

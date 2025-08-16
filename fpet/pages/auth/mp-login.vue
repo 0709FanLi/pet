@@ -43,7 +43,7 @@
           const token = resp?.data?.token
           if (token) {
             uni.setStorageSync(STORAGE_KEYS.token, token)
-            uni.setStorageSync('userInfo', resp?.data?.user || {})
+            uni.setStorageSync(STORAGE_KEYS.userInfo, resp?.data?.user || {})
             uni.showToast({ title: '登录成功' })
             setTimeout(() => uni.switchTab({ url: '/pages/home/home' }), 300)
           } else throw new Error('no token')
@@ -70,7 +70,7 @@
           const token = resp?.data?.token
           if (token) {
             uni.setStorageSync(STORAGE_KEYS.token, token)
-            uni.setStorageSync('userInfo', resp?.data?.user || {})
+            uni.setStorageSync(STORAGE_KEYS.userInfo, resp?.data?.user || {})
             uni.showToast({ title: '登录成功' })
             setTimeout(() => uni.switchTab({ url: '/pages/home/home' }), 300)
           } else throw new Error('no token')
