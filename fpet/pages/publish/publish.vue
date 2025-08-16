@@ -1,121 +1,142 @@
 <template>
-  <view class="publish-page">
-    <!-- 顶部可爱风格头部 -->
-    <view class="publish-header">
-      <text class="emoji">🐾</text>
-      <view class="head-text">
-        <text class="title">发布寻宠信息</text>
-        <text class="sub">请尽可能完整地填写信息，增加找回概率</text>
+  <view class="page">
+    <!-- 温馨的头部 -->
+    <view class="publish-header bg-gradient-primary">
+      <view class="publish-header__content">
+        <text class="publish-header__emoji">🐾</text>
+        <view class="publish-header__text">
+          <text class="publish-header__title">发布寻宠信息</text>
+          <text class="publish-header__subtitle">每个细节都可能帮助Ta回家</text>
+        </view>
       </view>
     </view>
 
-    <u-form
-      :model="form"
-      ref="formRef"
-      class="form-wrap"
-      :labelWidth="90"
-      labelPosition="left"
-    >
-      <view class="section">
-        <view class="section-title">🐶 基本信息</view>
-        <u-form-item label="宠物名称" prop="petName" :labelWidth="90">
-          <u-input
-            v-model="form.petName"
-            placeholder="请输入宠物名称"
-            :maxlength="20"
-            @input="onPetNameInput"
-          />
-        </u-form-item>
-        <u-form-item label="宠物种类" prop="petType" :labelWidth="90">
-          <u-radio-group v-model="form.petType" shape="circle">
-            <u-radio name="猫" label="猫" />
-            <u-radio name="狗" label="狗" />
-            <u-radio name="其它" label="其它" />
-          </u-radio-group>
-        </u-form-item>
-        <u-form-item label="宠物品种" prop="petBreed" :labelWidth="90">
-          <u-input v-model="form.petBreed" placeholder="可选，如 英短/金毛" />
-        </u-form-item>
-      </view>
-
-      <view class="section">
-        <view class="section-title">📍 丢失信息</view>
-        <u-form-item label="丢失城市" prop="city" :labelWidth="90">
-          <view class="fake-input" @tap="openCitySheet">{{
-            cityDisplay || '请选择丢失城市'
-          }}</view>
-          <u-action-sheet
-            :show="showCity"
-            :actions="cityActions"
-            title="选择城市"
-            @select="onSelectCity"
-            @close="showCity = false"
-            @cancel="showCity = false"
-          />
-        </u-form-item>
-        <u-form-item label="具体地点" prop="address" :labelWidth="90">
-          <u-input v-model="form.address" placeholder="道路、小区、门牌号" />
-        </u-form-item>
-        <u-form-item label="丢失时间" prop="lostTime" :labelWidth="90">
-          <view class="fake-input" @tap="openTimePicker">{{
-            lostTimeText
-          }}</view>
-          <u-datetime-picker
-            :show="showTimePicker"
-            v-model="pickerTime"
-            :minDate="minDate"
-            :maxDate="maxDate"
-            mode="datetime"
-            @confirm="onConfirmTime"
-            @change="onChangeTime"
-            @cancel="showTimePicker = false"
-            @close="showTimePicker = false"
-          />
-        </u-form-item>
-        <u-form-item label="情况描述" prop="petDescription" :labelWidth="90">
-          <u-textarea
-            v-model="form.petDescription"
-            placeholder="如毛色、特征、项圈等（可选）"
-            count
-          />
-        </u-form-item>
-      </view>
-
-      <view class="section">
-        <view class="section-title">☎️ 联系与悬赏</view>
-        <u-form-item label="联系方式" prop="contactInfo" :labelWidth="90">
-          <u-input v-model="form.contactInfo" placeholder="手机号或微信号" />
-        </u-form-item>
-        <u-form-item label="悬赏金额" prop="reward" :labelWidth="90">
-          <u-input v-model="form.reward" type="number" placeholder="如 500" />
-        </u-form-item>
-      </view>
-
-      <view class="section">
-        <view class="section-title">📷 图片</view>
-        <view class="upload-grid">
-          <view v-for="(img, idx) in imageList" :key="idx" class="img-item">
-            <image :src="img.url" mode="aspectFill" />
+    <view class="page-content">
+      <u-form
+        :model="form"
+        ref="formRef"
+        class="publish-form"
+        :labelWidth="90"
+        labelPosition="left"
+      >
+        <!-- 基本信息部分 -->
+        <view class="form-section">
+          <view class="form-section__title">
+            <text class="form-section__icon">🐶</text>
+            <text class="form-section__text">基本信息</text>
           </view>
-          <view class="img-item add" @click="chooseAndUpload">
-            <view class="inner">
-              <text class="plus">＋</text>
-              <text class="hint">添加图片</text>
+          <u-form-item label="宠物名称" prop="petName" :labelWidth="90">
+            <u-input
+              v-model="form.petName"
+              placeholder="请输入宠物名称"
+              :maxlength="20"
+              @input="onPetNameInput"
+            />
+          </u-form-item>
+          <u-form-item label="宠物种类" prop="petType" :labelWidth="90">
+            <u-radio-group v-model="form.petType" shape="circle">
+              <u-radio name="猫" label="猫" />
+              <u-radio name="狗" label="狗" />
+              <u-radio name="其它" label="其它" />
+            </u-radio-group>
+          </u-form-item>
+          <u-form-item label="宠物品种" prop="petBreed" :labelWidth="90">
+            <u-input v-model="form.petBreed" placeholder="可选，如 英短/金毛" />
+          </u-form-item>
+        </view>
+        
+        <!-- 丢失信息部分 -->
+        <view class="form-section">
+          <view class="form-section__title">
+            <text class="form-section__icon">📍</text>
+            <text class="form-section__text">丢失信息</text>
+          </view>
+          <u-form-item label="丢失城市" prop="city" :labelWidth="90">
+            <view class="fake-input" @tap="openCitySheet">{{
+              cityDisplay || '请选择丢失城市'
+            }}</view>
+            <u-action-sheet
+              :show="showCity"
+              :actions="cityActions"
+              title="选择城市"
+              @select="onSelectCity"
+              @close="showCity = false"
+              @cancel="showCity = false"
+            />
+          </u-form-item>
+          <u-form-item label="具体地点" prop="address" :labelWidth="90">
+            <u-input v-model="form.address" placeholder="道路、小区、门牌号" />
+          </u-form-item>
+          <u-form-item label="丢失时间" prop="lostTime" :labelWidth="90">
+            <view class="fake-input" @tap="openTimePicker">{{
+              lostTimeText
+            }}</view>
+            <u-datetime-picker
+              :show="showTimePicker"
+              v-model="pickerTime"
+              :minDate="minDate"
+              :maxDate="maxDate"
+              mode="datetime"
+              @confirm="onConfirmTime"
+              @change="onChangeTime"
+              @cancel="showTimePicker = false"
+              @close="showTimePicker = false"
+            />
+          </u-form-item>
+          <u-form-item label="情况描述" prop="petDescription" :labelWidth="90">
+            <u-textarea
+              v-model="form.petDescription"
+              placeholder="如毛色、特征、项圈等（可选）"
+              count
+            />
+          </u-form-item>
+        </view>
+        
+        <!-- 联系与悬赏部分 -->
+        <view class="form-section">
+          <view class="form-section__title">
+            <text class="form-section__icon">☎️</text>
+            <text class="form-section__text">联系与悬赏</text>
+          </view>
+          <u-form-item label="联系方式" prop="contactInfo" :labelWidth="90">
+            <u-input v-model="form.contactInfo" placeholder="手机号或微信号" />
+          </u-form-item>
+          <u-form-item label="悬赏金额" prop="reward" :labelWidth="90">
+            <u-input v-model="form.reward" type="number" placeholder="如 500" />
+          </u-form-item>
+        </view>
+        
+        <!-- 图片上传部分 -->
+        <view class="form-section">
+          <view class="form-section__title">
+            <text class="form-section__icon">📷</text>
+            <text class="form-section__text">宠物照片</text>
+          </view>
+          <view class="upload-grid">
+            <view v-for="(img, idx) in imageList" :key="idx" class="img-item">
+              <image :src="img.url" mode="aspectFill" />
+            </view>
+            <view class="img-item add" @click="chooseAndUpload">
+              <view class="inner">
+                <text class="plus">＋</text>
+                <text class="hint">添加图片</text>
+              </view>
             </view>
           </view>
+          <view class="upload-tips">💡 最多上传6张，优先选择正脸、清晰照片</view>
         </view>
-        <view class="tips">最多上传 6 张，优先选择正脸、清晰照片</view>
-      </view>
-    </u-form>
+      </u-form>
+    </view>
 
-    <view class="bottom">
-      <u-button
-        type="primary"
-        :disabled="!canSubmit"
+    <!-- 底部提交按钮 -->
+    <view class="publish-footer">
+      <view 
+        class="btn btn--primary btn--large btn--block"
+        :class="{ 'btn--disabled': !canSubmit }"
         @click="submit"
-        :customStyle="primaryStyle"
-        >提交发布</u-button
       >
+        <text class="btn-text">🎯 提交发布</text>
+      </view>
     </view>
 
     <u-toast ref="toast" />

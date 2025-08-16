@@ -120,7 +120,7 @@
     loading.value = true
     try {
       const resp = await fetch(
-        `http://192.168.1.11:8080/api/admin/detectives?page=${
+        `http://192.168.1.18:8080/api/admin/detectives?page=${
           query.page
         }&pageSize=${query.pageSize}&keyword=${encodeURIComponent(
           query.keyword || ''
@@ -147,7 +147,7 @@
 
   const approve = async row => {
     await post(
-      `http://192.168.1.11:8080/api/admin/detectives/${row.id}/approve`
+      `http://192.168.1.18:8080/api/admin/detectives/${row.id}/approve`
     )
     fetchList()
   }
@@ -158,7 +158,7 @@
   }
   const disableDetective = async row => {
     await post(
-      `http://192.168.1.11:8080/api/admin/detectives/${row.id}/disable`
+      `http://192.168.1.18:8080/api/admin/detectives/${row.id}/disable`
     )
     fetchList()
   }
@@ -176,7 +176,7 @@
       return window.alert('请填写不通过原因')
     }
     await post(
-      `http://192.168.1.11:8080/api/admin/detectives/${review.id}/reject`,
+      `http://192.168.1.18:8080/api/admin/detectives/${review.id}/reject`,
       { reason: review.reason }
     )
     review.visible = false

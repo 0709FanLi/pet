@@ -1,0 +1,216 @@
+/* 🐾 设计规范演示样式 - 重构后的组件样式示例 */
+
+/* 发布页面头部样式 */
+.publish-header {
+  padding: var(--spacing-lg) var(--spacing-md);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  
+  /* 添加装饰性元素 */
+  &::before {
+    content: "🌟";
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    opacity: 0.7;
+    animation: twinkle 2s ease-in-out infinite;
+  }
+  
+  &::after {
+    content: "💝";
+    position: absolute;
+    bottom: 20px;
+    left: 30px;
+    font-size: 20px;
+    opacity: 0.6;
+    animation: float 3s ease-in-out infinite;
+  }
+}
+
+.publish-header__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.publish-header__emoji {
+  font-size: 48px;
+  margin-right: var(--spacing-md);
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.publish-header__text {
+  flex: 1;
+}
+
+.publish-header__title {
+  font-size: var(--font-2xl);
+  font-weight: 700;
+  display: block;
+  margin-bottom: var(--spacing-xs);
+}
+
+.publish-header__subtitle {
+  font-size: var(--font-sm);
+  opacity: 0.9;
+  display: block;
+}
+
+/* 表单区块样式 */
+.form-section {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-md);
+  box-shadow: var(--shadow-light);
+  overflow: hidden;
+}
+
+.form-section__title {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-md);
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.form-section__icon {
+  font-size: var(--font-lg);
+  margin-right: var(--spacing-sm);
+}
+
+.form-section__text {
+  font-size: var(--font-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* 图片上传组件样式 */
+.upload-section {
+  .upload-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+  }
+  
+  .upload-item {
+    width: 100px;
+    height: 100px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    position: relative;
+    
+    image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    &.add-button {
+      border: 2px dashed var(--border-base);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-tertiary);
+      transition: all 0.2s ease;
+      
+      &:active {
+        border-color: var(--brand-primary);
+        background: rgba(91, 143, 249, 0.1);
+        transform: scale(0.98);
+      }
+      
+      .upload-content {
+        text-align: center;
+        
+        .upload-icon {
+          font-size: 32px;
+          color: var(--text-tertiary);
+          display: block;
+        }
+        
+        .upload-text {
+          font-size: var(--font-xs);
+          color: var(--text-tertiary);
+          margin-top: var(--spacing-xs);
+          display: block;
+        }
+      }
+    }
+  }
+  
+  .upload-tips {
+    font-size: var(--font-sm);
+    color: var(--text-tertiary);
+    padding: 0 var(--spacing-md) var(--spacing-md);
+    text-align: center;
+  }
+}
+
+/* 动画效果 */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* 底部固定按钮 */
+.fixed-bottom-action {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-md);
+  background: var(--bg-primary);
+  box-shadow: var(--shadow-medium);
+  z-index: 100;
+}
+
+/* 响应式适配 */
+@media (max-width: 375px) {
+  .publish-header {
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+  
+  .publish-header__emoji {
+    font-size: 40px;
+  }
+  
+  .upload-section .upload-grid {
+    gap: var(--spacing-xs);
+  }
+  
+  .upload-section .upload-item {
+    width: 80px;
+    height: 80px;
+  }
+}

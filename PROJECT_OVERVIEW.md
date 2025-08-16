@@ -155,6 +155,35 @@ cd fpet && npm run dev:h5
 - uView Plus 移动组件
 - MySQL 数据持久化
 
+## 🔧 IP 地址配置
+
+当前配置的局域网 IP: **192.168.1.18**
+
+### 快速更换 IP 地址
+
+如果局域网 IP 发生变化，可以使用以下方法快速更新：
+
+1. **使用更新脚本** (推荐)
+
+```bash
+cd scripts
+./update-ip.sh 192.168.1.xxx
+```
+
+2. **手动更新**
+   需要更新以下文件中的 IP 地址：
+
+- `fpet/common/config.ts` - uni-app 配置
+- `fpet/common/request.ts` - 请求配置
+- `manage-web/src/views/*/` - 管理后台各页面
+
+3. **运行时覆盖** (临时方案)
+   在 uni-app 控制台执行：
+
+```javascript
+uni.setStorageSync('base_url', 'http://新IP:8080')
+```
+
 ## 📂 目录结构
 
 ```

@@ -1,7 +1,7 @@
 <template>
-  <view class="home-page">
+  <view class="page">
     <!-- 顶部筛选 -->
-    <view class="header">
+    <view class="page-header">
       <u-dropdown activeColor="#5B8FF9">
         <u-dropdown-item
           v-model="selectedType"
@@ -16,35 +16,33 @@
       </u-dropdown>
     </view>
 
-    <!-- 列表 -->
-    <u-loading-page :loading="loading" loadingText="加载中..." />
-    <view v-if="!loading" class="list">
+    <!-- 宠物列表 -->
+    <u-loading-page :loading="loading" loadingText="🐾 正在加载宠物信息..." />
+    <view v-if="!loading" class="page-content">
+      <!-- 宠物卡片列表 -->
       <block v-for="pet in filteredList" :key="pet.id">
-        <view class="card" @click="goDetail(pet)">
-          <image class="card-image" :src="pet.image" mode="aspectFill" />
-          <view class="card-body">
-            <view class="row between">
-              <text class="title">{{ pet.location || '未知位置' }}</text>
-              <text class="time">{{ formatLostTime(pet.lostTime) }}</text>
+        <view class="pet-card" @click="goDetail(pet)">
+          <image class="pet-card__image" :src="pet.image" mode="aspectFill" />
+          <view class="pet-card__content">
+            <view class="pet-card__meta">
+              <text class="pet-card__location">{{ pet.location || '未知位置' }}</text>
+              <text class="pet-card__time">{{ formatLostTime(pet.lostTime) }}</text>
             </view>
-            <view class="row">
-              <text class="reward">悬赏 ¥{{ pet.amount || '0' }}</text>
-            </view>
-            <view class="row">
-              <u-tag
-                :text="statusText(pet.status)"
-                :type="pet.status === 'finding' ? 'primary' : 'success'"
-                plain
-                size="mini"
-              />
+            <view class="flex items-center justify-between mt-sm">
+              <text class="pet-card__reward">悬赏 ¥{{ pet.amount || '0' }}</text>
+              <view class="tag" :class="getStatusTagClass(pet.status)">
+                {{ statusText(pet.status) }}
+              </view>
             </view>
           </view>
         </view>
       </block>
 
-      <view v-if="filteredList.length === 0" class="empty">
-        <text class="empty-icon">🐾</text>
-        <text class="empty-text">暂无符合条件的宠物信息</text>
+      <!-- 空状态 -->
+      <view v-if="filteredList.length === 0" class="empty-state">
+        <text class="empty-state__icon">🐾</text>
+        <text class="empty-state__title">暂无宠物信息</text>
+        <text class="empty-state__text">目前没有符合条件的寻宠启事<br/>您可以调整筛选条件或稍后再来看看</text>
       </view>
     </view>
   </view>
@@ -190,6 +188,15 @@
   const statusText = s =>
     ({ finding: '寻找中', found: '已找到', closed: '已关闭' }[s] || '未知')
 
+  const getStatusTagClass = status => {
+    const classMap = {
+      finding: 'tag--primary',
+      found: 'tag--success', 
+      closed: 'tag--warning'
+    }
+    return classMap[status] || 'tag--primary'
+  }
+
   onMounted(async () => {
     await loadOptions()
     await loadList()
@@ -206,64 +213,67 @@
 </script>
 
 <style lang="scss" scoped>
-  .home-page {
-    background: #f5f7fa;
-    min-height: 100vh;
+/* 页面特定样式，通用样式已在公共样式库中定义 */
+
+/* 宠物卡片悬停效果 */
+.pet-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  
+  &:active {
+    transform: scale(0.98);
+    box-shadow: var(--shadow-medium);
   }
-  .header {
-    background: #fff;
-    padding: 8px 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  }
-  .list {
-    padding: 8px 12px 80px;
-  }
-  .card {
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 12px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  }
-  .card-image {
-    width: 100%;
-    height: 180px;
-    display: block;
-  }
-  .card-body {
-    padding: 12px;
-  }
-  .row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 6px;
-    &.between {
-      justify-content: space-between;
-    }
-  }
-  .title {
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
-  }
-  .time {
+}
+
+/* 宠物卡片动画入场效果 */
+.pet-card:nth-child(1) { animation: paw-animation 0.6s ease-out 0.1s both; }
+.pet-card:nth-child(2) { animation: paw-animation 0.6s ease-out 0.2s both; }
+.pet-card:nth-child(3) { animation: paw-animation 0.6s ease-out 0.3s both; }
+.pet-card:nth-child(4) { animation: paw-animation 0.6s ease-out 0.4s both; }
+.pet-card:nth-child(n+5) { animation: paw-animation 0.6s ease-out 0.5s both; }
+
+/* 悬赏金额特殊样式 */
+.pet-card__reward {
+  position: relative;
+  
+  &::before {
+    content: "💰";
+    margin-right: 4px;
     font-size: 12px;
-    color: #999;
   }
-  .reward {
-    font-size: 14px;
-    color: #ff6b6b;
-    font-weight: 600;
+}
+
+/* 时间标签样式优化 */
+.pet-card__time {
+  position: relative;
+  
+  &::before {
+    content: "⏰";
+    margin-right: 4px;
+    font-size: 10px;
   }
-  .empty {
-    text-align: center;
-    color: #999;
-    padding: 60px 0;
-    .empty-icon {
-      font-size: 42px;
-      display: block;
-      margin-bottom: 8px;
-    }
+}
+
+/* 位置标签样式优化 */
+.pet-card__location {
+  position: relative;
+  
+  &::before {
+    content: "📍";
+    margin-right: 4px;
+    font-size: 12px;
   }
+}
+
+/* 响应式优化 */
+@media (max-width: 375px) {
+  .pet-card__content {
+    padding: var(--spacing-sm);
+  }
+  
+  .pet-card__location {
+    font-size: var(--font-base);
+  }
+}
 </style>

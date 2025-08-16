@@ -83,7 +83,7 @@ export function upload(
         console.error(
           '[upload] hint: 确认 BASE_URL 是否正确:',
           BASE_URL,
-          '，以及服务端是否可达（同一局域网/IP未变更）。可在控制台执行 uni.setStorageSync("base_url", "http://192.168.1.11:8080") 后重试。'
+          '，以及服务端是否可达（同一局域网/IP未变更）。可在控制台执行 uni.setStorageSync("base_url", "http://192.168.1.18:8080") 后重试。'
         )
         reject(err)
       },
