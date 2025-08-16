@@ -31,7 +31,8 @@ public class LostPetController {
                                                 @RequestParam String petType,
                                                 @RequestParam(required = false) String petBreed,
                                                 @RequestParam String petDescription,
-                                                @RequestParam String lostLocation,
+                                                @RequestParam String city,
+                                                @RequestParam String address,
                                                 @RequestParam String lostTime,
                                                 @RequestParam String contactInfo,
                                                 @RequestParam(required = false) String reward,
@@ -41,7 +42,10 @@ public class LostPetController {
         lostPet.setPetType(petType);
         lostPet.setPetBreed(petBreed);
         lostPet.setPetDescription(petDescription);
-        lostPet.setLostLocation(lostLocation);
+        lostPet.setCity(city);
+        lostPet.setAddress(address);
+        // 兼容拼接
+        lostPet.setLostLocation((city != null ? city : "") + (address != null ? (" " + address) : ""));
         // 解析时间字符串为LocalDateTime
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -89,7 +93,12 @@ public class LostPetController {
         lostPet.setPetType(req.getPetType());
         lostPet.setPetBreed(req.getPetBreed());
         lostPet.setPetDescription(req.getPetDescription());
-        lostPet.setLostLocation(req.getLostLocation());
+        lostPet.setCity(req.getCity());
+        lostPet.setAddress(req.getAddress());
+        // 兼容拼接
+        String city = req.getCity();
+        String address = req.getAddress();
+        lostPet.setLostLocation((city != null ? city : "") + (address != null ? (" " + address) : ""));
         // 解析时间
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -124,7 +133,9 @@ public class LostPetController {
         private String petType;
         private String petBreed;
         private String petDescription;
-        private String lostLocation;
+        private String city;      // 丢失城市
+        private String address;   // 具体地点（门牌号）
+        private String lostLocation; // 兼容老字段
         private String lostTime; // 格式：yyyy-MM-dd HH:mm:ss
         private String contactInfo;
         private String reward;
@@ -140,6 +151,10 @@ public class LostPetController {
         public void setPetBreed(String petBreed) { this.petBreed = petBreed; }
         public String getPetDescription() { return petDescription; }
         public void setPetDescription(String petDescription) { this.petDescription = petDescription; }
+        public String getCity() { return city; }
+        public void setCity(String city) { this.city = city; }
+        public String getAddress() { return address; }
+        public void setAddress(String address) { this.address = address; }
         public String getLostLocation() { return lostLocation; }
         public void setLostLocation(String lostLocation) { this.lostLocation = lostLocation; }
         public String getLostTime() { return lostTime; }

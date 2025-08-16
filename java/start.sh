@@ -1,9 +1,35 @@
 #!/bin/bash
 
 # 宠物找回平台启动脚本
+# 支持已有数据的数据库快速启动
 
 echo "=== 宠物找回平台后端服务启动脚本 ==="
+echo "🐾 支持完整的宠物找回生态系统："
+echo "   • 后端API服务 (Spring Boot)"
+echo "   • 移动端应用 (Vue3 + Vant)"  
+echo "   • PC端应用 (Vue3 + Element Plus)"
+echo "   • 管理后台 (Vue3 + Element Plus)"
+echo "   • uni-app应用 (Vue3 + uView Plus)"
+echo "   • 宠物侦探端 (Vue3 + 移动端优化)"
 echo
+
+# 检查已运行的进程
+echo "0. 检查已运行的服务..."
+EXISTING_JAVA=$(ps aux | grep "spring-boot:run\|PetRecoveryApplication" | grep -v grep | awk '{print $2}')
+if [ -n "$EXISTING_JAVA" ]; then
+    echo "⚠️  检测到Spring Boot应用已在运行 (PID: $EXISTING_JAVA)"
+    echo "是否要停止现有进程并重新启动？(y/N): "
+    read -t 10 restart_choice
+    if [[ "$restart_choice" =~ ^[Yy]$ ]]; then
+        echo "正在停止现有进程..."
+        kill $EXISTING_JAVA 2>/dev/null
+        sleep 3
+        echo "✅ 已停止现有进程"
+    else
+        echo "保持现有服务运行"
+        exit 0
+    fi
+fi
 
 # 检查Java环境
 echo "1. 检查Java环境..."
@@ -52,8 +78,8 @@ else
     exit 1
 fi
 
-# 检查数据库是否存在
-echo "4. 检查数据库..."
+# 检查数据库和数据
+echo "4. 检查数据库和数据..."
 DB_EXISTS=$(mysql -u root -e "SHOW DATABASES LIKE 'pet_recovery';" 2>/dev/null | grep pet_recovery || echo "")
 if [ -z "$DB_EXISTS" ]; then
     echo "⚠️  数据库 pet_recovery 不存在，正在创建..."
@@ -65,45 +91,109 @@ if [ -z "$DB_EXISTS" ]; then
     echo "✅ 数据库创建成功"
 else
     echo "✅ 数据库 pet_recovery 已存在"
+    
+    # 显示数据统计
+    USER_COUNT=$(mysql -u root -D pet_recovery -e "SELECT COUNT(*) FROM users;" 2>/dev/null | tail -n 1)
+    PET_COUNT=$(mysql -u root -D pet_recovery -e "SELECT COUNT(*) FROM lost_pets;" 2>/dev/null | tail -n 1)
+    DETECTIVE_COUNT=$(mysql -u root -D pet_recovery -e "SELECT COUNT(*) FROM detective_applications;" 2>/dev/null | tail -n 1)
+    
+    if [ "$USER_COUNT" != "" ] && [ "$USER_COUNT" -gt 0 ]; then
+        echo "📊 数据库统计："
+        echo "   👥 用户数量: $USER_COUNT"
+        echo "   🐕 宠物启事: $PET_COUNT"
+        echo "   🕵️ 侦探申请: $DETECTIVE_COUNT"
+    fi
 fi
 
 # 编译项目
 echo "5. 编译项目..."
-echo "正在下载依赖并编译项目，请稍候..."
-mvn clean compile -q || {
-    echo "❌ 项目编译失败"
-    exit 1
-}
-echo "✅ 项目编译成功"
+echo "正在检查依赖并编译项目，请稍候..."
+
+# 检查target目录
+if [ -f "target/pet-recovery-1.0-SNAPSHOT.jar" ]; then
+    echo "✅ 发现已编译的JAR文件，跳过编译"
+else
+    echo "   正在编译Spring Boot项目..."
+    mvn clean compile -q || {
+        echo "❌ 项目编译失败"
+        exit 1
+    }
+    echo "✅ 项目编译成功"
+fi
 
 # 启动项目（后台）
 echo "6. 启动项目..."
-echo "以后台方式启动Spring Boot应用并写入 spring-boot.log"
-nohup mvn spring-boot:run > spring-boot.log 2>&1 &
-APP_PID=$!
-sleep 3
+echo "📡 启动Spring Boot后端API服务..."
 
-# 轮询健康检查（以公开接口代替）
+# 创建或清空日志文件
+> spring-boot.log
+
+# 启动方式选择
+if [ -f "target/pet-recovery-1.0-SNAPSHOT.jar" ]; then
+    echo "   使用JAR包方式启动..."
+    nohup java -jar target/pet-recovery-1.0-SNAPSHOT.jar > spring-boot.log 2>&1 &
+else
+    echo "   使用Maven方式启动..."
+    nohup mvn -q spring-boot:run > spring-boot.log 2>&1 &
+fi
+
+APP_PID=$!
+echo "   后台进程PID: $APP_PID"
+sleep 5
+
+# 增强的健康检查
 echo "7. 健康检查..."
 RETRY=30
-until curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/api/users/test | grep -q "200"; do
+HEALTH_CHECK_URL="http://localhost:8080/api/users/test"
+
+echo "   等待服务启动..."
+until curl -s -o /dev/null -w "%{http_code}" $HEALTH_CHECK_URL | grep -q "200"; do
   RETRY=$((RETRY-1))
   if [ $RETRY -le 0 ]; then
-    echo "❌ 应用启动检测超时，请查看 spring-boot.log"
+    echo "❌ 应用启动检测超时"
+    echo "💡 请检查日志文件: $(pwd)/spring-boot.log"
+    echo "💡 常见问题："
+    echo "   • 端口8080被占用"
+    echo "   • 数据库连接失败"
+    echo "   • 配置文件错误"
+    tail -n 10 spring-boot.log
     exit 1
   fi
+  printf "."
   sleep 1
 done
 
-echo "✅ 应用已启动成功"
+echo ""
+echo "✅ 🎉 宠物找回平台后端服务启动成功！"
 echo
-echo "可访问:"
-echo "- 测试接口: http://localhost:8080/api/users/test"
-echo "- 配置-种类: http://localhost:8080/api/config/pet-types"
-echo "- 配置-城市: http://localhost:8080/api/config/cities"
-echo "- API文档: http://localhost:8080/swagger-ui.html"
-echo "日志文件: $(pwd)/spring-boot.log"
+echo "🌐 API服务地址："
+echo "   • 主接口: http://localhost:8080"
+echo "   • 测试接口: http://localhost:8080/api/users/test"
+echo "   • API文档: http://localhost:8080/swagger-ui.html"
 echo
-echo "后台进程PID: $APP_PID"
+echo "🔧 配置接口："
+echo "   • 宠物种类: http://localhost:8080/api/config/pet-types"
+echo "   • 城市列表: http://localhost:8080/api/config/cities"
+echo
+echo "📱 前端应用："
+echo "   • 移动端: mobile/ (Vue3 + Vant)"
+echo "   • PC端: pc/ (Vue3 + Element Plus)"
+echo "   • 管理后台: manage-web/ (Vue3 + Element Plus)"
+echo "   • uni-app: fpet/ (Vue3 + uView Plus)"
+echo "   • 宠物侦探端: detective-mobile/ (Vue3)"
+echo
+echo "📋 进程信息："
+echo "   • 后台进程PID: $APP_PID"
+echo "   • 日志文件: $(pwd)/spring-boot.log"
+echo "   • 停止命令: kill $APP_PID"
+echo
+echo "💡 启动前端应用："
+echo "   cd ../mobile && npm run dev      # 移动端"
+echo "   cd ../pc && npm run dev          # PC端"  
+echo "   cd ../manage-web && npm run dev  # 管理后台"
+echo "   cd ../fpet && npm run dev:h5     # uni-app H5"
+echo
+echo "==========================================="
+echo "🐾 宠物找回平台已就绪！"
 echo "==========================================="
 exit 0

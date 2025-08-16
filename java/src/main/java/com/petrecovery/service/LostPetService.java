@@ -30,18 +30,19 @@ public class LostPetService {
     }
 
     public List<LostPet> getAllLostPets() {
-        return lostPetRepository.findByStatus("lost");
+        // 首页仅展示已审核通过的数据
+        return lostPetRepository.findByStatus("approved");
     }
 
     public List<LostPet> getAllLostPets(String petType, String city) {
         // 如果没有筛选条件，返回所有丢失状态的宠物
         if ((petType == null || petType.isEmpty() || "all".equals(petType)) && 
             (city == null || city.isEmpty() || "all".equals(city))) {
-            return lostPetRepository.findByStatus("lost");
+            return lostPetRepository.findByStatus("approved");
         }
         
         // 根据筛选条件查询
-        return lostPetRepository.findByFilters("lost", petType, city);
+        return lostPetRepository.findByFilters("approved", petType, city);
     }
 
     public List<LostPet> getUserLostPets(Long userId) {

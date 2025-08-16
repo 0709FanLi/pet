@@ -19,6 +19,11 @@ public class LostPet {
     private String petType;
     private String petBreed;
     private String petDescription;
+    // 城市（如 北京/上海）
+    private String city;
+    // 具体地址（精确到门牌号）
+    private String address;
+    // 兼容旧字段：丢失地点（将由 city + address 组合填充）
     private String lostLocation;
     private LocalDateTime lostTime;
     private String contactInfo;
@@ -97,6 +102,22 @@ public class LostPet {
 
     public void setLostLocation(String lostLocation) {
         this.lostLocation = lostLocation;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public LocalDateTime getLostTime() {

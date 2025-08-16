@@ -18,7 +18,7 @@ public interface LostPetRepository extends JpaRepository<LostPet, Long> {
      */
     @Query("SELECT l FROM LostPet l WHERE l.status = :status " +
            "AND (:petType IS NULL OR :petType = '' OR :petType = 'all' OR l.petType = :petType) " +
-           "AND (:city IS NULL OR :city = '' OR :city = 'all' OR l.lostLocation LIKE %:city%) " +
+           "AND (:city IS NULL OR :city = '' OR :city = 'all' OR l.city = :city OR l.lostLocation LIKE %:city%) " +
            "ORDER BY l.createdAt DESC")
     List<LostPet> findByFilters(@Param("status") String status, 
                                @Param("petType") String petType, 

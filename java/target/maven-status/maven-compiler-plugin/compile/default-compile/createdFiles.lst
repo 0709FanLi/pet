@@ -18,6 +18,7 @@ com/petrecovery/controller/UserController$SendCodeRequest.class
 com/petrecovery/config/SwaggerConfig.class
 com/petrecovery/controller/AdminAuthController$LoginRequest.class
 com/petrecovery/config/SecurityConfig.class
+com/petrecovery/controller/AdminNoticeController$RejectBody.class
 com/petrecovery/controller/FileUploadController.class
 com/petrecovery/repository/LostPetRepository.class
 com/petrecovery/controller/DetectiveApplicationController.class

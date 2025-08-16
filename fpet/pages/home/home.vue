@@ -52,6 +52,7 @@
 
 <script setup>
   import { ref, computed, onMounted } from 'vue'
+  import { onPullDownRefresh } from '@dcloudio/uni-app'
   import { BASE_URL } from '@/common/config'
   import { request } from '@/common/request'
 
@@ -128,18 +129,21 @@
     }
   }
 
-  const loadList = async () => {
-    loading.value = true
+  const loadList = async (opts = {}) => {
+    const silent = !!opts.silent
+    if (!silent) loading.value = true
     try {
       const res = await request({ url: '/api/lost-pets' })
       const arr = Array.isArray(res) ? res : res?.data || []
-      list.value = arr.map(pet => ({
+      const mapped = arr.map(pet => ({
         id: pet.id,
         petType: pet.petType,
         rawLostLocation: pet.lostLocation,
         location: pet.lostLocation,
         amount: pet.reward,
         lostTime: pet.lostTime,
+        createdAt: pet.createdAt,
+        approvedAt: pet.updatedAt,
         image: (() => {
           try {
             const imgs = JSON.parse(pet.images || '[]')
@@ -152,8 +156,18 @@
         })(),
         status: pet.status === 'lost' ? 'finding' : pet.status,
       }))
+      // 按通过审核时间倒序（最后通过在最上）
+      mapped.sort((a, b) => {
+        const taRaw = Date.parse(a.approvedAt || a.createdAt || a.lostTime || 0)
+        const tbRaw = Date.parse(b.approvedAt || b.createdAt || b.lostTime || 0)
+        const ta = isNaN(taRaw) ? 0 : taRaw
+        const tb = isNaN(tbRaw) ? 0 : tbRaw
+        if (ta !== tb) return tb - ta
+        return (b.id || 0) - (a.id || 0)
+      })
+      list.value = mapped
     } finally {
-      loading.value = false
+      if (!silent) loading.value = false
     }
   }
 
@@ -179,6 +193,15 @@
   onMounted(async () => {
     await loadOptions()
     await loadList()
+  })
+
+  // 下拉刷新
+  onPullDownRefresh(async () => {
+    try {
+      await loadList({ silent: true })
+    } finally {
+      uni.stopPullDownRefresh()
+    }
   })
 </script>
 

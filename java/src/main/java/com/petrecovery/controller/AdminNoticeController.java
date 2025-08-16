@@ -38,7 +38,8 @@ public class AdminNoticeController {
             @RequestParam(required = false) String city
     ) {
         // 从现有服务拉取 lost 状态数据，并按需过滤
-        List<LostPet> all = lostPetService.getAllLostPets();
+        // 审核待办来源：状态为 lost（待审）
+        List<LostPet> all = lostPetRepository.findByStatus("lost");
 
         String kw = keyword == null ? null : keyword.trim().toLowerCase(Locale.ROOT);
         String cityFilter = city == null ? null : city.trim();
@@ -70,7 +71,7 @@ public class AdminNoticeController {
                 title = title.isEmpty() ? shortDesc : (title + " · " + shortDesc);
             }
             item.put("title", title);
-            item.put("city", safe(lp.getLostLocation()));
+            item.put("city", safe(lp.getCity()));
             item.put("reward", safe(lp.getReward()));
             item.put("createdAt", lp.getCreatedAt() == null ? "" : dtf.format(lp.getCreatedAt()));
             list.add(item);
@@ -119,8 +120,8 @@ public class AdminNoticeController {
         detail.put("id", lp.getId());
         detail.put("title", safe(lp.getPetName()));
         detail.put("content", safe(lp.getPetDescription()));
-        detail.put("city", safe(lp.getLostLocation()));
-        detail.put("location", safe(lp.getLostLocation()));
+        detail.put("city", safe(lp.getCity()));
+        detail.put("location", safe(lp.getAddress()));
         detail.put("reward", safe(lp.getReward()));
         detail.put("lostTime", lp.getLostTime() == null ? "" : dtf.format(lp.getLostTime()));
         detail.put("createdAt", lp.getCreatedAt() == null ? "" : dtf.format(lp.getCreatedAt()));
@@ -187,7 +188,7 @@ public class AdminNoticeController {
                         (safe(lp.getPetName()).toLowerCase(Locale.ROOT).contains(kw) ||
                          safe(lp.getPetDescription()).toLowerCase(Locale.ROOT).contains(kw)))
                 .filter(lp -> cityFilter == null || cityFilter.isEmpty() ||
-                        safe(lp.getLostLocation()).contains(cityFilter))
+                        safe(lp.getCity()).contains(cityFilter))
                 .sorted((a,b) -> {
                     // 最新审核在前
                     java.time.LocalDateTime ta = a.getUpdatedAt() != null ? a.getUpdatedAt() : a.getCreatedAt();
@@ -216,7 +217,7 @@ public class AdminNoticeController {
                 title = title.isEmpty() ? shortDesc : (title + " · " + shortDesc);
             }
             item.put("title", title);
-            item.put("city", safe(lp.getLostLocation()));
+            item.put("city", safe(lp.getCity()));
             item.put("result", safe(lp.getStatus()));
             java.time.LocalDateTime rt = lp.getUpdatedAt() != null ? lp.getUpdatedAt() : lp.getCreatedAt();
             item.put("reviewedAt", rt == null ? "" : dtf.format(rt));

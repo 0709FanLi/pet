@@ -40,8 +40,21 @@
 
       <view class="section">
         <view class="section-title">📍 丢失信息</view>
-        <u-form-item label="丢失地点" prop="lostLocation" :labelWidth="90">
-          <u-input v-model="form.lostLocation" placeholder="请输入丢失地点" />
+        <u-form-item label="丢失城市" prop="city" :labelWidth="90">
+          <view class="fake-input" @tap="openCitySheet">{{
+            cityDisplay || '请选择丢失城市'
+          }}</view>
+          <u-action-sheet
+            :show="showCity"
+            :actions="cityActions"
+            title="选择城市"
+            @select="onSelectCity"
+            @close="showCity = false"
+            @cancel="showCity = false"
+          />
+        </u-form-item>
+        <u-form-item label="具体地点" prop="address" :labelWidth="90">
+          <u-input v-model="form.address" placeholder="道路、小区、门牌号" />
         </u-form-item>
         <u-form-item label="丢失时间" prop="lostTime" :labelWidth="90">
           <view class="fake-input" @tap="openTimePicker">{{
@@ -118,7 +131,8 @@
   const form = ref({
     petName: '',
     petType: '猫',
-    lostLocation: '',
+    city: '',
+    address: '',
     // 默认当前时间（包含分钟）
     lostTime: dayjs().valueOf(),
     contactInfo: '',
@@ -126,6 +140,19 @@
     petBreed: '',
     petDescription: '',
   })
+  // 城市列表
+  const showCity = ref(false)
+  const cityActions = ref([])
+  const cityDisplay = ref('')
+  const openCitySheet = () => {
+    showCity.value = true
+  }
+  const onSelectCity = e => {
+    const name = e?.name || e?.text || ''
+    form.value.city = name
+    cityDisplay.value = name
+    showCity.value = false
+  }
   const imageList = ref([]) // { url }
   // 宠物名称不允许换行与回车
   const onPetNameInput = val => {
@@ -177,7 +204,12 @@
   const canSubmit = computed(() => {
     const f = form.value
     return (
-      f.petName && f.petType && f.lostLocation && f.lostTime && f.contactInfo
+      f.petName &&
+      f.petType &&
+      f.city &&
+      f.address &&
+      f.lostTime &&
+      f.contactInfo
     )
   })
 
@@ -268,7 +300,8 @@
       petType: form.value.petType,
       petBreed: form.value.petBreed,
       petDescription: form.value.petDescription,
-      lostLocation: form.value.lostLocation,
+      city: form.value.city,
+      address: form.value.address,
       lostTime: lostTimeStr,
       contactInfo: form.value.contactInfo,
       reward: form.value.reward,
@@ -287,6 +320,21 @@
       uni.showToast({ title: '发布失败', icon: 'none' })
     }
   }
+
+  // 加载城市
+  ;(async function loadCities() {
+    try {
+      const res = await request({ url: '/api/config/cities' })
+      const arr = Array.isArray(res?.data)
+        ? res.data
+        : Array.isArray(res)
+        ? res
+        : []
+      cityActions.value = arr.map(name => ({ name }))
+    } catch (e) {
+      console.error('[publish] load cities error:', e)
+    }
+  })()
 </script>
 
 <style lang="scss" scoped>
