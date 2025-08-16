@@ -47,10 +47,6 @@ public class AvatarController {
         Map<String, Object> response = new HashMap<>();
         
         try {
-            System.out.println("=== 头像上传开始 ===");
-            System.out.println("上传路径: " + uploadPath);
-            System.out.println("文件信息: " + file.getOriginalFilename() + ", 大小: " + file.getSize());
-            
             // 获取用户信息
             String token = request.getHeader("Authorization");
             if (token == null || !token.startsWith("Bearer ")) {
@@ -61,16 +57,13 @@ public class AvatarController {
             
             token = token.substring(7);
             String username = jwtUtil.getUsernameFromToken(token);
-            System.out.println("解析用户名: " + username);
             User user = userRepository.findByUsername(username).orElse(null);
             
             if (user == null) {
-                System.out.println("用户不存在: " + username);
                 response.put("success", false);
                 response.put("message", "用户不存在");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
-            System.out.println("找到用户: " + user.getUsername() + ", ID: " + user.getId());
 
             // 验证文件
             if (file.isEmpty()) {
@@ -96,12 +89,8 @@ public class AvatarController {
 
             // 创建上传目录
             Path uploadDir = Paths.get(uploadPath);
-            System.out.println("上传目录: " + uploadDir.toAbsolutePath());
             if (!Files.exists(uploadDir)) {
-                System.out.println("创建上传目录: " + uploadDir);
                 Files.createDirectories(uploadDir);
-            } else {
-                System.out.println("上传目录已存在");
             }
 
             // 生成唯一文件名
@@ -114,13 +103,10 @@ public class AvatarController {
             originalFilename = StringUtils.cleanPath(originalFilename);
             String fileExtension = getFileExtension(originalFilename);
             String newFileName = "avatar_" + user.getId() + "_" + UUID.randomUUID().toString() + fileExtension;
-            System.out.println("生成文件名: " + newFileName);
             
             // 保存文件
             Path filePath = uploadDir.resolve(newFileName);
-            System.out.println("保存文件路径: " + filePath.toAbsolutePath());
             Files.copy(file.getInputStream(), filePath);
-            System.out.println("文件保存成功");
 
             // 删除旧头像文件（如果存在）
             if (user.getAvatar() != null && !user.getAvatar().isEmpty()) {
@@ -129,16 +115,13 @@ public class AvatarController {
 
             // 更新数据库中的头像路径
             String avatarUrl = "/uploads/" + newFileName;
-            System.out.println("设置头像URL: " + avatarUrl);
             user.setAvatar(avatarUrl);
             userRepository.save(user);
-            System.out.println("数据库更新成功");
 
             response.put("success", true);
             response.put("message", "头像上传成功");
             response.put("avatarUrl", avatarUrl);
             response.put("fullUrl", "http://192.168.1.18:8080" + avatarUrl); // 返回完整URL用于前端显示
-            System.out.println("返回结果: " + response);
             
             return ResponseEntity.ok(response);
 

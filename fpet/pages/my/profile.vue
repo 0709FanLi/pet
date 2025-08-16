@@ -316,18 +316,15 @@
   }
 
   const uploadAvatar = filePath => {
-    console.log('开始上传头像:', filePath)
     const token = uni.getStorageSync(STORAGE_KEYS.token)
     if (!token) {
       uni.showToast({ title: '请先登录', icon: 'none' })
       return
     }
-    console.log('Token:', token)
 
     uni.showLoading({ title: '上传中...' })
 
     const uploadUrl = `${BASE_URL}${API.avatar.upload}`
-    console.log('上传URL:', uploadUrl)
 
     uni.uploadFile({
       url: uploadUrl,
@@ -337,10 +334,8 @@
         Authorization: `Bearer ${token}`,
       },
       success: uploadRes => {
-        console.log('上传响应:', uploadRes)
         try {
           const data = JSON.parse(uploadRes.data)
-          console.log('解析后的数据:', data)
           if (data.success) {
             user.value.avatar = data.avatarUrl
             // 更新本地存储的用户信息
@@ -353,12 +348,10 @@
             }
             uni.showToast({ title: '头像更新成功', icon: 'success' })
           } else {
-            console.error('上传失败:', data.message)
             uni.showToast({ title: data.message || '上传失败', icon: 'none' })
           }
         } catch (e) {
           console.error('解析上传结果失败:', e)
-          console.error('原始响应数据:', uploadRes.data)
           uni.showToast({ title: '上传失败', icon: 'none' })
         }
       },
