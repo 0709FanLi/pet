@@ -31,6 +31,9 @@ public class User {
     @Column(name = "phone_number")
     private String phoneNumber;
     
+    @Column(name = "avatar")
+    private String avatar;
+    
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     
@@ -96,6 +99,14 @@ public class User {
     
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+    
+    public String getAvatar() {
+        return avatar;
+    }
+    
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
     
     public LocalDateTime getCreatedAt() {

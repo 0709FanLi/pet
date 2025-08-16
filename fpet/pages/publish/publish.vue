@@ -44,7 +44,7 @@
             <u-input v-model="form.petBreed" placeholder="可选，如 英短/金毛" />
           </u-form-item>
         </view>
-        
+
         <!-- 丢失信息部分 -->
         <view class="form-section">
           <view class="form-section__title">
@@ -91,7 +91,7 @@
             />
           </u-form-item>
         </view>
-        
+
         <!-- 联系与悬赏部分 -->
         <view class="form-section">
           <view class="form-section__title">
@@ -105,7 +105,7 @@
             <u-input v-model="form.reward" type="number" placeholder="如 500" />
           </u-form-item>
         </view>
-        
+
         <!-- 图片上传部分 -->
         <view class="form-section">
           <view class="form-section__title">
@@ -123,14 +123,16 @@
               </view>
             </view>
           </view>
-          <view class="upload-tips">💡 最多上传6张，优先选择正脸、清晰照片</view>
+          <view class="upload-tips"
+            >💡 最多上传6张，优先选择正脸、清晰照片</view
+          >
         </view>
       </u-form>
     </view>
 
     <!-- 底部提交按钮 -->
     <view class="publish-footer">
-      <view 
+      <view
         class="btn btn--primary btn--large btn--block"
         :class="{ 'btn--disabled': !canSubmit }"
         @click="submit"

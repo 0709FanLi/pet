@@ -37,6 +37,11 @@ export const API = {
     reviewLog: '/api/detective/application/review-log',
     status: '/api/detective/status',
   },
+  avatar: {
+    upload: '/api/avatar/upload',
+    info: '/api/avatar/info',
+    delete: '/api/avatar/delete',
+  },
 }
 
 export const STORAGE_KEYS = {

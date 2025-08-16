@@ -25,11 +25,17 @@
           <image class="pet-card__image" :src="pet.image" mode="aspectFill" />
           <view class="pet-card__content">
             <view class="pet-card__meta">
-              <text class="pet-card__location">{{ pet.location || '未知位置' }}</text>
-              <text class="pet-card__time">{{ formatLostTime(pet.lostTime) }}</text>
+              <text class="pet-card__location">{{
+                pet.location || '未知位置'
+              }}</text>
+              <text class="pet-card__time">{{
+                formatLostTime(pet.lostTime)
+              }}</text>
             </view>
             <view class="flex items-center justify-between mt-sm">
-              <text class="pet-card__reward">悬赏 ¥{{ pet.amount || '0' }}</text>
+              <text class="pet-card__reward"
+                >悬赏 ¥{{ pet.amount || '0' }}</text
+              >
               <view class="tag" :class="getStatusTagClass(pet.status)">
                 {{ statusText(pet.status) }}
               </view>
@@ -42,7 +48,9 @@
       <view v-if="filteredList.length === 0" class="empty-state">
         <text class="empty-state__icon">🐾</text>
         <text class="empty-state__title">暂无宠物信息</text>
-        <text class="empty-state__text">目前没有符合条件的寻宠启事<br/>您可以调整筛选条件或稍后再来看看</text>
+        <text class="empty-state__text"
+          >目前没有符合条件的寻宠启事<br />您可以调整筛选条件或稍后再来看看</text
+        >
       </view>
     </view>
   </view>
@@ -191,8 +199,8 @@
   const getStatusTagClass = status => {
     const classMap = {
       finding: 'tag--primary',
-      found: 'tag--success', 
-      closed: 'tag--warning'
+      found: 'tag--success',
+      closed: 'tag--warning',
     }
     return classMap[status] || 'tag--primary'
   }
@@ -213,67 +221,77 @@
 </script>
 
 <style lang="scss" scoped>
-/* 页面特定样式，通用样式已在公共样式库中定义 */
+  /* 页面特定样式，通用样式已在公共样式库中定义 */
 
-/* 宠物卡片悬停效果 */
-.pet-card {
-  transition: all 0.3s ease;
-  cursor: pointer;
-  
-  &:active {
-    transform: scale(0.98);
-    box-shadow: var(--shadow-medium);
+  /* 宠物卡片悬停效果 */
+  .pet-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:active {
+      transform: scale(0.98);
+      box-shadow: var(--shadow-medium);
+    }
   }
-}
 
-/* 宠物卡片动画入场效果 */
-.pet-card:nth-child(1) { animation: paw-animation 0.6s ease-out 0.1s both; }
-.pet-card:nth-child(2) { animation: paw-animation 0.6s ease-out 0.2s both; }
-.pet-card:nth-child(3) { animation: paw-animation 0.6s ease-out 0.3s both; }
-.pet-card:nth-child(4) { animation: paw-animation 0.6s ease-out 0.4s both; }
-.pet-card:nth-child(n+5) { animation: paw-animation 0.6s ease-out 0.5s both; }
-
-/* 悬赏金额特殊样式 */
-.pet-card__reward {
-  position: relative;
-  
-  &::before {
-    content: "💰";
-    margin-right: 4px;
-    font-size: 12px;
+  /* 宠物卡片动画入场效果 */
+  .pet-card:nth-child(1) {
+    animation: paw-animation 0.6s ease-out 0.1s both;
   }
-}
-
-/* 时间标签样式优化 */
-.pet-card__time {
-  position: relative;
-  
-  &::before {
-    content: "⏰";
-    margin-right: 4px;
-    font-size: 10px;
+  .pet-card:nth-child(2) {
+    animation: paw-animation 0.6s ease-out 0.2s both;
   }
-}
-
-/* 位置标签样式优化 */
-.pet-card__location {
-  position: relative;
-  
-  &::before {
-    content: "📍";
-    margin-right: 4px;
-    font-size: 12px;
+  .pet-card:nth-child(3) {
+    animation: paw-animation 0.6s ease-out 0.3s both;
   }
-}
-
-/* 响应式优化 */
-@media (max-width: 375px) {
-  .pet-card__content {
-    padding: var(--spacing-sm);
+  .pet-card:nth-child(4) {
+    animation: paw-animation 0.6s ease-out 0.4s both;
   }
-  
+  .pet-card:nth-child(n + 5) {
+    animation: paw-animation 0.6s ease-out 0.5s both;
+  }
+
+  /* 悬赏金额特殊样式 */
+  .pet-card__reward {
+    position: relative;
+
+    &::before {
+      content: '💰';
+      margin-right: 4px;
+      font-size: 12px;
+    }
+  }
+
+  /* 时间标签样式优化 */
+  .pet-card__time {
+    position: relative;
+
+    &::before {
+      content: '⏰';
+      margin-right: 4px;
+      font-size: 10px;
+    }
+  }
+
+  /* 位置标签样式优化 */
   .pet-card__location {
-    font-size: var(--font-base);
+    position: relative;
+
+    &::before {
+      content: '📍';
+      margin-right: 4px;
+      font-size: 12px;
+    }
   }
-}
+
+  /* 响应式优化 */
+  @media (max-width: 375px) {
+    .pet-card__content {
+      padding: var(--spacing-sm);
+    }
+
+    .pet-card__location {
+      font-size: var(--font-base);
+    }
+  }
 </style>
