@@ -15,19 +15,23 @@ echo
 
 # 检查已运行的进程
 echo "0. 检查已运行的服务..."
-EXISTING_JAVA=$(ps aux | grep "spring-boot:run\|PetRecoveryApplication" | grep -v grep | awk '{print $2}')
+EXISTING_JAVA=$(ps aux | grep "spring-boot:run\|PetRecoveryApplication" | grep -v grep | awk '{print $2}' | head -1)
 if [ -n "$EXISTING_JAVA" ]; then
     echo "⚠️  检测到Spring Boot应用已在运行 (PID: $EXISTING_JAVA)"
-    echo "是否要停止现有进程并重新启动？(y/N): "
-    read -t 10 restart_choice
-    if [[ "$restart_choice" =~ ^[Yy]$ ]]; then
-        echo "正在停止现有进程..."
+    
+    # 检查服务是否响应
+    if curl -s -f "http://localhost:8080/api/users/test" > /dev/null 2>&1; then
+        echo "✅ 服务正在正常运行"
+        echo "🌐 API服务地址: http://localhost:8080"
+        echo "📋 进程PID: $EXISTING_JAVA"
+        echo "💡 如需重启服务，请先执行: kill $EXISTING_JAVA"
+        exit 0
+    else
+        echo "⚠️  进程存在但服务无响应，将停止并重新启动"
+        echo "正在停止无响应的进程..."
         kill $EXISTING_JAVA 2>/dev/null
         sleep 3
-        echo "✅ 已停止现有进程"
-    else
-        echo "保持现有服务运行"
-        exit 0
+        echo "✅ 已停止无响应进程"
     fi
 fi
 
@@ -80,8 +84,11 @@ fi
 
 # 检查数据库和数据
 echo "4. 检查数据库和数据..."
-DB_EXISTS=$(mysql -u root -e "SHOW DATABASES LIKE 'pet_recovery';" 2>/dev/null | grep pet_recovery || echo "")
-if [ -z "$DB_EXISTS" ]; then
+
+# 更稳定的数据库检查方法
+DB_CHECK=$(mysql -u root -e "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'pet_recovery';" 2>/dev/null | grep -c "pet_recovery" || echo "0")
+
+if [ "$DB_CHECK" = "0" ]; then
     echo "⚠️  数据库 pet_recovery 不存在，正在创建..."
     mysql -u root -e "CREATE DATABASE pet_recovery CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;" 2>/dev/null || {
         echo "❌ 创建数据库失败，请手动创建数据库"
@@ -92,16 +99,25 @@ if [ -z "$DB_EXISTS" ]; then
 else
     echo "✅ 数据库 pet_recovery 已存在"
     
-    # 显示数据统计
-    USER_COUNT=$(mysql -u root -D pet_recovery -e "SELECT COUNT(*) FROM users;" 2>/dev/null | tail -n 1)
-    PET_COUNT=$(mysql -u root -D pet_recovery -e "SELECT COUNT(*) FROM lost_pets;" 2>/dev/null | tail -n 1)
-    DETECTIVE_COUNT=$(mysql -u root -D pet_recovery -e "SELECT COUNT(*) FROM detective_applications;" 2>/dev/null | tail -n 1)
+    # 检查并显示数据统计
+    echo "📊 数据库统计："
     
-    if [ "$USER_COUNT" != "" ] && [ "$USER_COUNT" -gt 0 ]; then
-        echo "📊 数据库统计："
-        echo "   👥 用户数量: $USER_COUNT"
-        echo "   🐕 宠物启事: $PET_COUNT"
-        echo "   🕵️ 侦探申请: $DETECTIVE_COUNT"
+    # 检查用户表
+    USER_COUNT=$(mysql -u root -D pet_recovery -e "SELECT COUNT(*) FROM users;" 2>/dev/null | tail -n 1 2>/dev/null || echo "0")
+    echo "   👥 用户数量: $USER_COUNT"
+    
+    # 检查宠物启事表  
+    PET_COUNT=$(mysql -u root -D pet_recovery -e "SELECT COUNT(*) FROM lost_pets;" 2>/dev/null | tail -n 1 2>/dev/null || echo "0")
+    echo "   🐕 宠物启事: $PET_COUNT"
+    
+    # 检查侦探申请表
+    DETECTIVE_COUNT=$(mysql -u root -D pet_recovery -e "SELECT COUNT(*) FROM detective_applications;" 2>/dev/null | tail -n 1 2>/dev/null || echo "0")
+    echo "   🕵️ 侦探申请: $DETECTIVE_COUNT"
+    
+    # 检查侦探申请缓存表（新功能）
+    CACHE_COUNT=$(mysql -u root -D pet_recovery -e "SELECT COUNT(*) FROM detective_application_cache;" 2>/dev/null | tail -n 1 2>/dev/null || echo "0")
+    if [ "$CACHE_COUNT" != "0" ] || mysql -u root -D pet_recovery -e "SHOW TABLES LIKE 'detective_application_cache';" 2>/dev/null | grep -q "detective_application_cache"; then
+        echo "   💾 侦探申请缓存: $CACHE_COUNT"
     fi
 fi
 
@@ -147,20 +163,29 @@ RETRY=30
 HEALTH_CHECK_URL="http://localhost:8080/api/users/test"
 
 echo "   等待服务启动..."
-until curl -s -o /dev/null -w "%{http_code}" $HEALTH_CHECK_URL | grep -q "200"; do
-  RETRY=$((RETRY-1))
-  if [ $RETRY -le 0 ]; then
-    echo "❌ 应用启动检测超时"
-    echo "💡 请检查日志文件: $(pwd)/spring-boot.log"
-    echo "💡 常见问题："
-    echo "   • 端口8080被占用"
-    echo "   • 数据库连接失败"
-    echo "   • 配置文件错误"
-    tail -n 10 spring-boot.log
-    exit 1
-  fi
-  printf "."
-  sleep 1
+while [ $RETRY -gt 0 ]; do
+    HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" $HEALTH_CHECK_URL 2>/dev/null)
+    if [ "$HTTP_CODE" = "200" ]; then
+        break
+    fi
+    
+    RETRY=$((RETRY-1))
+    if [ $RETRY -le 0 ]; then
+        echo ""
+        echo "❌ 应用启动检测超时"
+        echo "💡 请检查日志文件: $(pwd)/spring-boot.log"
+        echo "💡 常见问题："
+        echo "   • 端口8080被占用"
+        echo "   • 数据库连接失败"  
+        echo "   • 配置文件错误"
+        echo "📋 最近10行日志："
+        tail -n 10 spring-boot.log 2>/dev/null || echo "   无法读取日志文件"
+        echo "🔍 进程状态："
+        ps aux | grep "spring-boot:run\|PetRecoveryApplication" | grep -v grep || echo "   未找到相关进程"
+        exit 1
+    fi
+    printf "."
+    sleep 1
 done
 
 echo ""

@@ -6,9 +6,13 @@ com/petrecovery/entity/User.class
 com/petrecovery/controller/UserController$PhoneLoginRequest.class
 com/petrecovery/service/LostPetService.class
 com/petrecovery/controller/UserController$LoginRequest.class
+com/petrecovery/entity/DetectiveApplicationCache.class
 com/petrecovery/controller/AdminNoticeController.class
 com/petrecovery/repository/DetectiveApplicationRepository.class
 com/petrecovery/entity/DetectiveApplication.class
+com/petrecovery/controller/DetectiveApplicationCacheController.class
+com/petrecovery/controller/AvatarController.class
+com/petrecovery/service/DetectiveApplicationCacheService.class
 com/petrecovery/controller/UserController$LoginOrRegisterRequest.class
 com/petrecovery/util/JwtUtil.class
 com/petrecovery/entity/LostPet.class
@@ -17,6 +21,7 @@ com/petrecovery/controller/AdminDetectiveController.class
 com/petrecovery/controller/UserController$SendCodeRequest.class
 com/petrecovery/config/SwaggerConfig.class
 com/petrecovery/controller/AdminAuthController$LoginRequest.class
+com/petrecovery/repository/DetectiveApplicationCacheRepository.class
 com/petrecovery/config/SecurityConfig.class
 com/petrecovery/controller/AdminNoticeController$RejectBody.class
 com/petrecovery/controller/FileUploadController.class
