@@ -9,15 +9,17 @@ type ReqOptions = {
 
 export function request(options: ReqOptions): Promise<any> {
   const token = uni.getStorageSync(STORAGE_KEYS.token)
-  const fullUrl = options.url.startsWith('http') ? options.url : BASE_URL + options.url
-  
+  const fullUrl = options.url.startsWith('http')
+    ? options.url
+    : BASE_URL + options.url
+
   console.log('[request] 🌐 发起网络请求:')
   console.log('  - 原始URL:', options.url)
   console.log('  - 完整URL:', fullUrl)
   console.log('  - 方法:', options.method || 'GET')
   console.log('  - 有Token:', !!token)
   console.log('  - 请求数据:', JSON.stringify(options.data, null, 2))
-  
+
   return new Promise((resolve, reject) => {
     const requestConfig = {
       url: fullUrl,
@@ -30,9 +32,12 @@ export function request(options: ReqOptions): Promise<any> {
       },
       timeout: 30000, // 30秒超时
     }
-    
-    console.log('[request] 📤 请求配置:', JSON.stringify(requestConfig, null, 2))
-    
+
+    console.log(
+      '[request] 📤 请求配置:',
+      JSON.stringify(requestConfig, null, 2)
+    )
+
     uni.request({
       ...requestConfig,
       success: res => {
@@ -40,17 +45,17 @@ export function request(options: ReqOptions): Promise<any> {
         console.log('  - 状态码:', res.statusCode)
         console.log('  - 响应头:', JSON.stringify(res.header, null, 2))
         console.log('  - 响应数据:', JSON.stringify(res.data, null, 2))
-        
+
         if (res.statusCode !== 200) {
           console.error('[request] ❌ HTTP状态码错误:', res.statusCode)
           reject({
             message: `HTTP ${res.statusCode}`,
             statusCode: res.statusCode,
-            data: res.data
+            data: res.data,
           })
           return
         }
-        
+
         // 兼容我们返回 {code, message, data} 与纯数组
         const data: any = res.data
         if (
@@ -59,7 +64,12 @@ export function request(options: ReqOptions): Promise<any> {
           'code' in data &&
           'data' in data
         ) {
-          console.log('[request] 📋 标准格式响应 - code:', data.code, 'message:', data.message)
+          console.log(
+            '[request] 📋 标准格式响应 - code:',
+            data.code,
+            'message:',
+            data.message
+          )
           if (data.code === 200) {
             console.log('[request] ✅ 请求完全成功')
             resolve(data)
@@ -76,7 +86,7 @@ export function request(options: ReqOptions): Promise<any> {
         console.error('[request] 💥 请求失败:')
         console.error('  - 错误对象:', JSON.stringify(err, null, 2))
         console.error('  - 错误消息:', err.errMsg || err.message)
-        
+
         // 网络检查
         uni.getNetworkType({
           success: (netRes: any) => {
@@ -87,15 +97,15 @@ export function request(options: ReqOptions): Promise<any> {
           },
           fail: () => {
             console.warn('[request] ⚠️ 无法获取网络状态')
-          }
+          },
         })
-        
+
         // 提供更友好的错误信息
         let friendlyError = {
           message: '网络请求失败',
-          originalError: err
+          originalError: err,
         }
-        
+
         if (err.errMsg) {
           if (err.errMsg.includes('timeout')) {
             friendlyError.message = '请求超时，请检查网络连接'
@@ -105,7 +115,7 @@ export function request(options: ReqOptions): Promise<any> {
             friendlyError.message = '请求被中止'
           }
         }
-        
+
         console.error('[request] 🎯 友好错误信息:', friendlyError.message)
         reject(friendlyError)
       },

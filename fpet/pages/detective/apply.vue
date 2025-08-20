@@ -895,8 +895,11 @@
 
   const submit = async () => {
     console.log('[detective-apply] 🚀 开始提交申请...')
-    console.log('[detective-apply] 当前表单数据:', JSON.stringify(form, null, 2))
-    
+    console.log(
+      '[detective-apply] 当前表单数据:',
+      JSON.stringify(form, null, 2)
+    )
+
     // 1. 验证必填字段
     const missing = getMissingFields()
     if (missing.length > 0) {
@@ -917,12 +920,15 @@
     try {
       // 3. 准备提交数据
       const payload = JSON.parse(JSON.stringify(form))
-      console.log('[detective-apply] 📤 准备提交的数据:', JSON.stringify(payload, null, 2))
-      
+      console.log(
+        '[detective-apply] 📤 准备提交的数据:',
+        JSON.stringify(payload, null, 2)
+      )
+
       // 4. 显示提交状态
       uni.showLoading({ title: '提交中...' })
       console.log('[detective-apply] ⏳ 开始发送请求...')
-      
+
       // 5. 发送请求
       const startTime = Date.now()
       const res = await request({
@@ -931,11 +937,11 @@
         data: payload,
       })
       const endTime = Date.now()
-      
+
       console.log('[detective-apply] 📥 收到响应:')
-      console.log('  - 耗时:', (endTime - startTime), 'ms')
+      console.log('  - 耗时:', endTime - startTime, 'ms')
       console.log('  - 响应数据:', JSON.stringify(res, null, 2))
-      
+
       uni.hideLoading()
 
       // 6. 检查响应结果
@@ -943,7 +949,7 @@
         console.log('[detective-apply] ✅ 提交成功!')
         console.log('  - 申请ID:', res.data?.applicationId)
         console.log('  - 状态:', res.data?.status)
-        
+
         // 提交成功后清除缓存
         console.log('[detective-apply] 🧹 清除缓存...')
         await clearAllCache()
@@ -960,20 +966,19 @@
         console.error('  - code:', res?.code)
         console.error('  - message:', res?.message)
         console.error('  - 完整响应:', res)
-        
+
         const errorMsg = res?.message || '提交失败，请重试'
         uni.showToast({ title: errorMsg, icon: 'none', duration: 3000 })
       }
-      
     } catch (e) {
       console.error('[detective-apply] 💥 提交异常:')
       console.error('  - 错误类型:', e.constructor.name)
       console.error('  - 错误消息:', e.message)
       console.error('  - 错误栈:', e.stack)
       console.error('  - 完整错误对象:', e)
-      
+
       uni.hideLoading()
-      
+
       // 根据错误类型提供更具体的错误信息
       let errorMessage = '提交失败'
       if (e.message && e.message.includes('Network')) {
@@ -985,7 +990,7 @@
       } else if (e.message) {
         errorMessage = `提交失败: ${e.message}`
       }
-      
+
       uni.showToast({ title: errorMessage, icon: 'none', duration: 3000 })
     }
   }
