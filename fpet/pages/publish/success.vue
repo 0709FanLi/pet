@@ -5,7 +5,8 @@
     <view class="card" v-if="pet">
       <image class="cover" :src="coverSrc" mode="aspectFill" />
       <view class="info"
-        >{{ pet.petName }} · {{ pet.petType }} · {{ pet.lostLocation }}</view
+        >{{ pet.petName }} · {{ pet.petType }} ·
+        {{ getLostLocation(pet) }}</view
       >
     </view>
     <view class="btns">
@@ -21,8 +22,23 @@
   const pet = ref(null)
   onMounted(() => {
     const t = uni.getStorageSync('temp_published_pet')
-    if (t) pet.value = typeof t === 'string' ? JSON.parse(t) : t
+    if (t) {
+      pet.value = typeof t === 'string' ? JSON.parse(t) : t
+      console.log('[Success] 获取发布的宠物数据:', pet.value)
+    } else {
+      console.log('[Success] 未找到发布的宠物数据')
+    }
   })
+
+  const getLostLocation = pet => {
+    if (!pet) return ''
+    // 新格式：城市 + 具体地点
+    if (pet.city && pet.address) {
+      return `${pet.city} ${pet.address}`
+    }
+    // 兼容老格式
+    return pet.lostLocation || pet.city || pet.address || '未知'
+  }
   const coverSrc = computed(() => {
     try {
       const imgs = Array.isArray(pet.value?.images) ? pet.value.images : []

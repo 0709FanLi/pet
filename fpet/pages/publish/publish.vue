@@ -372,15 +372,26 @@
       images: imgs,
     }
     try {
-      await request({
+      const response = await request({
         url: '/api/lost-pets/json',
         method: 'POST',
         data: payload,
       })
-      const temp = { id: Date.now(), ...payload }
+      console.log('[Publish] 发布成功响应:', response)
+
+      // 获取返回的宠物数据（包含真实ID）
+      const createdPet = response?.data || response
+      const temp = {
+        id: createdPet?.id || Date.now(),
+        ...payload,
+        ...createdPet,
+      }
+
+      console.log('[Publish] 保存临时数据:', temp)
       uni.setStorageSync('temp_published_pet', temp)
       uni.redirectTo({ url: '/pages/publish/success' })
     } catch (e) {
+      console.error('[Publish] 发布失败:', e)
       uni.showToast({ title: '发布失败', icon: 'none' })
     }
   }
