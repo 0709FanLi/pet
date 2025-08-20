@@ -1228,7 +1228,7 @@
   /* uView组件样式重置 */
   :deep(.u-input) {
     flex: 1;
-    padding: 0 var(--spacing-md);
+    padding: 0 !important;
     font-size: var(--font-base);
     color: var(--text-primary);
     background: transparent !important;
@@ -1239,16 +1239,54 @@
     box-shadow: none !important;
   }
 
+  :deep(.u-input__content) {
+    padding: 0 var(--spacing-md) !important;
+    width: 100% !important;
+    height: 46px !important;
+    line-height: 46px !important;
+  }
+
   :deep(.u-input__inner) {
     background: transparent !important;
     border: none !important;
     padding: 0 !important;
+    margin: 0 !important;
     height: 46px !important;
     line-height: 46px !important;
     font-size: var(--font-base) !important;
     color: var(--text-primary) !important;
     box-shadow: none !important;
     outline: none !important;
+    text-indent: 0 !important;
+    width: 100% !important;
+
+    &::placeholder,
+    &::-webkit-input-placeholder,
+    &::-moz-placeholder {
+      padding-left: 0 !important;
+      text-indent: 0 !important;
+      color: var(--text-placeholder) !important;
+    }
+  }
+
+  :deep(input) {
+    padding: 0 !important;
+    margin: 0 !important;
+    text-indent: 0 !important;
+    width: 100% !important;
+    height: 46px !important;
+    line-height: 46px !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+
+    &::placeholder,
+    &::-webkit-input-placeholder,
+    &::-moz-placeholder {
+      padding-left: 0 !important;
+      text-indent: 0 !important;
+      color: var(--text-placeholder) !important;
+    }
   }
 
   :deep(.u-input--disabled) {
@@ -1262,9 +1300,25 @@
     background: var(--bg-tertiary) !important;
     cursor: not-allowed;
 
+    :deep(.u-input__content) {
+      padding: 0 var(--spacing-md) !important;
+    }
+
     :deep(.u-input__inner) {
       color: var(--text-tertiary) !important;
       cursor: not-allowed;
+      padding: 0 !important;
+    }
+
+    :deep(input) {
+      color: var(--text-tertiary) !important;
+      cursor: not-allowed;
+
+      &::placeholder,
+      &::-webkit-input-placeholder,
+      &::-moz-placeholder {
+        color: var(--text-tertiary) !important;
+      }
     }
   }
 
