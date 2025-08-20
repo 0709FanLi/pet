@@ -32,12 +32,8 @@
               :maxlength="20"
               @input="onPetNameInput"
               @focus="onInputFocus"
-              :customStyle="{
-                paddingLeft: '16px',
-                paddingRight: '16px',
-                paddingTop: '12px',
-                paddingBottom: '12px',
-              }"
+              border="surround"
+              clearable
             />
           </u-form-item>
           <u-form-item label="宠物种类" prop="petType" :labelWidth="90">
@@ -51,12 +47,8 @@
             <u-input
               v-model="form.petBreed"
               placeholder="可选，如 英短/金毛"
-              :customStyle="{
-                paddingLeft: '16px',
-                paddingRight: '16px',
-                paddingTop: '12px',
-                paddingBottom: '12px',
-              }"
+              border="surround"
+              clearable
             />
           </u-form-item>
         </view>
@@ -84,12 +76,8 @@
             <u-input
               v-model="form.address"
               placeholder="道路、小区、门牌号"
-              :customStyle="{
-                paddingLeft: '16px',
-                paddingRight: '16px',
-                paddingTop: '12px',
-                paddingBottom: '12px',
-              }"
+              border="surround"
+              clearable
             />
           </u-form-item>
           <u-form-item label="丢失时间" prop="lostTime" :labelWidth="90">
@@ -113,7 +101,7 @@
               v-model="form.petDescription"
               placeholder="如毛色、特征、项圈等（可选）"
               count
-              :customStyle="{ padding: '16px' }"
+              border="surround"
             />
           </u-form-item>
         </view>
@@ -130,12 +118,8 @@
               placeholder="手机号或微信号"
               type="number"
               @focus="onContactFocus"
-              :customStyle="{
-                paddingLeft: '16px',
-                paddingRight: '16px',
-                paddingTop: '12px',
-                paddingBottom: '12px',
-              }"
+              border="surround"
+              clearable
             />
           </u-form-item>
           <u-form-item label="悬赏金额" prop="reward" :labelWidth="90">
@@ -143,12 +127,8 @@
               v-model="form.reward"
               type="number"
               placeholder="如 500"
-              :customStyle="{
-                paddingLeft: '16px',
-                paddingRight: '16px',
-                paddingTop: '12px',
-                paddingBottom: '12px',
-              }"
+              border="surround"
+              clearable
             />
           </u-form-item>
         </view>
@@ -453,49 +433,75 @@
 </script>
 
 <style lang="scss" scoped>
-  .publish-page {
-    padding-bottom: 80px;
-    background: #f7f8fa;
+  .page {
     min-height: 100vh;
+    background-color: #f7f8fa;
+  }
+
+  .page-content {
+    padding: 16px;
+    padding-bottom: 100px; /* 为底部按钮预留空间 */
   }
   .publish-header {
+    background: linear-gradient(135deg, #5b8ff9 0%, #36cfc9 100%);
+    color: white;
+    padding: 24px 16px 16px;
+  }
+
+  .publish-header__content {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 16px 16px 8px;
-    background: linear-gradient(
-      135deg,
-      var(--brand-gradient-start),
-      var(--brand-gradient-end)
-    );
-    color: #fff;
   }
-  .publish-header .emoji {
+
+  .publish-header__emoji {
     font-size: 32px;
+    line-height: 1;
   }
-  .publish-header .title {
+
+  .publish-header__text {
+    flex: 1;
+  }
+
+  .publish-header__title {
+    display: block;
     font-size: 18px;
     font-weight: 700;
-    display: block;
+    margin-bottom: 4px;
   }
-  .publish-header .sub {
+
+  .publish-header__subtitle {
+    display: block;
     font-size: 12px;
     opacity: 0.9;
   }
-  .form-wrap {
-    padding: 8px 12px;
-  }
-  .section {
-    background: #fff;
+  /* 表单分组样式 */
+  .form-section {
+    background: #ffffff;
     border-radius: 12px;
-    padding: 8px 12px 2px;
-    margin: 10px 0;
-    box-shadow: 0 4px 16px rgba(91, 143, 249, 0.08);
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   }
-  .section-title {
-    font-weight: 700;
-    color: #333;
-    padding: 8px 2px 10px;
+
+  .form-section__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .form-section__icon {
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .form-section__text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #303133;
   }
 
   .upload-grid {
@@ -570,61 +576,68 @@
     color: #333;
   }
 
-  /* uView输入框样式调整 - 使用更强的选择器 */
-  :deep(.u-input) {
-    padding: 0 !important;
+  /* 表单项样式优化 */
+  :deep(.u-form-item) {
+    margin-bottom: 16px;
   }
 
-  :deep(.u-input .u-input__content) {
-    padding: 12px 16px !important;
+  :deep(.u-form-item__label) {
+    font-weight: 500;
+    color: #606266;
+    margin-bottom: 8px;
+  }
+
+  :deep(.u-form-item__body__content) {
+    width: 100%;
+  }
+
+  /* uView输入框样式调整 */
+  :deep(.u-input) {
+    width: 100% !important;
+    pointer-events: auto !important;
   }
 
   :deep(.u-input__content) {
-    padding: 12px 16px !important;
+    width: 100% !important;
+    pointer-events: auto !important;
   }
 
   :deep(.u-input__inner) {
-    padding: 0 !important;
-    margin: 0 !important;
-    text-indent: 0 !important;
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-    padding-top: 12px !important;
-    padding-bottom: 12px !important;
-    box-sizing: border-box !important;
-  }
-
-  :deep(input) {
+    width: 100% !important;
+    pointer-events: auto !important;
+    background: #fff !important;
+    border: 1px solid #e5e6eb !important;
+    border-radius: 8px !important;
     padding: 12px 16px !important;
-    box-sizing: border-box !important;
-  }
-
-  :deep(textarea) {
-    padding: 16px !important;
-    box-sizing: border-box !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
   }
 
   :deep(.u-textarea) {
-    padding: 0 !important;
+    width: 100% !important;
+    pointer-events: auto !important;
   }
 
   :deep(.u-textarea__inner) {
-    padding: 16px !important;
-    margin: 0 !important;
-    text-indent: 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  /* 更广泛的输入框样式覆盖 */
-  :deep(.u-form-item__body__content) {
-    padding: 0 !important;
-  }
-
-  :deep(.u-form-item__body__content input) {
+    width: 100% !important;
+    pointer-events: auto !important;
+    background: #fff !important;
+    border: 1px solid #e5e6eb !important;
+    border-radius: 8px !important;
     padding: 12px 16px !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    min-height: 80px !important;
   }
 
-  :deep(.u-form-item__body__content textarea) {
-    padding: 16px !important;
+  /* 单选框组样式 */
+  :deep(.u-radio-group) {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  :deep(.u-radio) {
+    margin-right: 0;
   }
 </style>
