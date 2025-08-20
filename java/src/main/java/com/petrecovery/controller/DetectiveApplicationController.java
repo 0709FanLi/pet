@@ -60,10 +60,10 @@ public class DetectiveApplicationController {
         app.setCity((String) body.getOrDefault("city", ""));
         app.setCompanyName((String) body.getOrDefault("companyName", ""));
         app.setAddress((String) body.getOrDefault("address", ""));
-        app.setTeamSize(((Number) body.getOrDefault("teamSize", 0)).intValue());
+        app.setTeamSize(parseInteger(body.get("teamSize"), 0));
         app.setDevices(toJsonArray(body.get("devices")));
         app.setDevicePhotos(toJsonArray(body.get("devicePhotos")));
-        app.setExperienceYears(((Number) body.getOrDefault("experienceYears", 0)).intValue());
+        app.setExperienceYears(parseInteger(body.get("experienceYears"), 0));
         app.setServiceAreas(toJsonArray(body.get("serviceAreas")));
         app.setAvailableTimes(toJsonArray(body.get("availableTimes")));
         app.setBio((String) body.getOrDefault("bio", ""));
@@ -175,6 +175,29 @@ public class DetectiveApplicationController {
         Map<String, Object> m = new HashMap<>();
         for (int i = 0; i + 1 < kv.length; i += 2) m.put(String.valueOf(kv[i]), kv[i + 1]);
         return m;
+    }
+
+    /**
+     * 安全地将对象转换为Integer，支持字符串和数字类型
+     */
+    private Integer parseInteger(Object value, Integer defaultValue) {
+        if (value == null) return defaultValue;
+        
+        if (value instanceof Number) {
+            return ((Number) value).intValue();
+        }
+        
+        if (value instanceof String) {
+            try {
+                return Integer.parseInt(((String) value).trim());
+            } catch (NumberFormatException e) {
+                System.err.println("Failed to parse integer: " + value + ", using default: " + defaultValue);
+                return defaultValue;
+            }
+        }
+        
+        System.err.println("Unexpected type for integer conversion: " + value.getClass() + ", value: " + value + ", using default: " + defaultValue);
+        return defaultValue;
     }
 
     /**

@@ -894,32 +894,99 @@
   }
 
   const submit = async () => {
+    console.log('[detective-apply] 🚀 开始提交申请...')
+    console.log('[detective-apply] 当前表单数据:', JSON.stringify(form, null, 2))
+    
+    // 1. 验证必填字段
     const missing = getMissingFields()
     if (missing.length > 0) {
-      console.warn('[detective-apply] missing fields:', missing)
+      console.warn('[detective-apply] ❌ 缺少必填字段:', missing)
       const brief =
         missing.slice(0, 4).join('、') + (missing.length > 4 ? ' 等' : '')
       uni.showToast({ title: `请完善：${brief}`, icon: 'none' })
       return
     }
+    console.log('[detective-apply] ✅ 表单验证通过')
+
+    // 2. 检查网络和配置
+    console.log('[detective-apply] 🌐 API配置:')
+    console.log('  - BASE_URL:', BASE_URL)
+    console.log('  - API.detective.apply:', API.detective.apply)
+    console.log('  - 完整URL:', BASE_URL + API.detective.apply)
+
     try {
+      // 3. 准备提交数据
       const payload = JSON.parse(JSON.stringify(form))
-      console.log('[detective-apply] submit payload:', payload)
+      console.log('[detective-apply] 📤 准备提交的数据:', JSON.stringify(payload, null, 2))
+      
+      // 4. 显示提交状态
+      uni.showLoading({ title: '提交中...' })
+      console.log('[detective-apply] ⏳ 开始发送请求...')
+      
+      // 5. 发送请求
+      const startTime = Date.now()
       const res = await request({
         url: API.detective.apply,
         method: 'POST',
         data: payload,
       })
-      console.log('[detective-apply] submit resp:', res)
+      const endTime = Date.now()
+      
+      console.log('[detective-apply] 📥 收到响应:')
+      console.log('  - 耗时:', (endTime - startTime), 'ms')
+      console.log('  - 响应数据:', JSON.stringify(res, null, 2))
+      
+      uni.hideLoading()
 
-      // 提交成功后清除缓存
-      await clearAllCache()
+      // 6. 检查响应结果
+      if (res && (res.code === 200 || res.code === '200')) {
+        console.log('[detective-apply] ✅ 提交成功!')
+        console.log('  - 申请ID:', res.data?.applicationId)
+        console.log('  - 状态:', res.data?.status)
+        
+        // 提交成功后清除缓存
+        console.log('[detective-apply] 🧹 清除缓存...')
+        await clearAllCache()
+        console.log('[detective-apply] ✅ 缓存清除完成')
 
-      uni.showToast({ title: '提交成功', icon: 'success' })
-      setTimeout(() => uni.redirectTo({ url: '/pages/detective/pending' }), 500)
+        uni.showToast({ title: '提交成功', icon: 'success' })
+        console.log('[detective-apply] 🔄 准备跳转到pending页面...')
+        setTimeout(() => {
+          console.log('[detective-apply] 📍 执行页面跳转')
+          uni.redirectTo({ url: '/pages/detective/pending' })
+        }, 500)
+      } else {
+        console.error('[detective-apply] ❌ 服务器返回错误:')
+        console.error('  - code:', res?.code)
+        console.error('  - message:', res?.message)
+        console.error('  - 完整响应:', res)
+        
+        const errorMsg = res?.message || '提交失败，请重试'
+        uni.showToast({ title: errorMsg, icon: 'none', duration: 3000 })
+      }
+      
     } catch (e) {
-      console.error('[detective-apply] submit error:', e)
-      uni.showToast({ title: '提交失败', icon: 'none' })
+      console.error('[detective-apply] 💥 提交异常:')
+      console.error('  - 错误类型:', e.constructor.name)
+      console.error('  - 错误消息:', e.message)
+      console.error('  - 错误栈:', e.stack)
+      console.error('  - 完整错误对象:', e)
+      
+      uni.hideLoading()
+      
+      // 根据错误类型提供更具体的错误信息
+      let errorMessage = '提交失败'
+      if (e.message && e.message.includes('Network')) {
+        errorMessage = '网络连接失败，请检查网络'
+      } else if (e.message && e.message.includes('timeout')) {
+        errorMessage = '请求超时，请重试'
+      } else if (e.message && e.message.includes('statusCode')) {
+        errorMessage = '服务器响应错误'
+      } else if (e.message) {
+        errorMessage = `提交失败: ${e.message}`
+      }
+      
+      uni.showToast({ title: errorMessage, icon: 'none', duration: 3000 })
     }
   }
 
