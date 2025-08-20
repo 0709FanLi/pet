@@ -14,27 +14,150 @@
     </view>
 
     <!-- 正常内容 -->
-    <view v-else-if="pet">
-      <swiper class="gallery" circular>
-        <swiper-item v-for="(img, idx) in images" :key="idx">
-          <image :src="img" mode="aspectFill" class="gallery-img" />
-        </swiper-item>
-      </swiper>
-      <view class="body">
-        <view class="title">{{ pet.petName }} · {{ pet.petType }}</view>
-        <view class="row">丢失地点：{{ getLostLocation(pet) }}</view>
-        <view class="row">悬赏金额：¥{{ pet.reward || '0' }}</view>
-        <view class="row">丢失时间：{{ formatLostTime(pet.lostTime) }}</view>
-        <view class="row" v-if="pet.petDescription"
-          >宠物描述：{{ pet.petDescription }}</view
+    <view v-else-if="pet" class="detail-content">
+      <!-- 图片轮播区域 -->
+      <view class="image-section">
+        <swiper
+          class="gallery"
+          circular
+          indicator-dots
+          indicator-color="rgba(255,255,255,0.4)"
+          indicator-active-color="#ffffff"
+          autoplay
+          interval="5000"
         >
-        <view class="btns">
-          <u-button type="primary" @click="contact">联系Ta</u-button>
+          <swiper-item v-for="(img, idx) in images" :key="idx">
+            <image
+              :src="img"
+              mode="aspectFill"
+              class="gallery-img"
+              @tap="previewImage(img)"
+            />
+          </swiper-item>
+        </swiper>
+
+        <!-- 图片计数器 -->
+        <view class="image-counter" v-if="images.length > 1">
+          <text class="counter-text"
+            >{{ currentImageIndex + 1 }}/{{ images.length }}</text
+          >
         </view>
       </view>
+
+      <!-- 主要信息卡片 -->
+      <view class="info-section">
+        <!-- 宠物基本信息 -->
+        <view class="pet-info-card">
+          <view class="pet-header">
+            <view class="pet-title">
+              <text class="pet-name">{{ pet.petName }}</text>
+              <view class="pet-badge">
+                <text class="badge-icon">🐾</text>
+                <text class="badge-text">{{ pet.petType }}</text>
+              </view>
+            </view>
+            <view class="urgent-tag" v-if="isUrgent">
+              <text class="urgent-icon">🚨</text>
+              <text class="urgent-text">紧急寻找</text>
+            </view>
+          </view>
+
+          <!-- 关键信息 -->
+          <view class="key-info">
+            <view class="info-item location">
+              <view class="info-icon-wrapper location-icon">
+                <text class="info-icon">📍</text>
+              </view>
+              <view class="info-content">
+                <text class="info-label">丢失地点</text>
+                <text class="info-value">{{ getLostLocation(pet) }}</text>
+              </view>
+            </view>
+
+            <view class="info-item reward" v-if="pet.reward && pet.reward > 0">
+              <view class="info-icon-wrapper reward-icon">
+                <text class="info-icon">💰</text>
+              </view>
+              <view class="info-content">
+                <text class="info-label">悬赏金额</text>
+                <text class="info-value reward-amount">¥{{ pet.reward }}</text>
+              </view>
+            </view>
+
+            <view class="info-item time">
+              <view class="info-icon-wrapper time-icon">
+                <text class="info-icon">⏰</text>
+              </view>
+              <view class="info-content">
+                <text class="info-label">丢失时间</text>
+                <text class="info-value">{{
+                  formatLostTime(pet.lostTime)
+                }}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 详细描述卡片 -->
+        <view class="description-card" v-if="pet.petDescription">
+          <view class="card-header">
+            <text class="card-icon">📝</text>
+            <text class="card-title">详细描述</text>
+          </view>
+          <view class="description-content">
+            <text class="description-text">{{ pet.petDescription }}</text>
+          </view>
+        </view>
+
+        <!-- 联系信息卡片 -->
+        <view class="contact-card">
+          <view class="card-header">
+            <text class="card-icon">📞</text>
+            <text class="card-title">联系方式</text>
+          </view>
+          <view class="contact-options">
+            <view class="contact-item" @tap="makePhoneCall">
+              <view class="contact-icon-wrapper phone">
+                <text class="contact-icon">📱</text>
+              </view>
+              <view class="contact-info">
+                <text class="contact-label">拨打电话</text>
+                <text class="contact-hint">快速联系失主</text>
+              </view>
+              <text class="contact-arrow">→</text>
+            </view>
+
+            <view class="contact-item" @tap="copyContact">
+              <view class="contact-icon-wrapper wechat">
+                <text class="contact-icon">💬</text>
+              </view>
+              <view class="contact-info">
+                <text class="contact-label">复制联系方式</text>
+                <text class="contact-hint">复制到剪贴板</text>
+              </view>
+              <text class="contact-arrow">→</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 温馨提示 -->
+        <view class="tips-card">
+          <view class="tip-item">
+            <text class="tip-icon">💡</text>
+            <text class="tip-text">见到走失宠物时，请耐心安抚，避免惊吓</text>
+          </view>
+          <view class="tip-item">
+            <text class="tip-icon">📸</text>
+            <text class="tip-text">发现线索时可拍照留证，便于失主确认</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 联系方式选择器 -->
       <u-action-sheet
         :show="showSheet"
         :actions="actions"
+        title="选择联系方式"
         @close="showSheet = false"
         @select="onAction"
       />
@@ -43,7 +166,7 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, computed } from 'vue'
   import { onLoad } from '@dcloudio/uni-app'
   import { request } from '@/common/request'
   import { BASE_URL } from '@/common/config'
@@ -55,6 +178,16 @@
   const loading = ref(true)
   const error = ref('')
   const currentId = ref('')
+  const currentImageIndex = ref(0)
+
+  // 计算属性
+  const isUrgent = computed(() => {
+    if (!pet.value?.lostTime) return false
+    const lostTime = new Date(pet.value.lostTime).getTime()
+    const now = Date.now()
+    const hoursDiff = (now - lostTime) / (1000 * 60 * 60)
+    return hoursDiff <= 24 // 24小时内为紧急
+  })
 
   const parseImages = imagesStr => {
     try {
@@ -87,16 +220,61 @@
     return `${h}小时前`
   }
 
+  // 图片预览
+  const previewImage = current => {
+    uni.previewImage({
+      current,
+      urls: images.value,
+    })
+  }
+
+  // 拨打电话
+  const makePhoneCall = () => {
+    if (pet.value?.contactInfo) {
+      uni.makePhoneCall({
+        phoneNumber: pet.value.contactInfo,
+        success: () => {
+          console.log('[Detail] 拨打电话成功')
+        },
+        fail: err => {
+          console.error('[Detail] 拨打电话失败:', err)
+          uni.showToast({ title: '拨打失败', icon: 'none' })
+        },
+      })
+    } else {
+      uni.showToast({ title: '联系方式不可用', icon: 'none' })
+    }
+  }
+
+  // 复制联系方式
+  const copyContact = () => {
+    if (pet.value?.contactInfo) {
+      uni.setClipboardData({
+        data: pet.value.contactInfo,
+        success: () => {
+          uni.showToast({ title: '已复制到剪贴板', icon: 'success' })
+        },
+        fail: () => {
+          uni.showToast({ title: '复制失败', icon: 'none' })
+        },
+      })
+    } else {
+      uni.showToast({ title: '联系方式不可用', icon: 'none' })
+    }
+  }
+
   const contact = () => {
     showSheet.value = true
   }
+
   const onAction = e => {
     const name = e?.name
-    if (name === '拨打电话' && pet.value?.contactInfo) {
-      uni.makePhoneCall({ phoneNumber: pet.value.contactInfo })
-    } else if (name === '复制微信' && pet.value?.contactInfo) {
-      uni.setClipboardData({ data: pet.value.contactInfo })
+    if (name === '拨打电话') {
+      makePhoneCall()
+    } else if (name === '复制微信') {
+      copyContact()
     }
+    showSheet.value = false
   }
 
   const loadPetDetail = async id => {
@@ -149,34 +327,357 @@
 
 <style lang="scss" scoped>
   .detail-page {
-    background: #f5f7fa;
+    background: #f8f8f8;
     min-height: 100vh;
   }
-  .gallery {
-    height: 240px;
+
+  .detail-content {
+    position: relative;
   }
+
+  /* 图片区域 */
+  .image-section {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+  }
+
+  .gallery {
+    height: 100%;
+    width: 100%;
+  }
+
   .gallery-img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
     display: block;
   }
-  .body {
-    background: #fff;
-    border-radius: 12px 12px 0 0;
-    margin-top: -12px;
-    padding: 16px;
+
+  .image-counter {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
   }
-  .title {
-    font-size: 18px;
+
+  .counter-text {
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  /* 信息区域 */
+  .info-section {
+    position: relative;
+    margin-top: -20px;
+    border-radius: 20px 20px 0 0;
+    background: #f8f8f8;
+    padding: 20px 16px 20px;
+    z-index: 2;
+  }
+
+  /* 宠物信息卡片 */
+  .pet-info-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0f0f0;
+  }
+
+  .pet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .pet-title {
+    flex: 1;
+  }
+
+  .pet-name {
+    font-size: 24px;
     font-weight: 700;
+    color: #303133;
     margin-bottom: 8px;
+    display: block;
   }
-  .row {
-    color: #666;
-    margin: 6px 0;
+
+  .pet-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(91, 143, 249, 0.1);
+    color: #5b8ff9;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
   }
-  .btns {
-    margin-top: 12px;
+
+  .badge-icon {
+    font-size: 12px;
+    line-height: 1;
+  }
+
+  .badge-text {
+    font-size: 12px;
+  }
+
+  .urgent-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%);
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(255, 77, 79, 0.3);
+    animation: pulse 2s infinite;
+  }
+
+  .urgent-icon,
+  .urgent-text {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  /* 关键信息 */
+  .key-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border-left: 4px solid transparent;
+  }
+
+  .info-item.location {
+    border-left-color: #36cfc9;
+  }
+
+  .info-item.reward {
+    border-left-color: #ff6b9d;
+  }
+
+  .info-item.time {
+    border-left-color: #faad14;
+  }
+
+  .info-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .location-icon {
+    background: rgba(54, 207, 201, 0.15);
+  }
+
+  .reward-icon {
+    background: rgba(255, 107, 157, 0.15);
+  }
+
+  .time-icon {
+    background: rgba(250, 173, 20, 0.15);
+  }
+
+  .info-icon {
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .info-content {
+    flex: 1;
+  }
+
+  .info-label {
+    display: block;
+    font-size: 12px;
+    color: #909399;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+
+  .info-value {
+    display: block;
+    font-size: 14px;
+    color: #303133;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .reward-amount {
+    color: #ff6b9d;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  /* 卡片通用样式 */
+  .description-card,
+  .contact-card,
+  .tips-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0f0f0;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .card-icon {
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #303133;
+  }
+
+  /* 描述卡片 */
+  .description-content {
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border-left: 4px solid #5b8ff9;
+  }
+
+  .description-text {
+    font-size: 14px;
+    color: #606266;
+    line-height: 1.6;
+  }
+
+  /* 联系卡片 */
+  .contact-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+  }
+
+  .contact-item:active {
+    background: #e8f4fd;
+    border-color: #5b8ff9;
+    transform: scale(0.98);
+  }
+
+  .contact-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .contact-icon-wrapper.phone {
+    background: rgba(82, 196, 26, 0.15);
+  }
+
+  .contact-icon-wrapper.wechat {
+    background: rgba(54, 207, 201, 0.15);
+  }
+
+  .contact-icon {
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .contact-info {
+    flex: 1;
+  }
+
+  .contact-label {
+    display: block;
+    font-size: 14px;
+    color: #303133;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .contact-hint {
+    font-size: 12px;
+    color: #909399;
+  }
+
+  .contact-arrow {
+    font-size: 16px;
+    color: #c0c4cc;
+    font-weight: bold;
+  }
+
+  /* 提示卡片 */
+  .tips-card {
+    background: linear-gradient(135deg, #fff7e6 0%, #fff2cc 100%);
+    border: 1px solid #ffe58f;
+  }
+
+  .tip-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+  }
+
+  .tip-item:not(:last-child) {
+    margin-bottom: 8px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(250, 173, 20, 0.2);
+  }
+
+  .tip-icon {
+    font-size: 14px;
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .tip-text {
+    flex: 1;
+    font-size: 13px;
+    color: #ad6800;
+    line-height: 1.5;
+    font-weight: 500;
   }
 
   /* 加载和错误状态样式 */
@@ -206,5 +707,42 @@
     font-size: 14px;
     margin-bottom: 20px;
     text-align: center;
+  }
+
+  /* 动画效果 */
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  /* 响应式适配 */
+  @media (max-width: 375px) {
+    .info-section {
+      padding: 16px 12px 16px;
+    }
+
+    .pet-info-card,
+    .description-card,
+    .contact-card,
+    .tips-card {
+      padding: 16px;
+    }
+
+    .pet-name {
+      font-size: 22px;
+    }
+  }
+
+  @media (min-width: 415px) {
+    .info-section {
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 </style>
