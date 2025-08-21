@@ -3,7 +3,7 @@ declare const uni: any
 function computeBaseUrl(): string {
   try {
     // 允许在运行时通过本地存储覆盖，适配真机调试
-    // 可在控制台执行：uni.setStorageSync('base_url', 'http://192.168.1.18:8080')
+    // 可在控制台执行：uni.setStorageSync('base_url', 'http://192.168.1.10:8080')
     // @ts-ignore
     const stored =
       typeof uni !== 'undefined' && uni.getStorageSync
@@ -22,7 +22,7 @@ function computeBaseUrl(): string {
   } catch {}
 
   // 默认回退为你的局域网 IP（也可用 base_url 覆盖）
-  return 'http://192.168.1.18:8080'
+  return 'http://192.168.1.10:8080'
 }
 
 export const BASE_URL = computeBaseUrl()

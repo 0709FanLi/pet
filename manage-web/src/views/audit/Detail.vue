@@ -99,7 +99,7 @@
   const form = ref({ result: 'approved', reason: '' })
   const submitting = ref(false)
 
-  const BASE = 'http://192.168.1.18:8080'
+  const BASE = 'http://192.168.1.10:8080'
   const goBack = () => router.back()
   const resolve = p => (p && p.startsWith('/uploads/') ? `${BASE}${p}` : p)
 

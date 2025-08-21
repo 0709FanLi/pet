@@ -84,7 +84,7 @@
     loading.value = true
     try {
       const kw = [query.keyword, query.user].filter(Boolean).join(' ')
-      const url = `http://192.168.1.18:8080/api/admin/notices/history?page=${
+      const url = `http://192.168.1.10:8080/api/admin/notices/history?page=${
         query.page
       }&pageSize=${query.pageSize}&keyword=${encodeURIComponent(
         kw
@@ -105,7 +105,7 @@
   const loadCities = async () => {
     try {
       const resp = await fetch(
-        'http://192.168.1.18:8080/api/admin/notices/cities'
+        'http://192.168.1.10:8080/api/admin/notices/cities'
       ).then(r => r.json())
       cities.value = resp?.data || resp || []
     } catch (e) {

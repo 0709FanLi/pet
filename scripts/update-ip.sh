@@ -5,7 +5,7 @@
 
 if [ $# -eq 0 ]; then
     echo "Usage: $0 <new-ip>"
-    echo "Example: $0 192.168.1.18"
+    echo "Example: $0 192.168.1.10"
     exit 1
 fi
 

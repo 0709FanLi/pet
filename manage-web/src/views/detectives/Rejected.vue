@@ -51,7 +51,7 @@
     if (typeof page === 'number') query.page = page
     loading.value = true
     try {
-      const url = `http://192.168.1.18:8080/api/admin/detectives?page=${
+      const url = `http://192.168.1.10:8080/api/admin/detectives?page=${
         query.page
       }&pageSize=${query.pageSize}&keyword=${encodeURIComponent(
         query.keyword || ''
