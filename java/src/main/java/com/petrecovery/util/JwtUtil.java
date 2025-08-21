@@ -85,4 +85,11 @@ public class JwtUtil {
         final String tokenUsername = getUsernameFromToken(token);
         return (tokenUsername.equals(username) && !isTokenExpired(token));
     }
+    
+    /**
+     * 从token中获取subject（与getUsernameFromToken相同，为了兼容性）
+     */
+    public String getSubjectFromToken(String token) {
+        return getUsernameFromToken(token);
+    }
 }

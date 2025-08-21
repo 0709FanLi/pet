@@ -1,7 +1,11 @@
 package com.petrecovery.controller;
 
 import com.petrecovery.entity.LostPet;
+import com.petrecovery.entity.User;
+import com.petrecovery.repository.UserRepository;
+import com.petrecovery.service.DetectiveOrderService;
 import com.petrecovery.service.LostPetService;
+import com.petrecovery.util.JwtUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -23,6 +28,15 @@ public class LostPetController {
 
     @Autowired
     private LostPetService lostPetService;
+    
+    @Autowired
+    private DetectiveOrderService detectiveOrderService;
+    
+    @Autowired
+    private JwtUtil jwtUtil;
+    
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping
     @Operation(summary = "发布丢失宠物信息", description = "创建新的丢失宠物记录")
@@ -200,5 +214,120 @@ public class LostPetController {
     public ResponseEntity<Void> deleteLostPet(@PathVariable Long id) {
         lostPetService.deleteLostPet(id);
         return ResponseEntity.noContent().build();
+    }
+    
+    /**
+     * 获取宠物的意向侦探列表
+     */
+    @GetMapping("/{id}/intentions")
+    @Operation(summary = "获取宠物的意向侦探列表")
+    public ResponseEntity<Map<String, Object>> getPetIntentions(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable Long id) {
+        
+        try {
+            Long userId = getUserFromAuth(authHeader);
+            if (userId == null) {
+                return ResponseEntity.status(401).body(Map.of("success", false, "message", "用户未登录"));
+            }
+            
+            // 验证权限：只有宠物主人才能查看意向列表
+            Optional<LostPet> lostPetOpt = lostPetService.getLostPetById(id);
+            if (!lostPetOpt.isPresent()) {
+                return ResponseEntity.status(404).body(Map.of("success", false, "message", "宠物信息不存在"));
+            }
+            
+            LostPet lostPet = lostPetOpt.get();
+            if (!userId.equals(lostPet.getUser().getId())) {
+                return ResponseEntity.status(403).body(Map.of("success", false, "message", "无权限查看"));
+            }
+            
+            Map<String, Object> result = detectiveOrderService.getPetIntentions(id);
+            
+            if ((Boolean) result.get("success")) {
+                return ResponseEntity.ok(result);
+            } else {
+                return ResponseEntity.badRequest().body(result);
+            }
+            
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("success", false, "message", "查询失败：" + e.getMessage()));
+        }
+    }
+    
+    /**
+     * 宠物主人确认侦探
+     */
+    @PostMapping("/{id}/confirm-detective")
+    @Operation(summary = "宠物主人确认侦探")
+    public ResponseEntity<Map<String, Object>> confirmDetective(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable Long id,
+            @RequestBody Map<String, Object> request) {
+        
+        try {
+            Long userId = getUserFromAuth(authHeader);
+            if (userId == null) {
+                return ResponseEntity.status(401).body(Map.of("success", false, "message", "用户未登录"));
+            }
+            
+            Long detectiveId = Long.valueOf(request.get("detectiveId").toString());
+            
+            Map<String, Object> result = detectiveOrderService.confirmDetective(userId, id, detectiveId);
+            
+            if ((Boolean) result.get("success")) {
+                return ResponseEntity.ok(result);
+            } else {
+                return ResponseEntity.badRequest().body(result);
+            }
+            
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("success", false, "message", "确认失败：" + e.getMessage()));
+        }
+    }
+    
+    /**
+     * 查询订单接单状态
+     */
+    @GetMapping("/{id}/order-status")
+    @Operation(summary = "查询订单接单状态")
+    public ResponseEntity<Map<String, Object>> getOrderStatus(@PathVariable Long id) {
+        try {
+            Map<String, Object> result = detectiveOrderService.getIntentionStatus(null, id);
+            
+            // 移除个人相关的状态信息，只保留公共信息
+            result.remove("canExpress");
+            result.remove("status");
+            result.remove("orderId");
+            
+            return ResponseEntity.ok(result);
+            
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("success", false, "message", "查询失败：" + e.getMessage()));
+        }
+    }
+    
+    /**
+     * 从Authorization头部解析用户ID
+     */
+    private Long getUserFromAuth(String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return null;
+        }
+        
+        try {
+            String token = authHeader.substring(7);
+            String subject = jwtUtil.getSubjectFromToken(token);
+            
+            if (subject != null && subject.startsWith("user_")) {
+                String phone = subject.substring(5);
+                Optional<User> userOpt = userRepository.findByPhoneNumber(phone);
+                return userOpt.map(User::getId).orElse(null);
+            }
+            
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

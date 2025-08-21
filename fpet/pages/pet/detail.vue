@@ -140,6 +140,80 @@
           </view>
         </view>
 
+        <!-- 侦探专用功能区 -->
+        <view class="detective-section" v-if="isDetective">
+          <view class="detective-card">
+            <view class="card-header">
+              <text class="card-icon">🕵️‍♂️</text>
+              <text class="card-title">侦探专区</text>
+            </view>
+            
+            <!-- 意向状态显示 -->
+            <view class="intention-status">
+              <view class="status-item" v-if="intentionStatus.status === 'none'">
+                <text class="status-text">您可以表达接单意向</text>
+                <view class="intention-count" v-if="intentionStatus.intentionCount > 0">
+                  <text class="count-text">已有 {{ intentionStatus.intentionCount }} 位侦探表达意向</text>
+                </view>
+              </view>
+              
+              <view class="status-item" v-else-if="intentionStatus.status === 'intention'">
+                <text class="status-text success">✅ 您已表达意向</text>
+                <text class="status-detail">等待宠物主人确认</text>
+              </view>
+              
+              <view class="status-item" v-else-if="intentionStatus.status === 'confirmed'">
+                <text class="status-text confirmed">🎉 您已接单</text>
+                <text class="status-detail">请联系宠物主人开始工作</text>
+              </view>
+              
+              <view class="status-item" v-else-if="intentionStatus.status === 'withdrawn'">
+                <text class="status-text withdrawn">❌ 已撤回意向</text>
+                <text class="status-detail">无法再对该订单表达意向</text>
+              </view>
+              
+              <view class="status-item" v-else-if="intentionStatus.isConfirmed">
+                <text class="status-text unavailable">该订单已被其他侦探接单</text>
+              </view>
+            </view>
+            
+            <!-- 操作按钮 -->
+            <view class="detective-actions">
+              <!-- 意向接单按钮 -->
+              <u-button 
+                v-if="intentionStatus.status === 'none' && !intentionStatus.isConfirmed"
+                @click="showIntentionModal = true"
+                type="primary"
+                shape="round"
+                :custom-style="{ background: 'linear-gradient(135deg, #5b8ff9 0%, #36cfc9 100%)', border: 'none' }"
+              >
+                意向接单
+              </u-button>
+              
+              <!-- 撤回意向按钮 -->
+              <u-button 
+                v-if="intentionStatus.status === 'intention'"
+                @click="confirmWithdraw"
+                type="warning"
+                shape="round"
+                plain
+              >
+                撤回意向
+              </u-button>
+              
+              <!-- 联系主人按钮 -->
+              <u-button 
+                v-if="intentionStatus.status === 'confirmed'"
+                @click="contactOwner"
+                type="success"
+                shape="round"
+              >
+                联系主人
+              </u-button>
+            </view>
+          </view>
+        </view>
+
         <!-- 温馨提示 -->
         <view class="tips-card">
           <view class="tip-item">
@@ -161,6 +235,41 @@
         @close="showSheet = false"
         @select="onAction"
       />
+      
+      <!-- 意向接单模态框 -->
+      <u-modal 
+        v-model:show="showIntentionModal" 
+        title="表达接单意向"
+        :show-cancel-button="true"
+        @confirm="submitIntention"
+        @cancel="showIntentionModal = false"
+      >
+        <view class="intention-form">
+          <view class="form-item">
+            <text class="form-label">预计完成时间 *</text>
+            <u-radio-group v-model="intentionForm.estimatedCompletion">
+              <u-radio name="1天内">1天内</u-radio>
+              <u-radio name="3天内">3天内</u-radio>
+              <u-radio name="7天内">7天内</u-radio>
+              <u-radio name="其他">其他</u-radio>
+            </u-radio-group>
+          </view>
+          
+          <view class="form-item">
+            <text class="form-label">服务说明 *</text>
+            <u-textarea 
+              v-model="intentionForm.serviceDescription"
+              placeholder="请描述您的优势，如：擅长该区域、有相关经验、团队优势等"
+              :maxlength="200"
+              count
+            />
+          </view>
+          
+          <view class="form-tip">
+            <text class="tip-text">提示：表达意向后，宠物主人可查看您的信息并选择合适的侦探</text>
+          </view>
+        </view>
+      </u-modal>
     </view>
   </view>
 </template>
@@ -169,7 +278,7 @@
   import { ref, computed } from 'vue'
   import { onLoad } from '@dcloudio/uni-app'
   import { request } from '@/common/request'
-  import { BASE_URL } from '@/common/config'
+  import { BASE_URL, API, STORAGE_KEYS } from '@/common/config'
 
   const pet = ref(null)
   const images = ref([])
@@ -179,6 +288,19 @@
   const error = ref('')
   const currentId = ref('')
   const currentImageIndex = ref(0)
+  
+  // 侦探相关状态
+  const isDetective = ref(false)
+  const intentionStatus = ref({
+    status: 'none', // none/intention/confirmed/withdrawn
+    intentionCount: 0,
+    isConfirmed: false
+  })
+  const showIntentionModal = ref(false)
+  const intentionForm = ref({
+    estimatedCompletion: '3天内',
+    serviceDescription: ''
+  })
 
   // 计算属性
   const isUrgent = computed(() => {
@@ -295,6 +417,9 @@
       images.value = parseImages(data.images)
       console.log('[Detail] 设置宠物数据:', data)
       console.log('[Detail] 设置图片数据:', images.value)
+      
+      // 检查侦探身份和意向状态
+      await checkDetectiveStatus(id)
     } catch (e) {
       console.error('[Detail] 加载详情失败:', e)
       error.value = e.message || '加载失败，请重试'
@@ -306,6 +431,161 @@
   const retry = () => {
     if (currentId.value) {
       loadPetDetail(currentId.value)
+    }
+  }
+
+  // 检查侦探身份和意向状态
+  const checkDetectiveStatus = async (petId) => {
+    try {
+      const token = uni.getStorageSync(STORAGE_KEYS.token)
+      if (!token) {
+        console.log('[Detail] 用户未登录，跳过侦探检查')
+        return
+      }
+
+      // 检查是否为认证侦探
+      const detectiveRes = await request({
+        url: API.detective.status,
+        header: { Authorization: `Bearer ${token}` }
+      })
+      
+      if (detectiveRes?.success && detectiveRes?.data?.status === 'approved') {
+        isDetective.value = true
+        console.log('[Detail] 用户是认证侦探')
+        
+        // 获取意向状态
+        await loadIntentionStatus(petId)
+      }
+    } catch (error) {
+      console.error('[Detail] 检查侦探身份失败:', error)
+    }
+  }
+
+  // 加载意向状态
+  const loadIntentionStatus = async (petId) => {
+    try {
+      const token = uni.getStorageSync(STORAGE_KEYS.token)
+      const res = await request({
+        url: `${API.detective.orders.intentionStatus}/${petId}`,
+        header: { Authorization: `Bearer ${token}` }
+      })
+      
+      if (res?.success) {
+        intentionStatus.value = {
+          status: res.status || 'none',
+          intentionCount: res.intentionCount || 0,
+          isConfirmed: res.isConfirmed || false
+        }
+        console.log('[Detail] 意向状态:', intentionStatus.value)
+      }
+    } catch (error) {
+      console.error('[Detail] 获取意向状态失败:', error)
+    }
+  }
+
+  // 提交意向接单
+  const submitIntention = async () => {
+    try {
+      if (!intentionForm.value.serviceDescription?.trim()) {
+        uni.showToast({ title: '请填写服务说明', icon: 'none' })
+        return
+      }
+
+      uni.showLoading({ title: '提交中...' })
+      
+      const token = uni.getStorageSync(STORAGE_KEYS.token)
+      const res = await request({
+        url: API.detective.orders.intention,
+        method: 'POST',
+        data: {
+          lostPetId: parseInt(currentId.value),
+          estimatedCompletion: intentionForm.value.estimatedCompletion,
+          serviceDescription: intentionForm.value.serviceDescription
+        },
+        header: { Authorization: `Bearer ${token}` }
+      })
+
+      uni.hideLoading()
+      
+      if (res?.success) {
+        uni.showToast({ title: '意向提交成功', icon: 'success' })
+        showIntentionModal.value = false
+        
+        // 重新加载意向状态
+        await loadIntentionStatus(currentId.value)
+        
+        // 清空表单
+        intentionForm.value = {
+          estimatedCompletion: '3天内',
+          serviceDescription: ''
+        }
+      } else {
+        uni.showToast({ title: res?.message || '提交失败', icon: 'none' })
+      }
+    } catch (error) {
+      uni.hideLoading()
+      console.error('[Detail] 提交意向失败:', error)
+      uni.showToast({ title: '提交失败，请重试', icon: 'none' })
+    }
+  }
+
+  // 确认撤回意向
+  const confirmWithdraw = () => {
+    uni.showModal({
+      title: '确认撤回意向',
+      content: '撤回后将无法再对该寻宠启示表达意向，此操作不可撤销。确定要撤回吗？',
+      success: (res) => {
+        if (res.confirm) {
+          withdrawIntention()
+        }
+      }
+    })
+  }
+
+  // 撤回意向
+  const withdrawIntention = async () => {
+    try {
+      uni.showLoading({ title: '撤回中...' })
+      
+      const token = uni.getStorageSync(STORAGE_KEYS.token)
+      const res = await request({
+        url: `${API.detective.orders.intention}/${currentId.value}`,
+        method: 'DELETE',
+        header: { Authorization: `Bearer ${token}` }
+      })
+
+      uni.hideLoading()
+      
+      if (res?.success) {
+        uni.showToast({ title: '意向已撤回', icon: 'success' })
+        
+        // 重新加载意向状态
+        await loadIntentionStatus(currentId.value)
+      } else {
+        uni.showToast({ title: res?.message || '撤回失败', icon: 'none' })
+      }
+    } catch (error) {
+      uni.hideLoading()
+      console.error('[Detail] 撤回意向失败:', error)
+      uni.showToast({ title: '撤回失败，请重试', icon: 'none' })
+    }
+  }
+
+  // 联系宠物主人
+  const contactOwner = () => {
+    if (pet.value?.contactInfo) {
+      uni.makePhoneCall({
+        phoneNumber: pet.value.contactInfo,
+        success: () => {
+          console.log('[Detail] 拨打电话成功')
+        },
+        fail: err => {
+          console.error('[Detail] 拨打电话失败:', err)
+          uni.showToast({ title: '拨打失败', icon: 'none' })
+        },
+      })
+    } else {
+      uni.showToast({ title: '联系方式不可用', icon: 'none' })
     }
   }
 
@@ -744,5 +1024,109 @@
       margin-left: auto;
       margin-right: auto;
     }
+  }
+
+  /* 侦探专用功能区 */
+  .detective-section {
+    margin-bottom: 16px;
+  }
+
+  .detective-card {
+    background: linear-gradient(135deg, rgba(91, 143, 249, 0.05) 0%, rgba(54, 207, 201, 0.05) 100%);
+    border-radius: 16px;
+    padding: 20px;
+    border: 2px solid rgba(91, 143, 249, 0.2);
+    box-shadow: 0 4px 20px rgba(91, 143, 249, 0.1);
+  }
+
+  .intention-status {
+    margin-bottom: 16px;
+  }
+
+  .status-item {
+    text-align: center;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+
+  .status-text {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: #303133;
+    margin-bottom: 4px;
+  }
+
+  .status-text.success {
+    color: #52c41a;
+  }
+
+  .status-text.confirmed {
+    color: #5b8ff9;
+  }
+
+  .status-text.withdrawn {
+    color: #909399;
+  }
+
+  .status-text.unavailable {
+    color: #ff6b9d;
+  }
+
+  .status-detail {
+    font-size: 12px;
+    color: #909399;
+  }
+
+  .intention-count {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: rgba(91, 143, 249, 0.1);
+    border-radius: 8px;
+  }
+
+  .count-text {
+    font-size: 12px;
+    color: #5b8ff9;
+    font-weight: 500;
+  }
+
+  .detective-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  /* 意向接单表单 */
+  .intention-form {
+    padding: 16px;
+  }
+
+  .form-item {
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #303133;
+    margin-bottom: 8px;
+  }
+
+  .form-tip {
+    margin-top: 16px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #faad14;
+  }
+
+  .form-tip .tip-text {
+    font-size: 12px;
+    color: #909399;
+    line-height: 1.4;
   }
 </style>

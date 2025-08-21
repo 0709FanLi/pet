@@ -42,12 +42,25 @@ export const API = {
       check: '/api/detective/cache/check',
       clear: '/api/detective/cache/clear',
     },
+    orders: {
+      intention: '/api/detective/orders/intention',
+      my: '/api/detective/orders/my',
+      intentionStatus: '/api/detective/orders/intention-status'
+    }
   },
   avatar: {
     upload: '/api/avatar/upload',
     info: '/api/avatar/info',
     delete: '/api/avatar/delete',
   },
+  notifications: {
+    list: '/api/notifications/list',
+    detail: '/api/notifications',
+    unreadCount: '/api/notifications/unread-count',
+    markRead: '/api/notifications',
+    markAllRead: '/api/notifications/read-all',
+    delete: '/api/notifications'
+  }
 }
 
 export const STORAGE_KEYS = {
