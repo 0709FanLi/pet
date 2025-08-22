@@ -244,10 +244,11 @@
 </template>
 
 <script setup>
-  import { ref, computed, onMounted } from 'vue'
+  import { ref, computed, onMounted, onUnmounted } from 'vue'
   import { onShow } from '@dcloudio/uni-app'
   import { STORAGE_KEYS, API, BASE_URL } from '@/common/config'
   import { request } from '@/common/request'
+  import { disconnectMqtt } from '@/common/mqtt-wrapper'
 
   const user = ref({ username: '', phoneNumber: '', avatar: '' })
   const showHelp = ref(false)
@@ -518,6 +519,9 @@
     }
   }
   const logout = () => {
+    // 断开MQTT连接
+    disconnectMqtt()
+
     uni.removeStorageSync('token')
     uni.removeStorageSync('userInfo')
     checkLoginStatus() // 立即刷新登录状态
@@ -541,6 +545,21 @@
     if (u) user.value = typeof u === 'string' ? JSON.parse(u) : u
     fetchStatus()
     loadUnreadCount()
+
+    // 监听MQTT消息事件
+    uni.$on('mqtt:notification', () => {
+      loadUnreadCount()
+    })
+
+    uni.$on('mqtt:unreadCountUpdate', () => {
+      loadUnreadCount()
+    })
+  })
+
+  onUnmounted(() => {
+    // 移除MQTT事件监听
+    uni.$off('mqtt:notification')
+    uni.$off('mqtt:unreadCountUpdate')
   })
 
   // 返回我的页面时也刷新一次，避免提交申请后状态不更新

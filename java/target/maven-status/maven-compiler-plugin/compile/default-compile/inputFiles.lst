@@ -16,6 +16,7 @@
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/PetRecoveryApplication.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/controller/AdminNoticeController.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/entity/DetectiveApplication.java
+/Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/service/MqttService.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/repository/DetectiveApplicationCacheRepository.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/controller/NotificationController.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/config/SecurityConfig.java
@@ -29,6 +30,7 @@
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/entity/DetectiveOrder.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/entity/NotificationSettings.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/service/LostPetService.java
+/Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/config/MqttConfig.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/service/DetectiveApplicationCacheService.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/controller/UserController.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/repository/LostPetRepository.java

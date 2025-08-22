@@ -429,7 +429,7 @@ public class DetectiveOrderService {
                 "order",
                 order.getId(),
                 order.getLostPet().getPetName(),
-                order.getDetectiveUser().getNickname()
+                order.getDetective().getUsername()
             );
             
             result.put("success", true);
@@ -494,7 +494,7 @@ public class DetectiveOrderService {
                 "order",
                 order.getId(),
                 order.getLostPet().getPetName(),
-                order.getDetectiveUser().getNickname()
+                order.getDetective().getUsername()
             );
             
             result.put("success", true);
@@ -552,7 +552,7 @@ public class DetectiveOrderService {
                 "order",
                 order.getId(),
                 order.getLostPet().getPetName(),
-                order.getDetectiveUser().getNickname()
+                order.getDetective().getUsername()
             );
             
             result.put("success", true);

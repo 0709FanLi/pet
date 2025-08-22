@@ -129,7 +129,7 @@
   import { ref, reactive, computed, onMounted } from 'vue'
   import { onLoad } from '@dcloudio/uni-app'
   import { request } from '@/common/request'
-  import config from '@/common/config'
+  import { API } from '@/common/config'
 
   // 页面参数
   const messageId = ref('')
@@ -174,7 +174,7 @@
       loading.value = true
 
       const response = await request({
-        url: config.API.notifications.detail.replace('{id}', messageId.value),
+        url: API.notifications.detail.replace('{id}', messageId.value),
         method: 'GET',
       })
 
@@ -207,7 +207,7 @@
   const markAsRead = async () => {
     try {
       await request({
-        url: config.API.notifications.markRead.replace('{id}', messageId.value),
+        url: API.notifications.markRead.replace('{id}', messageId.value),
         method: 'PUT',
       })
     } catch (error) {
@@ -264,10 +264,7 @@
         if (res.confirm) {
           try {
             await request({
-              url: config.API.notifications.delete.replace(
-                '{id}',
-                messageId.value
-              ),
+              url: API.notifications.delete.replace('{id}', messageId.value),
               method: 'DELETE',
             })
 

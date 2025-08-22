@@ -192,7 +192,7 @@
 <script setup lang="ts">
   import { ref, reactive, computed, onMounted, onShow } from 'vue'
   import { request } from '@/common/request'
-  import config from '@/common/config'
+  import { API } from '@/common/config'
 
   // 标签页配置
   const tabs = ref([
@@ -235,7 +235,7 @@
       const page = loadMore ? currentPage.value + 1 : 1
 
       const response = await request({
-        url: config.API.detective.orders.my,
+        url: API.detective.orders.my,
         method: 'GET',
         data: {
           page,
@@ -272,7 +272,7 @@
   const loadOrderCounts = async () => {
     try {
       const response = await request({
-        url: config.API.detective.orders.counts,
+        url: API.detective.orders.counts,
         method: 'GET',
       })
 
@@ -319,7 +319,7 @@
         if (res.confirm) {
           try {
             await request({
-              url: config.API.detective.orders.intention.replace(
+              url: API.detective.orders.intention.replace(
                 '{lostPetId}',
                 order.lostPet.id.toString()
               ),
@@ -378,10 +378,7 @@
   const startWork = async (order: any) => {
     try {
       await request({
-        url: config.API.detective.orders.start.replace(
-          '{id}',
-          order.id.toString()
-        ),
+        url: API.detective.orders.start.replace('{id}', order.id.toString()),
         method: 'PUT',
       })
 
@@ -421,7 +418,7 @@
 
     try {
       await request({
-        url: config.API.detective.orders.progress.replace(
+        url: API.detective.orders.progress.replace(
           '{id}',
           currentOrder.value.id.toString()
         ),
@@ -456,7 +453,7 @@
         if (res.confirm) {
           try {
             await request({
-              url: config.API.detective.orders.complete.replace(
+              url: API.detective.orders.complete.replace(
                 '{id}',
                 order.id.toString()
               ),

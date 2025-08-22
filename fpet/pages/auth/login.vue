@@ -75,6 +75,7 @@
   import { ref, reactive, computed, onUnmounted } from 'vue'
   import { request } from '@/common/request'
   import { STORAGE_KEYS } from '@/common/config'
+  import { connectMqtt } from '@/common/mqtt-wrapper'
 
   const authForm = reactive({ phone: '', verificationCode: '' })
   const loading = ref(false)
@@ -170,6 +171,22 @@
         uni.setStorageSync(STORAGE_KEYS.token, token)
         uni.setStorageSync(STORAGE_KEYS.userInfo, user)
         uni.showToast({ title: '登录成功', icon: 'success' })
+
+        // 连接MQTT
+        if (user.id) {
+          connectMqtt(user.id.toString(), token)
+            .then(connected => {
+              if (connected) {
+                console.log('MQTT连接成功')
+              } else {
+                console.log('MQTT连接失败，但不影响正常使用')
+              }
+            })
+            .catch(error => {
+              console.error('MQTT连接异常:', error)
+            })
+        }
+
         setTimeout(() => uni.switchTab({ url: '/pages/home/home' }), 500)
       } else {
         throw new Error('no token')

@@ -30,6 +30,9 @@ public class NotificationService {
     @Autowired
     private LostPetRepository lostPetRepository;
     
+    @Autowired
+    private MqttService mqttService;
+    
     /**
      * 发送通知
      */
@@ -74,7 +77,12 @@ public class NotificationService {
             
             notificationRepository.save(notification);
             
-            // TODO: 发送MQTT推送
+            // 发送MQTT实时推送
+            try {
+                mqttService.sendUserNotification(userId, title, content, type, extraData);
+            } catch (Exception e) {
+                System.err.println("MQTT推送失败，但数据库通知已保存: " + e.getMessage());
+            }
             // sendMQTTNotification(userId, notification);
             
         } catch (Exception e) {
@@ -421,7 +429,7 @@ public class NotificationService {
             extraData.put("detectiveName", detectiveName);
             extraData.put("actionType", "order_status_update");
             
-            sendNotification(userId, title, content, Notification.Type.ORDER, orderId, extraData);
+            sendNotification(userId, title, content, "order", orderId, "normal", extraData);
             
         } catch (Exception e) {
             System.err.println("发送订单状态通知失败: " + e.getMessage());

@@ -127,7 +127,7 @@
   import { ref, reactive, computed, onMounted, onShow } from 'vue'
   import { onLoad } from '@dcloudio/uni-app'
   import { request } from '@/common/request'
-  import config from '@/common/config'
+  import { API } from '@/common/config'
 
   // 标签页配置
   const tabs = ref([
@@ -175,7 +175,7 @@
       const page = loadMore ? currentPage.value + 1 : 1
 
       const response = await request({
-        url: config.API.notifications.list,
+        url: API.notifications.list,
         method: 'GET',
         data: {
           page,
@@ -212,7 +212,7 @@
   const loadUnreadCounts = async () => {
     try {
       const response = await request({
-        url: config.API.notifications.unreadCount,
+        url: API.notifications.unreadCount,
         method: 'GET',
       })
 
@@ -264,10 +264,7 @@
   const markMessageRead = async (messageId: number) => {
     try {
       await request({
-        url: config.API.notifications.markRead.replace(
-          '{id}',
-          messageId.toString()
-        ),
+        url: API.notifications.markRead.replace('{id}', messageId.toString()),
         method: 'PUT',
       })
     } catch (error) {
@@ -299,7 +296,7 @@
   const markAllRead = async () => {
     try {
       await request({
-        url: config.API.notifications.markAllRead,
+        url: API.notifications.markAllRead,
         method: 'PUT',
       })
 
@@ -338,10 +335,7 @@
             // 逐个删除消息
             for (const id of selectedIds.value) {
               await request({
-                url: config.API.notifications.delete.replace(
-                  '{id}',
-                  id.toString()
-                ),
+                url: API.notifications.delete.replace('{id}', id.toString()),
                 method: 'DELETE',
               })
             }
