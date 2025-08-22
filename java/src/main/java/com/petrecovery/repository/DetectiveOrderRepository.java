@@ -22,12 +22,12 @@ public interface DetectiveOrderRepository extends JpaRepository<DetectiveOrder, 
     /**
      * 根据侦探ID和状态查询订单列表
      */
-    Page<DetectiveOrder> findByDetectiveIdAndStatusOrderByCreatedAtDesc(Long detectiveId, String status, Pageable pageable);
+    Page<DetectiveOrder> findByDetectiveIdAndStatusOrderByCreatedAtDesc(Long detectiveId, DetectiveOrder.Status status, Pageable pageable);
     
     /**
      * 根据宠物ID查询所有意向订单
      */
-    List<DetectiveOrder> findByLostPetIdAndStatusOrderByCreatedAtDesc(Long lostPetId, String status);
+    List<DetectiveOrder> findByLostPetIdAndStatusOrderByCreatedAtDesc(Long lostPetId, DetectiveOrder.Status status);
     
     /**
      * 查询特定侦探对特定宠物的订单状态
@@ -42,12 +42,22 @@ public interface DetectiveOrderRepository extends JpaRepository<DetectiveOrder, 
     /**
      * 统计某个宠物的意向数量
      */
-    long countByLostPetIdAndStatus(Long lostPetId, String status);
+    long countByLostPetIdAndStatus(Long lostPetId, DetectiveOrder.Status status);
     
     /**
      * 查询宠物的已确认订单
      */
-    Optional<DetectiveOrder> findByLostPetIdAndStatus(Long lostPetId, String status);
+    Optional<DetectiveOrder> findByLostPetIdAndStatus(Long lostPetId, DetectiveOrder.Status status);
+    
+    /**
+     * 统计侦探的所有订单数量
+     */
+    long countByDetectiveId(Long detectiveId);
+    
+    /**
+     * 根据侦探ID和状态统计订单数量
+     */
+    long countByDetectiveIdAndStatus(Long detectiveId, DetectiveOrder.Status status);
     
     /**
      * 查询侦探的接单统计
@@ -56,8 +66,9 @@ public interface DetectiveOrderRepository extends JpaRepository<DetectiveOrder, 
     long countAcceptedOrdersByDetectiveId(@Param("detectiveId") Long detectiveId);
     
     /**
-     * 查询侦探的完成订单统计
+     * 查询侦探的完成订单统计（已废弃，使用上面的方法）
      */
+    @Deprecated
     long countByDetectiveIdAndStatus(Long detectiveId, String status);
     
     /**

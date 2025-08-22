@@ -408,4 +408,23 @@ public class NotificationService {
             return true; // 默认发送
         }
     }
+    
+    /**
+     * 发送订单状态通知
+     */
+    @Transactional
+    public void sendOrderStatusNotification(Long userId, String title, String content, String type, Long orderId, String petName, String detectiveName) {
+        try {
+            Map<String, Object> extraData = new HashMap<>();
+            extraData.put("orderId", orderId);
+            extraData.put("petName", petName);
+            extraData.put("detectiveName", detectiveName);
+            extraData.put("actionType", "order_status_update");
+            
+            sendNotification(userId, title, content, Notification.Type.ORDER, orderId, extraData);
+            
+        } catch (Exception e) {
+            System.err.println("发送订单状态通知失败: " + e.getMessage());
+        }
+    }
 }

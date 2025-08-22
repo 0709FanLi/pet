@@ -2,6 +2,20 @@
   <view class="page">
     <!-- 用户头部卡片 -->
     <view class="profile-header bg-gradient-primary">
+      <!-- 消息图标 -->
+      <view
+        v-if="isLoggedIn"
+        class="message-icon-wrapper"
+        @click="goToMessages"
+      >
+        <text class="message-icon">📬</text>
+        <view v-if="unreadCount > 0" class="message-badge">
+          <text class="message-badge-text">{{
+            unreadCount > 99 ? '99+' : unreadCount
+          }}</text>
+        </view>
+      </view>
+
       <view class="profile-header__content">
         <view class="profile-avatar-container" @click="openAvatarOptions">
           <view
@@ -95,6 +109,43 @@
           <text class="login-prompt__desc"
             >发布寻宠信息、申请成为宠物侦探等</text
           >
+        </view>
+      </view>
+
+      <!-- 消息和订单管理 -->
+      <view v-if="isLoggedIn" class="menu-section">
+        <view class="menu-section__title">
+          <text class="menu-section__icon">📋</text>
+          <text class="menu-section__text">消息与订单</text>
+        </view>
+
+        <view class="menu-list">
+          <view class="menu-item" @click="goToMessages">
+            <view class="menu-item__left">
+              <text class="menu-item__icon">📬</text>
+              <text class="menu-item__title">我的消息</text>
+            </view>
+            <view class="menu-item__right">
+              <view v-if="unreadCount > 0" class="menu-badge">
+                <text class="menu-badge-text">{{
+                  unreadCount > 99 ? '99+' : unreadCount
+                }}</text>
+              </view>
+              <text class="menu-item__arrow">›</text>
+            </view>
+          </view>
+
+          <view
+            v-if="detectiveStatus === 'approved'"
+            class="menu-item"
+            @click="goToMyOrders"
+          >
+            <view class="menu-item__left">
+              <text class="menu-item__icon">🕵️‍♂️</text>
+              <text class="menu-item__title">我的接单</text>
+            </view>
+            <text class="menu-item__arrow">›</text>
+          </view>
         </view>
       </view>
 
@@ -203,6 +254,7 @@
   const showAbout = ref(false)
   const detectiveStatus = ref('none')
   const showAvatarOptions = ref(false)
+  const unreadCount = ref(0)
 
   // 用户统计数据
   const userStats = ref({
@@ -434,8 +486,35 @@
         uni.navigateTo({ url: '/pages/detective/pending' })
         break
       case 'approved':
-        uni.showToast({ title: '接单功能开发中', icon: 'none' })
+        goToMyOrders()
         break
+    }
+  }
+
+  // 消息相关方法
+  const goToMessages = () => {
+    uni.navigateTo({ url: '/pages/message/list' })
+  }
+
+  const goToMyOrders = () => {
+    uni.navigateTo({ url: '/pages/detective/orders' })
+  }
+
+  const loadUnreadCount = async () => {
+    try {
+      const token = uni.getStorageSync(STORAGE_KEYS.token)
+      if (!token) return
+
+      const res = await request({
+        url: API.notifications.unreadCount,
+        header: { Authorization: `Bearer ${token}` },
+      })
+
+      if (res?.success) {
+        unreadCount.value = res.data?.total || 0
+      }
+    } catch (error) {
+      console.error('[Profile] 加载未读数量失败:', error)
     }
   }
   const logout = () => {
@@ -461,12 +540,14 @@
     const u = uni.getStorageSync('userInfo')
     if (u) user.value = typeof u === 'string' ? JSON.parse(u) : u
     fetchStatus()
+    loadUnreadCount()
   })
 
   // 返回我的页面时也刷新一次，避免提交申请后状态不更新
   onShow(() => {
     checkLoginStatus()
     fetchStatus()
+    loadUnreadCount()
   })
 </script>
 
@@ -488,6 +569,47 @@
     gap: var(--spacing-md);
     position: relative;
     z-index: 2;
+  }
+
+  /* 消息图标 */
+  .message-icon-wrapper {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  .message-icon {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .message-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background: #ff6b9d;
+    border-radius: 8px;
+    min-width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    border: 2px solid #ffffff;
+  }
+
+  .message-badge-text {
+    font-size: 10px;
+    color: #ffffff;
+    font-weight: 600;
   }
 
   /* 头像样式 */
@@ -916,6 +1038,29 @@
     color: var(--text-tertiary);
     transform: rotate(0deg);
     transition: transform 0.2s ease;
+  }
+
+  .menu-item__right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .menu-badge {
+    background: #ff6b9d;
+    border-radius: 8px;
+    min-width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+  }
+
+  .menu-badge-text {
+    font-size: 10px;
+    color: #ffffff;
+    font-weight: 600;
   }
 
   /* 认证操作区域 */

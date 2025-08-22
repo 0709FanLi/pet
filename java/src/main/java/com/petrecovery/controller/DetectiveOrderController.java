@@ -154,6 +154,123 @@ public class DetectiveOrderController {
     }
     
     /**
+     * 获取订单数量统计
+     */
+    @GetMapping("/counts")
+    @Operation(summary = "获取订单数量统计")
+    public ResponseEntity<Map<String, Object>> getOrderCounts(
+            @RequestHeader("Authorization") String authHeader) {
+        
+        try {
+            Long userId = getUserFromAuth(authHeader);
+            if (userId == null) {
+                return ResponseEntity.status(401).body(Map.of("success", false, "message", "用户未登录"));
+            }
+            
+            Map<String, Object> result = detectiveOrderService.getOrderCounts(userId);
+            
+            if ((Boolean) result.get("success")) {
+                return ResponseEntity.ok(result);
+            } else {
+                return ResponseEntity.badRequest().body(result);
+            }
+            
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("success", false, "message", "查询失败：" + e.getMessage()));
+        }
+    }
+    
+    /**
+     * 开始工作
+     */
+    @PutMapping("/{id}/start")
+    @Operation(summary = "开始工作")
+    public ResponseEntity<Map<String, Object>> startWork(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable Long id) {
+        
+        try {
+            Long userId = getUserFromAuth(authHeader);
+            if (userId == null) {
+                return ResponseEntity.status(401).body(Map.of("success", false, "message", "用户未登录"));
+            }
+            
+            Map<String, Object> result = detectiveOrderService.startWork(userId, id);
+            
+            if ((Boolean) result.get("success")) {
+                return ResponseEntity.ok(result);
+            } else {
+                return ResponseEntity.badRequest().body(result);
+            }
+            
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("success", false, "message", "操作失败：" + e.getMessage()));
+        }
+    }
+    
+    /**
+     * 更新进度
+     */
+    @PutMapping("/{id}/progress")
+    @Operation(summary = "更新进度")
+    public ResponseEntity<Map<String, Object>> updateProgress(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable Long id,
+            @RequestBody Map<String, Object> request) {
+        
+        try {
+            Long userId = getUserFromAuth(authHeader);
+            if (userId == null) {
+                return ResponseEntity.status(401).body(Map.of("success", false, "message", "用户未登录"));
+            }
+            
+            String progressUpdate = (String) request.get("progressUpdate");
+            if (progressUpdate == null || progressUpdate.trim().isEmpty()) {
+                return ResponseEntity.badRequest().body(Map.of("success", false, "message", "进度描述不能为空"));
+            }
+            
+            Map<String, Object> result = detectiveOrderService.updateProgress(userId, id, progressUpdate);
+            
+            if ((Boolean) result.get("success")) {
+                return ResponseEntity.ok(result);
+            } else {
+                return ResponseEntity.badRequest().body(result);
+            }
+            
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("success", false, "message", "操作失败：" + e.getMessage()));
+        }
+    }
+    
+    /**
+     * 完成订单
+     */
+    @PutMapping("/{id}/complete")
+    @Operation(summary = "完成订单")
+    public ResponseEntity<Map<String, Object>> completeOrder(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable Long id) {
+        
+        try {
+            Long userId = getUserFromAuth(authHeader);
+            if (userId == null) {
+                return ResponseEntity.status(401).body(Map.of("success", false, "message", "用户未登录"));
+            }
+            
+            Map<String, Object> result = detectiveOrderService.completeOrder(userId, id);
+            
+            if ((Boolean) result.get("success")) {
+                return ResponseEntity.ok(result);
+            } else {
+                return ResponseEntity.badRequest().body(result);
+            }
+            
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("success", false, "message", "操作失败：" + e.getMessage()));
+        }
+    }
+    
+    /**
      * 从Authorization头部解析用户ID
      */
     private Long getUserFromAuth(String authHeader) {

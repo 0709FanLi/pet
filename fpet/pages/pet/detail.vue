@@ -147,51 +147,78 @@
               <text class="card-icon">🕵️‍♂️</text>
               <text class="card-title">侦探专区</text>
             </view>
-            
+
             <!-- 意向状态显示 -->
             <view class="intention-status">
-              <view class="status-item" v-if="intentionStatus.status === 'none'">
+              <view
+                class="status-item"
+                v-if="intentionStatus.status === 'none'"
+              >
                 <text class="status-text">您可以表达接单意向</text>
-                <view class="intention-count" v-if="intentionStatus.intentionCount > 0">
-                  <text class="count-text">已有 {{ intentionStatus.intentionCount }} 位侦探表达意向</text>
+                <view
+                  class="intention-count"
+                  v-if="intentionStatus.intentionCount > 0"
+                >
+                  <text class="count-text"
+                    >已有
+                    {{ intentionStatus.intentionCount }} 位侦探表达意向</text
+                  >
                 </view>
               </view>
-              
-              <view class="status-item" v-else-if="intentionStatus.status === 'intention'">
+
+              <view
+                class="status-item"
+                v-else-if="intentionStatus.status === 'intention'"
+              >
                 <text class="status-text success">✅ 您已表达意向</text>
                 <text class="status-detail">等待宠物主人确认</text>
               </view>
-              
-              <view class="status-item" v-else-if="intentionStatus.status === 'confirmed'">
+
+              <view
+                class="status-item"
+                v-else-if="intentionStatus.status === 'confirmed'"
+              >
                 <text class="status-text confirmed">🎉 您已接单</text>
                 <text class="status-detail">请联系宠物主人开始工作</text>
               </view>
-              
-              <view class="status-item" v-else-if="intentionStatus.status === 'withdrawn'">
+
+              <view
+                class="status-item"
+                v-else-if="intentionStatus.status === 'withdrawn'"
+              >
                 <text class="status-text withdrawn">❌ 已撤回意向</text>
                 <text class="status-detail">无法再对该订单表达意向</text>
               </view>
-              
+
               <view class="status-item" v-else-if="intentionStatus.isConfirmed">
-                <text class="status-text unavailable">该订单已被其他侦探接单</text>
+                <text class="status-text unavailable"
+                  >该订单已被其他侦探接单</text
+                >
               </view>
             </view>
-            
+
             <!-- 操作按钮 -->
             <view class="detective-actions">
               <!-- 意向接单按钮 -->
-              <u-button 
-                v-if="intentionStatus.status === 'none' && !intentionStatus.isConfirmed"
+              <u-button
+                v-if="
+                  intentionStatus.status === 'none' &&
+                  !intentionStatus.isConfirmed
+                "
                 @click="showIntentionModal = true"
                 type="primary"
                 shape="round"
-                :custom-style="{ background: 'linear-gradient(135deg, #5b8ff9 0%, #36cfc9 100%)', border: 'none' }"
+                :custom-style="{
+                  background:
+                    'linear-gradient(135deg, #5b8ff9 0%, #36cfc9 100%)',
+                  border: 'none',
+                }"
               >
                 意向接单
               </u-button>
-              
+
               <!-- 撤回意向按钮 -->
-              <u-button 
+              <u-button
                 v-if="intentionStatus.status === 'intention'"
                 @click="confirmWithdraw"
                 type="warning"
@@ -200,9 +227,9 @@
               >
                 撤回意向
               </u-button>
-              
+
               <!-- 联系主人按钮 -->
-              <u-button 
+              <u-button
                 v-if="intentionStatus.status === 'confirmed'"
                 @click="contactOwner"
                 type="success"
@@ -235,10 +262,10 @@
         @close="showSheet = false"
         @select="onAction"
       />
-      
+
       <!-- 意向接单模态框 -->
-      <u-modal 
-        v-model:show="showIntentionModal" 
+      <u-modal
+        v-model:show="showIntentionModal"
         title="表达接单意向"
         :show-cancel-button="true"
         @confirm="submitIntention"
@@ -254,19 +281,21 @@
               <u-radio name="其他">其他</u-radio>
             </u-radio-group>
           </view>
-          
+
           <view class="form-item">
             <text class="form-label">服务说明 *</text>
-            <u-textarea 
+            <u-textarea
               v-model="intentionForm.serviceDescription"
               placeholder="请描述您的优势，如：擅长该区域、有相关经验、团队优势等"
               :maxlength="200"
               count
             />
           </view>
-          
+
           <view class="form-tip">
-            <text class="tip-text">提示：表达意向后，宠物主人可查看您的信息并选择合适的侦探</text>
+            <text class="tip-text"
+              >提示：表达意向后，宠物主人可查看您的信息并选择合适的侦探</text
+            >
           </view>
         </view>
       </u-modal>
@@ -288,18 +317,18 @@
   const error = ref('')
   const currentId = ref('')
   const currentImageIndex = ref(0)
-  
+
   // 侦探相关状态
   const isDetective = ref(false)
   const intentionStatus = ref({
     status: 'none', // none/intention/confirmed/withdrawn
     intentionCount: 0,
-    isConfirmed: false
+    isConfirmed: false,
   })
   const showIntentionModal = ref(false)
   const intentionForm = ref({
     estimatedCompletion: '3天内',
-    serviceDescription: ''
+    serviceDescription: '',
   })
 
   // 计算属性
@@ -417,7 +446,7 @@
       images.value = parseImages(data.images)
       console.log('[Detail] 设置宠物数据:', data)
       console.log('[Detail] 设置图片数据:', images.value)
-      
+
       // 检查侦探身份和意向状态
       await checkDetectiveStatus(id)
     } catch (e) {
@@ -435,7 +464,7 @@
   }
 
   // 检查侦探身份和意向状态
-  const checkDetectiveStatus = async (petId) => {
+  const checkDetectiveStatus = async petId => {
     try {
       const token = uni.getStorageSync(STORAGE_KEYS.token)
       if (!token) {
@@ -446,13 +475,13 @@
       // 检查是否为认证侦探
       const detectiveRes = await request({
         url: API.detective.status,
-        header: { Authorization: `Bearer ${token}` }
+        header: { Authorization: `Bearer ${token}` },
       })
-      
+
       if (detectiveRes?.success && detectiveRes?.data?.status === 'approved') {
         isDetective.value = true
         console.log('[Detail] 用户是认证侦探')
-        
+
         // 获取意向状态
         await loadIntentionStatus(petId)
       }
@@ -462,19 +491,19 @@
   }
 
   // 加载意向状态
-  const loadIntentionStatus = async (petId) => {
+  const loadIntentionStatus = async petId => {
     try {
       const token = uni.getStorageSync(STORAGE_KEYS.token)
       const res = await request({
         url: `${API.detective.orders.intentionStatus}/${petId}`,
-        header: { Authorization: `Bearer ${token}` }
+        header: { Authorization: `Bearer ${token}` },
       })
-      
+
       if (res?.success) {
         intentionStatus.value = {
           status: res.status || 'none',
           intentionCount: res.intentionCount || 0,
-          isConfirmed: res.isConfirmed || false
+          isConfirmed: res.isConfirmed || false,
         }
         console.log('[Detail] 意向状态:', intentionStatus.value)
       }
@@ -492,7 +521,7 @@
       }
 
       uni.showLoading({ title: '提交中...' })
-      
+
       const token = uni.getStorageSync(STORAGE_KEYS.token)
       const res = await request({
         url: API.detective.orders.intention,
@@ -500,24 +529,24 @@
         data: {
           lostPetId: parseInt(currentId.value),
           estimatedCompletion: intentionForm.value.estimatedCompletion,
-          serviceDescription: intentionForm.value.serviceDescription
+          serviceDescription: intentionForm.value.serviceDescription,
         },
-        header: { Authorization: `Bearer ${token}` }
+        header: { Authorization: `Bearer ${token}` },
       })
 
       uni.hideLoading()
-      
+
       if (res?.success) {
         uni.showToast({ title: '意向提交成功', icon: 'success' })
         showIntentionModal.value = false
-        
+
         // 重新加载意向状态
         await loadIntentionStatus(currentId.value)
-        
+
         // 清空表单
         intentionForm.value = {
           estimatedCompletion: '3天内',
-          serviceDescription: ''
+          serviceDescription: '',
         }
       } else {
         uni.showToast({ title: res?.message || '提交失败', icon: 'none' })
@@ -533,12 +562,13 @@
   const confirmWithdraw = () => {
     uni.showModal({
       title: '确认撤回意向',
-      content: '撤回后将无法再对该寻宠启示表达意向，此操作不可撤销。确定要撤回吗？',
-      success: (res) => {
+      content:
+        '撤回后将无法再对该寻宠启示表达意向，此操作不可撤销。确定要撤回吗？',
+      success: res => {
         if (res.confirm) {
           withdrawIntention()
         }
-      }
+      },
     })
   }
 
@@ -546,19 +576,19 @@
   const withdrawIntention = async () => {
     try {
       uni.showLoading({ title: '撤回中...' })
-      
+
       const token = uni.getStorageSync(STORAGE_KEYS.token)
       const res = await request({
         url: `${API.detective.orders.intention}/${currentId.value}`,
         method: 'DELETE',
-        header: { Authorization: `Bearer ${token}` }
+        header: { Authorization: `Bearer ${token}` },
       })
 
       uni.hideLoading()
-      
+
       if (res?.success) {
         uni.showToast({ title: '意向已撤回', icon: 'success' })
-        
+
         // 重新加载意向状态
         await loadIntentionStatus(currentId.value)
       } else {
@@ -1032,7 +1062,11 @@
   }
 
   .detective-card {
-    background: linear-gradient(135deg, rgba(91, 143, 249, 0.05) 0%, rgba(54, 207, 201, 0.05) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(91, 143, 249, 0.05) 0%,
+      rgba(54, 207, 201, 0.05) 100%
+    );
     border-radius: 16px;
     padding: 20px;
     border: 2px solid rgba(91, 143, 249, 0.2);

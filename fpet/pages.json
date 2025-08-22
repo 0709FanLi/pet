@@ -60,6 +60,24 @@
 			"style": {
 				"navigationBarTitleText": "一键登录"
 			}
+		},
+		{
+			"path": "pages/message/list",
+			"style": {
+				"navigationBarTitleText": "消息通知"
+			}
+		},
+		{
+			"path": "pages/message/detail",
+			"style": {
+				"navigationBarTitleText": "消息详情"
+			}
+		},
+		{
+			"path": "pages/detective/orders",
+			"style": {
+				"navigationBarTitleText": "我的接单"
+			}
 		}
 	],
 	"tabBar": {

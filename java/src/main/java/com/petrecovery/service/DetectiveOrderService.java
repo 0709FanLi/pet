@@ -357,6 +357,216 @@ public class DetectiveOrderService {
     }
     
     /**
+     * 获取订单数量统计
+     */
+    public Map<String, Object> getOrderCounts(Long detectiveId) {
+        Map<String, Object> result = new HashMap<>();
+        
+        try {
+            Map<String, Long> counts = new HashMap<>();
+            
+            // 全部订单
+            long allCount = detectiveOrderRepository.countByDetectiveId(detectiveId);
+            counts.put("all", allCount);
+            
+            // 按状态统计
+            counts.put("intention", detectiveOrderRepository.countByDetectiveIdAndStatus(detectiveId, DetectiveOrder.Status.INTENTION));
+            counts.put("confirmed", detectiveOrderRepository.countByDetectiveIdAndStatus(detectiveId, DetectiveOrder.Status.CONFIRMED));
+            counts.put("in_progress", detectiveOrderRepository.countByDetectiveIdAndStatus(detectiveId, DetectiveOrder.Status.IN_PROGRESS));
+            counts.put("completed", detectiveOrderRepository.countByDetectiveIdAndStatus(detectiveId, DetectiveOrder.Status.COMPLETED));
+            
+            result.put("success", true);
+            result.put("data", counts);
+            
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("message", "统计失败：" + e.getMessage());
+        }
+        
+        return result;
+    }
+    
+    /**
+     * 开始工作
+     */
+    @Transactional
+    public Map<String, Object> startWork(Long detectiveId, Long orderId) {
+        Map<String, Object> result = new HashMap<>();
+        
+        try {
+            Optional<DetectiveOrder> orderOpt = detectiveOrderRepository.findById(orderId);
+            if (!orderOpt.isPresent()) {
+                result.put("success", false);
+                result.put("message", "订单不存在");
+                return result;
+            }
+            
+            DetectiveOrder order = orderOpt.get();
+            
+            // 验证权限
+            if (!order.getDetectiveId().equals(detectiveId)) {
+                result.put("success", false);
+                result.put("message", "无权操作此订单");
+                return result;
+            }
+            
+            // 验证状态
+            if (order.getStatus() != DetectiveOrder.Status.CONFIRMED) {
+                result.put("success", false);
+                result.put("message", "只有已确认的订单才能开始工作");
+                return result;
+            }
+            
+            // 更新状态
+            order.setStatus(DetectiveOrder.Status.IN_PROGRESS);
+            detectiveOrderRepository.save(order);
+            
+            // 发送通知给宠物主人
+            notificationService.sendOrderStatusNotification(
+                order.getLostPet().getUser().getId(),
+                "订单状态更新",
+                "侦探已开始为您寻找宠物",
+                "order",
+                order.getId(),
+                order.getLostPet().getPetName(),
+                order.getDetectiveUser().getNickname()
+            );
+            
+            result.put("success", true);
+            result.put("message", "已开始工作");
+            
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("message", "操作失败：" + e.getMessage());
+        }
+        
+        return result;
+    }
+    
+    /**
+     * 更新进度
+     */
+    @Transactional
+    public Map<String, Object> updateProgress(Long detectiveId, Long orderId, String progressUpdate) {
+        Map<String, Object> result = new HashMap<>();
+        
+        try {
+            Optional<DetectiveOrder> orderOpt = detectiveOrderRepository.findById(orderId);
+            if (!orderOpt.isPresent()) {
+                result.put("success", false);
+                result.put("message", "订单不存在");
+                return result;
+            }
+            
+            DetectiveOrder order = orderOpt.get();
+            
+            // 验证权限
+            if (!order.getDetectiveId().equals(detectiveId)) {
+                result.put("success", false);
+                result.put("message", "无权操作此订单");
+                return result;
+            }
+            
+            // 验证状态
+            if (order.getStatus() != DetectiveOrder.Status.IN_PROGRESS) {
+                result.put("success", false);
+                result.put("message", "只有进行中的订单才能更新进度");
+                return result;
+            }
+            
+            // 更新进度
+            String currentProgress = order.getProgressUpdates();
+            String newProgress = "[" + LocalDateTime.now() + "] " + progressUpdate;
+            
+            if (currentProgress != null && !currentProgress.isEmpty()) {
+                order.setProgressUpdates(currentProgress + "\n" + newProgress);
+            } else {
+                order.setProgressUpdates(newProgress);
+            }
+            
+            detectiveOrderRepository.save(order);
+            
+            // 发送通知给宠物主人
+            notificationService.sendOrderStatusNotification(
+                order.getLostPet().getUser().getId(),
+                "进度更新",
+                "侦探更新了寻宠进度：" + progressUpdate,
+                "order",
+                order.getId(),
+                order.getLostPet().getPetName(),
+                order.getDetectiveUser().getNickname()
+            );
+            
+            result.put("success", true);
+            result.put("message", "进度更新成功");
+            
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("message", "更新失败：" + e.getMessage());
+        }
+        
+        return result;
+    }
+    
+    /**
+     * 完成订单
+     */
+    @Transactional
+    public Map<String, Object> completeOrder(Long detectiveId, Long orderId) {
+        Map<String, Object> result = new HashMap<>();
+        
+        try {
+            Optional<DetectiveOrder> orderOpt = detectiveOrderRepository.findById(orderId);
+            if (!orderOpt.isPresent()) {
+                result.put("success", false);
+                result.put("message", "订单不存在");
+                return result;
+            }
+            
+            DetectiveOrder order = orderOpt.get();
+            
+            // 验证权限
+            if (!order.getDetectiveId().equals(detectiveId)) {
+                result.put("success", false);
+                result.put("message", "无权操作此订单");
+                return result;
+            }
+            
+            // 验证状态
+            if (order.getStatus() != DetectiveOrder.Status.IN_PROGRESS) {
+                result.put("success", false);
+                result.put("message", "只有进行中的订单才能完成");
+                return result;
+            }
+            
+            // 更新状态
+            order.setStatus(DetectiveOrder.Status.COMPLETED);
+            order.setCompletedAt(LocalDateTime.now());
+            detectiveOrderRepository.save(order);
+            
+            // 发送通知给宠物主人
+            notificationService.sendOrderStatusNotification(
+                order.getLostPet().getUser().getId(),
+                "订单完成",
+                "侦探已完成寻宠任务，请联系侦探了解详情",
+                "order",
+                order.getId(),
+                order.getLostPet().getPetName(),
+                order.getDetectiveUser().getNickname()
+            );
+            
+            result.put("success", true);
+            result.put("message", "订单已完成");
+            
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("message", "操作失败：" + e.getMessage());
+        }
+        
+        return result;
+    }
+    
+    /**
      * 验证是否为认证侦探
      */
     private boolean isApprovedDetective(Long userId) {

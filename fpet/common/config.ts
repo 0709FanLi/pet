@@ -45,8 +45,12 @@ export const API = {
     orders: {
       intention: '/api/detective/orders/intention',
       my: '/api/detective/orders/my',
-      intentionStatus: '/api/detective/orders/intention-status'
-    }
+      intentionStatus: '/api/detective/orders/intention-status',
+      counts: '/api/detective/orders/counts',
+      start: '/api/detective/orders/{id}/start',
+      progress: '/api/detective/orders/{id}/progress',
+      complete: '/api/detective/orders/{id}/complete',
+    },
   },
   avatar: {
     upload: '/api/avatar/upload',
@@ -55,12 +59,12 @@ export const API = {
   },
   notifications: {
     list: '/api/notifications/list',
-    detail: '/api/notifications',
+    detail: '/api/notifications/{id}',
     unreadCount: '/api/notifications/unread-count',
-    markRead: '/api/notifications',
+    markRead: '/api/notifications/{id}/read',
     markAllRead: '/api/notifications/read-all',
-    delete: '/api/notifications'
-  }
+    delete: '/api/notifications/{id}',
+  },
 }
 
 export const STORAGE_KEYS = {
