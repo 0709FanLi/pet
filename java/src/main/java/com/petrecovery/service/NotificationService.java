@@ -33,6 +33,9 @@ public class NotificationService {
     @Autowired
     private MqttService mqttService;
     
+    @Autowired
+    private SimpleWebSocketService simpleWebSocketService;
+    
     /**
      * 发送通知
      */
@@ -82,6 +85,13 @@ public class NotificationService {
                 mqttService.sendUserNotification(userId, title, content, type, extraData);
             } catch (Exception e) {
                 System.err.println("MQTT推送失败，但数据库通知已保存: " + e.getMessage());
+            }
+            
+            // 发送WebSocket实时推送（模拟）
+            try {
+                simpleWebSocketService.sendNotificationToUser(userId, title, content, type, extraData);
+            } catch (Exception e) {
+                System.err.println("模拟WebSocket推送失败，但数据库通知已保存: " + e.getMessage());
             }
             // sendMQTTNotification(userId, notification);
             

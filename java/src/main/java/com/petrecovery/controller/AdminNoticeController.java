@@ -3,6 +3,7 @@ package com.petrecovery.controller;
 import com.petrecovery.entity.LostPet;
 import com.petrecovery.service.LostPetService;
 import com.petrecovery.repository.LostPetRepository;
+import com.petrecovery.service.NotificationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class AdminNoticeController {
     
     @Autowired
     private LostPetRepository lostPetRepository;
+    
+    @Autowired
+    private NotificationService notificationService;
 
     @GetMapping("/pending")
     @Operation(summary = "查询待审核启事列表", description = "当前以 LostPet 中 status=lost 的数据作为待审核数据源，支持关键词与城市筛选，简单分页")
@@ -252,8 +256,41 @@ public class AdminNoticeController {
             resp.put("message", "not found");
             return ResponseEntity.status(404).body(resp);
         }
+        
+        // 更新状态
         lp.setStatus("approved");
         lostPetRepository.save(lp);
+        
+        // 发送审核通过通知
+        try {
+            String title = "寻宠启示审核通过";
+            String content = String.format("您发布的宠物\"%s\"寻找启示已通过审核，现在可以在平台上展示了！", 
+                lp.getPetName() != null ? lp.getPetName() : "宠物");
+            
+            // 创建额外数据
+            Map<String, Object> extraData = new HashMap<>();
+            extraData.put("petId", lp.getId());
+            extraData.put("petName", lp.getPetName());
+            extraData.put("actionType", "audit_approved");
+            extraData.put("auditResult", "approved");
+            
+            notificationService.sendNotification(
+                lp.getUser().getId(),
+                title,
+                content,
+                "system",
+                lp.getId(),
+                "normal",
+                extraData
+            );
+            
+            System.out.println("已发送审核通过通知给用户: " + lp.getUser().getId());
+            
+        } catch (Exception e) {
+            System.err.println("发送审核通过通知失败: " + e.getMessage());
+            // 不影响主流程，继续返回成功
+        }
+        
         resp.put("code", 0);
         resp.put("message", "ok");
         return ResponseEntity.ok(resp);
@@ -275,9 +312,43 @@ public class AdminNoticeController {
             resp.put("message", "not found");
             return ResponseEntity.status(404).body(resp);
         }
-        // 简化：仅记录状态。原因可扩展记录至独立表。
+        
+        // 更新状态
         lp.setStatus("rejected");
         lostPetRepository.save(lp);
+        
+        // 发送审核拒绝通知
+        try {
+            String title = "寻宠启示审核未通过";
+            String reason = body != null && body.getReason() != null ? body.getReason() : "不符合平台发布规范";
+            String content = String.format("很抱歉，您发布的宠物\"%s\"寻找启示未通过审核。拒绝原因：%s。请修改后重新提交。", 
+                lp.getPetName() != null ? lp.getPetName() : "宠物", reason);
+            
+            // 创建额外数据
+            Map<String, Object> extraData = new HashMap<>();
+            extraData.put("petId", lp.getId());
+            extraData.put("petName", lp.getPetName());
+            extraData.put("actionType", "audit_rejected");
+            extraData.put("auditResult", "rejected");
+            extraData.put("rejectReason", reason);
+            
+            notificationService.sendNotification(
+                lp.getUser().getId(),
+                title,
+                content,
+                "system",
+                lp.getId(),
+                "normal",
+                extraData
+            );
+            
+            System.out.println("已发送审核拒绝通知给用户: " + lp.getUser().getId());
+            
+        } catch (Exception e) {
+            System.err.println("发送审核拒绝通知失败: " + e.getMessage());
+            // 不影响主流程，继续返回成功
+        }
+        
         resp.put("code", 0);
         resp.put("message", "ok");
         return ResponseEntity.ok(resp);

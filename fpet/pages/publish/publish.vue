@@ -354,12 +354,25 @@
   }
 
   const submit = async () => {
+    // 获取当前登录用户信息
+    const userInfo = uni.getStorageSync(STORAGE_KEYS.userInfo)
+    if (!userInfo || !userInfo.id) {
+      uni.showToast({
+        title: '请先登录',
+        icon: 'none'
+      })
+      setTimeout(() => {
+        uni.navigateTo({ url: '/pages/auth/login' })
+      }, 1500)
+      return
+    }
+
     const lostTimeStr = dayjs(form.value.lostTime || Date.now()).format(
       'YYYY-MM-DD HH:mm:ss'
     )
     const imgs = imageList.value.map(i => i.raw || i.url)
     const payload = {
-      userId: 1,
+      userId: userInfo.id, // 使用当前登录用户的真实ID
       petName: form.value.petName,
       petType: form.value.petType,
       petBreed: form.value.petBreed,

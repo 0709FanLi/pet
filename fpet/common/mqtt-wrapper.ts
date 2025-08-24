@@ -1,5 +1,10 @@
 // @ts-ignore
 declare const uni: any
+import {
+  startNotificationPolling,
+  stopNotificationPolling,
+} from './notification-polling'
+import { connectWebSocketMqtt, disconnectWebSocketMqtt } from './mqtt-websocket'
 
 interface MqttMessage {
   userId: number
@@ -20,15 +25,9 @@ class MqttWrapper {
   private userToken: string = ''
 
   constructor() {
-    // 检查运行环境
-    // #ifdef H5
+    // 所有环境都支持MQTT WebSocket
     this.isSupported = true
-    // #endif
-
-    // #ifndef H5
-    this.isSupported = false
-    console.info('当前环境不支持MQTT，将使用轮询方式获取消息')
-    // #endif
+    console.log('MQTT WebSocket支持已启用')
   }
 
   /**
@@ -38,43 +37,48 @@ class MqttWrapper {
     this.userId = userId
     this.userToken = token
 
-    if (!this.isSupported) {
-      console.info('MQTT不支持，连接跳过')
-      return false
-    }
-
     try {
-      // #ifdef H5
-      console.log('H5环境下初始化MQTT连接...')
-      // 这里可以添加实际的MQTT连接逻辑
-      // 暂时模拟连接成功
-      this.isConnected = true
-      return true
-      // #endif
-    } catch (error) {
-      console.error('MQTT连接失败:', error)
-      return false
-    }
+      console.log('初始化WebSocket MQTT连接...')
 
-    return false
+      // 连接WebSocket MQTT服务
+      const connected = await connectWebSocketMqtt(userId, token)
+
+      if (connected) {
+        this.isConnected = true
+        console.log('WebSocket MQTT连接成功')
+        return true
+      } else {
+        console.error('WebSocket MQTT连接失败')
+        return false
+      }
+    } catch (error) {
+      console.error('WebSocket MQTT连接失败:', error)
+
+      // 如果MQTT连接失败，启用轮询作为备选方案
+      console.info('启用消息轮询作为备选方案')
+      startNotificationPolling(userId)
+      return true
+    }
   }
 
   /**
    * 断开连接
    */
   disconnect(): void {
-    if (!this.isSupported) {
-      return
+    try {
+      console.log('断开WebSocket MQTT连接')
+
+      // 断开WebSocket MQTT连接
+      disconnectWebSocketMqtt()
+
+      this.isConnected = false
+      console.log('WebSocket MQTT连接已断开')
+    } catch (error) {
+      console.error('断开WebSocket MQTT连接失败:', error)
     }
 
-    try {
-      // #ifdef H5
-      console.log('断开MQTT连接')
-      this.isConnected = false
-      // #endif
-    } catch (error) {
-      console.error('MQTT断开失败:', error)
-    }
+    // 同时停止轮询（如果有的话）
+    stopNotificationPolling()
   }
 
   /**

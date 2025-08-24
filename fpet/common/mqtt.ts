@@ -3,22 +3,10 @@ declare const uni: any
 // @ts-ignore
 declare const plus: any
 
-// 条件导入MQTT
-let mqtt: any = null
-try {
-  // #ifdef H5
-  // @ts-ignore
-  mqtt = require('mqtt')
-  // #endif
+// 注意：此文件已弃用，请使用 mqtt-websocket.ts
+// 保留此文件是为了兼容性，但不再使用第三方MQTT库
 
-  // #ifndef H5
-  // 在非H5环境下不使用MQTT，或使用替代方案
-  mqtt = null
-  // #endif
-} catch (error) {
-  console.warn('MQTT library not available:', error)
-  mqtt = null
-}
+console.warn('mqtt.ts已弃用，请使用mqtt-websocket.ts')
 
 interface MqttMessage {
   userId: number
@@ -56,18 +44,11 @@ class MqttService {
   }
 
   /**
-   * 获取MQTT Broker地址
+   * 获取MQTT Broker地址 - 统一使用WebSocket
    */
   private getBrokerUrl(): string {
-    // H5环境下使用WebSocket协议
-    // #ifdef H5
-    return 'ws://192.168.1.18:9001/mqtt'
-    // #endif
-
-    // 小程序和App环境下使用TCP协议
-    // #ifndef H5
-    return 'tcp://192.168.1.18:1883'
-    // #endif
+    // 所有环境都使用WebSocket协议，确保跨平台兼容
+    return 'ws://192.168.1.18:9001'
   }
 
   /**
@@ -84,7 +65,8 @@ class MqttService {
    */
   async connect(userId: string, token: string): Promise<boolean> {
     try {
-      // 检查MQTT是否可用
+      // 动态加载MQTT库
+      mqtt = await loadMqtt()
       if (!mqtt) {
         console.warn('MQTT不可用，跳过连接')
         return false

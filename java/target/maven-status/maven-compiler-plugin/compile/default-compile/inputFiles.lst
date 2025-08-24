@@ -19,6 +19,7 @@
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/service/MqttService.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/repository/DetectiveApplicationCacheRepository.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/controller/NotificationController.java
+/Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/service/SimpleWebSocketService.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/config/SecurityConfig.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/entity/DetectiveApplicationCache.java
 /Users/Zhuanz/Desktop/pet/java/src/main/java/com/petrecovery/config/WebConfig.java
