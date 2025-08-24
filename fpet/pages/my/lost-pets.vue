@@ -38,7 +38,7 @@
 
 <script setup>
   import { ref, onMounted } from 'vue'
-  import { BASE_URL } from '@/common/config'
+  import { BASE_URL, STORAGE_KEYS } from '@/common/config'
   import { request } from '@/common/request'
 
   const loading = ref(true)
@@ -68,10 +68,53 @@
   const load = async () => {
     loading.value = true
     try {
-      const userId = 1
+      // 从本地存储获取当前登录用户信息
+      const userInfo = uni.getStorageSync(STORAGE_KEYS.userInfo)
+      const token = uni.getStorageSync(STORAGE_KEYS.token)
+
+      console.log('用户信息:', userInfo)
+      console.log('Token:', token ? '存在' : '不存在')
+
+      if (!userInfo || !userInfo.id) {
+        console.error('用户未登录或用户信息不完整')
+        uni.showToast({
+          title: '请先登录',
+          icon: 'none',
+        })
+        setTimeout(() => {
+          uni.navigateTo({ url: '/pages/auth/login' })
+        }, 1500)
+        return
+      }
+
+      if (!token) {
+        console.error('Token不存在，需要重新登录')
+        uni.showToast({
+          title: 'Token已过期，请重新登录',
+          icon: 'none',
+        })
+        setTimeout(() => {
+          uni.navigateTo({ url: '/pages/auth/login' })
+        }, 1500)
+        return
+      }
+
+      const userId = userInfo.id
+      console.log('加载用户发布列表，用户ID:', userId)
+
       const res = await request({ url: `/api/lost-pets/user/${userId}` })
+      console.log('API响应:', res)
+
       const arr = Array.isArray(res) ? res : res?.data || []
       list.value = arr.map(p => ({ ...p, image: parseImg(p.images) }))
+
+      console.log('用户发布列表加载完成，数量:', list.value.length)
+    } catch (error) {
+      console.error('加载用户发布列表失败:', error)
+      uni.showToast({
+        title: '加载失败',
+        icon: 'none',
+      })
     } finally {
       loading.value = false
     }
