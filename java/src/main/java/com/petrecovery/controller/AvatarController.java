@@ -121,7 +121,7 @@ public class AvatarController {
             response.put("success", true);
             response.put("message", "头像上传成功");
             response.put("avatarUrl", avatarUrl);
-            response.put("fullUrl", "http://192.168.1.18:8080" + avatarUrl); // 返回完整URL用于前端显示
+            response.put("fullUrl", "http://192.168.1.10:8080" + avatarUrl); // 返回完整URL用于前端显示
             
             return ResponseEntity.ok(response);
 

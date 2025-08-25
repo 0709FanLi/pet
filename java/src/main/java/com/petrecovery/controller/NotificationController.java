@@ -36,18 +36,32 @@ public class NotificationController {
     @GetMapping("/list")
     @Operation(summary = "获取消息列表")
     public ResponseEntity<Map<String, Object>> getNotificationList(
-            @RequestHeader("Authorization") String authHeader,
+            @RequestHeader(value = "Authorization", required = false) String authHeader,
             @RequestParam(defaultValue = "") String type,
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int pageSize) {
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(required = false) Long userId) {
         
         try {
-            Long userId = getUserFromAuth(authHeader);
-            if (userId == null) {
-                return ResponseEntity.status(401).body(Map.of("success", false, "message", "用户未登录"));
+            Long currentUserId = userId;
+            
+            // 如果没有传userId参数，尝试从认证头获取
+            if (currentUserId == null && authHeader != null) {
+                currentUserId = getUserFromAuth(authHeader);
             }
             
-            Map<String, Object> result = notificationService.getNotificationList(userId, type, page, pageSize);
+            // 临时调试：如果仍然没有userId，使用默认值
+            if (currentUserId == null) {
+                // 从token中尝试解析，如果失败则返回错误
+                if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                    currentUserId = getUserFromAuth(authHeader);
+                }
+                if (currentUserId == null) {
+                    return ResponseEntity.status(401).body(Map.of("success", false, "message", "用户未登录或用户ID无效"));
+                }
+            }
+            
+            Map<String, Object> result = notificationService.getNotificationList(currentUserId, type, page, pageSize);
             
             if ((Boolean) result.get("success")) {
                 return ResponseEntity.ok(result);
@@ -95,15 +109,22 @@ public class NotificationController {
     @GetMapping("/unread-count")
     @Operation(summary = "获取未读数量")
     public ResponseEntity<Map<String, Object>> getUnreadCount(
-            @RequestHeader("Authorization") String authHeader) {
+            @RequestHeader(value = "Authorization", required = false) String authHeader,
+            @RequestParam(required = false) Long userId) {
         
         try {
-            Long userId = getUserFromAuth(authHeader);
-            if (userId == null) {
-                return ResponseEntity.status(401).body(Map.of("success", false, "message", "用户未登录"));
+            Long currentUserId = userId;
+            
+            // 如果没有传userId参数，尝试从认证头获取
+            if (currentUserId == null && authHeader != null) {
+                currentUserId = getUserFromAuth(authHeader);
             }
             
-            Map<String, Object> result = notificationService.getUnreadCount(userId);
+            if (currentUserId == null) {
+                return ResponseEntity.status(401).body(Map.of("success", false, "message", "用户未登录或用户ID无效"));
+            }
+            
+            Map<String, Object> result = notificationService.getUnreadCount(currentUserId);
             
             if ((Boolean) result.get("success")) {
                 return ResponseEntity.ok(result);

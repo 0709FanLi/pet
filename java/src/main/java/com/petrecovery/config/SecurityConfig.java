@@ -64,6 +64,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/detective/**").permitAll()
                 // 管理端侦探列表（当前阶段对接调试放开，后续收敛到管理员鉴权）
                 .antMatchers("/api/admin/detectives", "/api/admin/detectives/**").permitAll()
+                // 通知相关接口（临时调试开放）
+                .antMatchers("/api/notifications/**").permitAll()
                 // 静态文件访问
                 .antMatchers("/uploads/**").permitAll()
                 // Swagger相关接口

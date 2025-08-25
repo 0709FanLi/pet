@@ -124,10 +124,10 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, reactive, computed, onMounted, onShow } from 'vue'
-  import { onLoad } from '@dcloudio/uni-app'
+  import { ref, reactive, computed, onMounted } from 'vue'
+  import { onLoad, onShow } from '@dcloudio/uni-app'
   import { request } from '@/common/request'
-  import { API } from '@/common/config'
+  import { API, STORAGE_KEYS } from '@/common/config'
 
   // 标签页配置
   const tabs = ref([
@@ -158,34 +158,36 @@
     })
   })
 
-  // 页面加载
-  onMounted(() => {
-    loadMessages()
-    loadUnreadCounts()
-  })
-
-  onShow(() => {
-    loadUnreadCounts()
-  })
-
   // 加载消息列表
   const loadMessages = async (loadMore = false) => {
     try {
       loading.value = true
       const page = loadMore ? currentPage.value + 1 : 1
 
+      // 获取当前用户信息
+      const userInfo = uni.getStorageSync(STORAGE_KEYS.userInfo)
+      if (!userInfo || !userInfo.id) {
+        console.error('用户未登录，无法加载消息')
+        uni.showToast({
+          title: '请先登录',
+          icon: 'none',
+        })
+        return
+      }
+
       const response = await request({
         url: API.notifications.list,
         method: 'GET',
         data: {
+          userId: userInfo.id,
           page,
           pageSize: 20,
           type: activeTab.value === 'all' ? undefined : activeTab.value,
         },
       })
 
-      if (response.code === 200) {
-        const newMessages = response.data.list || []
+      if (response.success || response.code === 200) {
+        const newMessages = response.data?.list || []
 
         if (loadMore) {
           messages.value.push(...newMessages)
@@ -196,6 +198,10 @@
         currentPage.value = page
         hasMore.value = newMessages.length >= 20
         loadStatus.value = hasMore.value ? 'loadmore' : 'nomore'
+
+        console.log('消息加载成功，数量:', newMessages.length)
+      } else {
+        console.error('API响应格式错误:', response)
       }
     } catch (error) {
       console.error('加载消息失败:', error)
@@ -211,16 +217,29 @@
   // 加载未读数量
   const loadUnreadCounts = async () => {
     try {
+      // 获取当前用户信息
+      const userInfo = uni.getStorageSync(STORAGE_KEYS.userInfo)
+      if (!userInfo || !userInfo.id) {
+        console.error('用户未登录，无法加载未读数量')
+        return
+      }
+
       const response = await request({
         url: API.notifications.unreadCount,
         method: 'GET',
+        data: {
+          userId: userInfo.id,
+        },
       })
 
-      if (response.code === 200) {
+      if (response.success || response.code === 200) {
         const counts = response.data || {}
         tabs.value.forEach(tab => {
           tab.badge = counts[tab.key] || 0
         })
+        console.log('未读数量加载成功:', counts)
+      } else {
+        console.error('未读数量API响应格式错误:', response)
       }
     } catch (error) {
       console.error('加载未读数量失败:', error)
@@ -406,6 +425,16 @@
       return date.toLocaleDateString()
     }
   }
+
+  // 页面加载钩子
+  onMounted(() => {
+    loadMessages()
+    loadUnreadCounts()
+  })
+
+  onShow(() => {
+    loadUnreadCounts()
+  })
 </script>
 
 <style scoped>

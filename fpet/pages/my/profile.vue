@@ -503,11 +503,16 @@
 
   const loadUnreadCount = async () => {
     try {
+      const userInfo = uni.getStorageSync(STORAGE_KEYS.userInfo)
       const token = uni.getStorageSync(STORAGE_KEYS.token)
-      if (!token) return
+      if (!token || !userInfo?.id) return
 
       const res = await request({
         url: API.notifications.unreadCount,
+        method: 'GET',
+        data: {
+          userId: userInfo.id,
+        },
         header: { Authorization: `Bearer ${token}` },
       })
 
